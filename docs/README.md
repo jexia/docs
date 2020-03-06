@@ -1,10 +1,10 @@
-# docs
-Official docs for Jexia platform
 ---
 home: true
-heroImage: https://vuepress.vuejs.org/hero.png
+heroImage: logo.png
+heroText: null
+tagline: Make development easier
 actionText: Get Started →
-actionLink: /guide/
+actionLink: /get-started/
 features:
   - title: Simplicity First
 

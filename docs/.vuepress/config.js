@@ -1,10 +1,11 @@
 module.exports = {
     //base:'/en/docs/',
     cache:false,
-    title: "",
-    description: "My VuePress powered docs",
+    title: null,
+    description: "Make development easier",
     themeConfig: {
-        logo: '/logo.png',
+        logo: '/logo.jpg',
+        smoothScroll: true,
         displayAllHeaders: false,
         nav: [
           { text: "SignUp", link: "https://app.jexia.com/signup" },
