@@ -1,7 +1,8 @@
 module.exports = {
     //base:'/en/docs/',
     cache:false,
-    title: null,
+    title:"Jexia documentation",
+    dest:"./dist",
     description: "Make development easier",
     themeConfig: {
         logo: '/logo.jpg',
