@@ -21,7 +21,7 @@ As you might see there is different action for channels versus other services.
 * Publish means you can send any data into specific channel
 * Subscribe  means you can read from specific channel
 
-You can use both or one of them to organise your project. 
+You can use both or one of them to organize your project. 
 
 ## Usage
 

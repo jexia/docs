@@ -5,7 +5,7 @@
 
 You can [create](https://app.jexia.com/signup) Jexia account by using email or GitHub account. 
 
-First place after sign in, will be Jexia Dashboard. Here you can observe all your projects and switch between them. Inside project you can do all management operations as well as organise collaboration and integration. Same operation you can do via our ![CLI tool](https://jexia-cli.readthedocs.io/en/stable/)
+First place after sign in, will be Jexia Dashboard. Here you can observe all your projects and switch between them. Inside project you can do all management operations as well as organize collaboration and integration. Same operation you can do via our ![CLI tool](https://jexia-cli.readthedocs.io/en/stable/)
 ![Jexia Dashboard](./dashboard.png)
 
 You can creatate project by clicking on Create Project button.
@@ -23,7 +23,7 @@ You can have maximum **3** projects with free plan, after you need to upgrade at
 1. **Dataset** - is used to store your application data. For example products, orders, transactions, configurations, other.
 1. **Fileset** - is used to manage files for your application. For example: avatars, blog images, product images, pdf documents, others.
 1. **Relations** - provide easy way to establish data relations between Dataset-Fileset-Project Users. It allows you to get related data within one request. All connection and optimisations are managed by Jexia you do not need to care about this.    
-1. **RTC Channels** - is used to organise **Pub/Sub** solutions such as chats, online games others. As well this module is adding real-time notification functionality for Dataset, Fileset, Project Users modules. 
+1. **RTC Channels** - is used to organize **Pub/Sub** solutions such as chats, online games others. As well this module is adding real-time notification functionality for Dataset, Fileset, Project Users modules. 
 1. **Project Users** - is used to manage users for your application. Module has some specific functions, like **change password**, **sing up**, **sign in** as well as supporting standart CRUD approach. You can choose any apprach. 
 1. **Automation** - this module allow you to setup actions which will run based on some event.
 

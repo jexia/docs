@@ -321,7 +321,7 @@ As a result you will get next array of objects:
 ## Related records
 If you created multiple Datasets you can establish relations between them under Relations menu. Currently, we support 1-1, 1-m, m-1 relation types. 
 
-When do you need this? For example you can keep orders header and order details separatly. Cool think about Jexia that you do not need to care about external keys and index optimizations to organise all off this. All managed by Jexia in optimal way. 
+When do you need this? For example you can keep orders header and order details separatly. Cool think about Jexia that you do not need to care about external keys and index optimizations to organize all off this. All managed by Jexia in optimal way. 
 
 Another cool think as soon as you setup relation you insert object which has parrent / chield data and Jexia automatically put data in proper place with keeping relation between them. For example I have Dataset: Order and Dataset: Items with 1 to many relations between them. So I can insert into Order next object and data will land in proper place: 
 
