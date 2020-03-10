@@ -135,27 +135,29 @@ selectQuery.subscribe(records => {
 <template v-slot:bash>
 
 ``` bash
-# save API-Key token to env in case of API-Key usage
+# env variables to be set
 export PROJECT_ID=<project_id>
 export API_KEY=<key_here>
 export API_SECRET=<secret_here>
-export TEST_USER=<>
-export TEST_USER_PSW=<>
-export UMS_TOKEN=`curl -X POST -d '{
+export TEST_USER=<user_here>
+export TEST_USER_PSW=<password_here>
+# save API-Key token to env in case of API-Key usage
+export APK_TOKEN=`curl -X POST -d '{
   "method":"apk",
   "key":"'"$API_KEY"'",
   "secret":"'"$API_SECRET"'"
-}' "https://$PROJECT_ID.app.jexia.com/auth"` | jq .access_token
-
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq .access_token`
 # save UMS token to env in case you use Project Users
 export UMS_TOKEN=`curl -X POST -d '{
   "method":"ums",
   "email":"'"$TEST_USER"'",
   "password":"'"$TEST_USER_PSW"'"
-}' "https://$PROJECT_ID.app.jexia.com/auth"` | jq -r .access_token
-
-# Select all data
-curl -H "Authorization: Bearer $UMS_TOKEN" 
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq -r .access_token`
+# Select all data with apk token
+curl -H "Authorization: Bearer $APK_TOKEN"
+  -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders" | jq .
+# or with ums token
+curl -H "Authorization: Bearer $UMS_TOKEN"
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders" | jq .
 ```
 
