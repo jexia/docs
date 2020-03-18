@@ -198,6 +198,40 @@ curl
 </template>
 </CodeSwitcher>
 
+by using Automation module. You need to set up automation which will catch `UMS: password reset request`. Then, when you initiate a reset password, the user will get an email with a templated message (see Automation). Inside you should create a link on a page with new password entry form. From this page you can make a call `resetPassword` with a token from URL, so Jexia will apply changes for a new password.     
+
+<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<template v-slot:js>
+ 
+```js
+// To request email with new token: 
+ums.requestResetPassword('Elon@tesla.com');
+
+// To apply newpassword
+ums.resetPassword(Token, newPassword);
+```
+
+</template>
+<template v-slot:bash>
+
+``` bash
+# To request token for change password for specific email
+curl 
+-X POST -d '{
+  "email":"user@email"
+}' "https://$PROJECT_ID.app.jexia.com/ums/resetpassword/" | jq .
+
+
+# To apply new password
+curl 
+-X POST -d '{
+  "new_password": "jexia_super"
+}' "https://$PROJECT_ID.app.jexia.com/ums/resetpassword/token" | jq .
+```
+
+</template>
+</CodeSwitcher>
+
 ## Users CRUD
 It is also possible to use CRUD methods. 
 
