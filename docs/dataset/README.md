@@ -1,5 +1,5 @@
 # Datasets
-Dataset is used to store your data in the cloud. You can interact with your data via REST API and our SDKs. All data protected with policy authorization. You can establish a relation between different Datsets or other parts of the platform. You do not need to take care of indexes, foreign keys, scaling, backups, SQL injections and other headaches related to database management. Each project has own instance of Dataset and other projects can't impact the stability and security of your project.   
+Dataset is used to store your data in the cloud. You can interact with your data via REST API and our SDKs. All data protected with policy authorization. You can establish a relation between different Datasets or other parts of the platform. You do not need to take care of indexes, foreign keys, scaling, backups, SQL injections and other headaches related to database management. Each project has own instance of Dataset and other projects can't impact the stability and security of your project.   
 
 Datasets have built-in support for validation, schema, and schemaless support, default values for fields.  
 
@@ -54,8 +54,8 @@ Please, keep in mind that for String type it is not possible to put default valu
 :::
 
 ## Insert record
-To create a record in Jexia Dataset you need Create action added for your User or API-Key Policy. 
-Below I will show User approach as it will be a more common use case for record creation.
+To create a record in Jexia Dataset you need to Create action added for your User or API-Key Policy. 
+Below I will show the User approach as it will be a more common use case for record creation.
 
 ::: tip
 Please, keep in mind in responds you always get back array of records, even if you insert only 1 record. With this you can apply same approach for data manipulation.  
@@ -233,7 +233,7 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
  
 ```
 
-You can have next comparator in `?cond` request:
+You can have the next comparator in `?cond` request:
 
 Comparator group|**comparator**|**value**|Applicable field types
 ----------------|------------|-------|----------------------
@@ -264,7 +264,7 @@ sum()|number|Returns the total value of the field for the selected records
 </template>
 </CodeSwitcher>
 
-As a result you, will get the next the array of objects:
+As a result, you will get the next the array of objects:
 
 ```JSON
 [{
@@ -318,7 +318,7 @@ deleteQuery.subscribe(records => {
 });
 ```
 </template>
-<template v-slot:ts>
+<template v-slot:bash>
 
 ``` bash
 # Select by id
@@ -330,7 +330,7 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 </template>
 </CodeSwitcher>
 
-As a result you will get the next array of objects:
+As a result, you will get the next array of objects:
 
 ```JSON
 [{
@@ -415,7 +415,7 @@ As a result, you will get the next array of objects:
 ```
 
 ## Related data
-If you created multiple Datasets you can establish relations between them. You can do it under Relations menu. Currently, Jexia supports **1-1, 1-m, m-1** relation types. 
+If you created multiple Datasets you can establish relations between them. You can do it under the Relations menu. Currently, Jexia supports **1-1, 1-m, m-1** relation types. 
 ![Relations](./ds_relation.png)
 
 When do you need this? For example, you can keep users and their TODOs in separate Dataset's. With Jexia you do not need to care about external keys and index optimizations to organize all off this. All will be optimally managed by Jexia. 
@@ -528,7 +528,7 @@ GET /ds/article?outputs=["article.comments.author.name", "article.comments.autho
 </CodeSwitcher>
 
 ## Attach and detach records
-If you would need to relate already exisintg data you can use `.attach()` and `.detach()` methods.
+If you would need to relate already existing data you can use `.attach()` and `.detach()` methods.
 For this you need to specify to which parrent you want to attach chield record. In example I am adding to order with id = my_uuid
 two items with id's "b4961b6a-85a2-4ee8-b946-9001c978c801" and "e199d460-c88f-4ab9-8373-1d6ad0bd0acb". 
 
@@ -597,7 +597,7 @@ subscription.unsubscribe();
 
 
 ## Filtering
-With filtering you can use to specify which data to fetch. In result you always will get array of records, even if it will be only one record. There are different approach applys to different languages. Please, check prefarable for you. 
+With filtering, you can use to specify which data to fetch. As a result, you always will get an array of records, even if it will be only one record. There are different approaches applied to different languages. Please, check the preferable for you. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -637,7 +637,7 @@ dataModule.dataset("posts")
 <template v-slot:bash>
 
 Optional filtering parameters to specify which records to select. If it is not provided the request is applied on all records.
-All filters build with help of 3 variables: `field`, `comparator`, `value`.
+All filters build with the help of 3 variables: `field`, `comparator`, `value`.
 Multiple queries within a (nested) condition are combined using `operator`.
 
 ``` bash
@@ -645,7 +645,7 @@ Multiple queries within a (nested) condition are combined using `operator`.
 
 $ curl -s 
 -H "Authorization: Bearer $JEXIA_TOKEN" 
--X GET "https://{$PROJECT_ID}/ds/applications?cond=\[\{\"field\":\"total\"\},\">\",\"0\"\]" | jq .
+-X GET "https://$PROJECT_ID/ds/orders?cond=\[\{\"field\":\"total\"\},\">\",\"0\"\]" | jq .
 
 #?cond=[{"field":"total"},">",0] // “<”, “=”, “!=”, “>=”, “<=”
 #?cond=[{"field":"total"},"=",null]
@@ -674,7 +674,7 @@ There are next operator available to combine filters: "and", "&&", "or" or "||"
 
 
 ## Response fields
-Sometimes you want to show specific fields from record versus all record. With Jexia you can have this. During data fetching, you need to specify what fields to get back. It is applicable for related data as well. 
+Sometimes you want to show specific fields from record versus all record. With Jexia you can have this. During data fetching, you need to specify what fields to get back. It is applicable to related data as well. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -738,7 +738,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 </CodeSwitcher>
 
 ## Sorting
-To sord output you can apply sort methods of Jexia, you can apply `Asc` and `Desc` directions. 
+To sort output you can apply sort methods of Jexia, you can apply `Asc` and `Desc` directions. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -769,7 +769,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN"
 
 
 ## Aggregation functions
-There are a few aggregation functions you are able to use in order to do some calculations before obtaining data:
+There are a few aggregation functions you can use in order to calculations before obtaining data:
 1. max
 2. min
 3. sum
@@ -800,7 +800,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 </template>
 </CodeSwitcher>
 
-As a result you will get next JSON
+As a result, you will get next JSON
 ```json
 [
   {
@@ -814,8 +814,8 @@ During REST API request you can get next errors:
 
 Code|Description
 ----|-----------
-200|Record(s) created successfully. Response contains the full record(s) including its default fields.
-400|Bad request. Request was somehow malformed and was not executed.
+200|Record(s) created successfully. The response contains the full record(s) including its default fields.
+400|Bad request. The request was somehow malformed and was not executed.
 401|Invalid authentication. Access token was not provided or incorrect.
 403|Forbidden. Access token does not have permission to insert the record(s) into this dataset.
 404|Dataset not found
