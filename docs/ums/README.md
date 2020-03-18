@@ -1,16 +1,17 @@
 # Project Users (UMS)
-The Proect Users or User Management System is the central hub of all user-related aspects of an application. It manages and controls users like signing up and signing in users, manage passwords. 
+The Project Users or User Management System is the central hub of all user-related aspects of an application. It manages and controls users like signing up and sign-in users, manage passwords, user groups, etc. 
 
 ::: tip
-Jexia User Management System is only available on Professional project.
+Jexia User Management System is only available for the project with a Professional subscription.
 :::
 
-UMS allow you to cover authentification part and manage which user can signin into your application. To grant specific access to resources you need to use Policy where Project Users become as a subject.   
+UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources you need to use Policy where Project Users become a subject.   
 
 ## Sign up user
-UMS uses email and password as user credentials. You can add as many extra fields as you need to keep all needed information.
-For example information about user profile. As for now all fields stored as schemaless so you are not able to re-use validation or defualt values. We are working hard to make it available as soon as possible. 
- 
+UMS is using email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place(user name, department, age, etc). As for now all fields stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 
+
+Below you can find an example of how to make sign-up for a new user. 
+
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
 
@@ -23,8 +24,8 @@ jexiaClient().init({
 }, ums); 
 
 const user = await ums.signUp({    
-  email: "robert@company.com",    
-  password: "qwert1234", 
+  email: "user@company.com",    
+  password: "my_password", 
   age: 25, 
   address: { 
       city: "Apeldoorn",
@@ -37,22 +38,23 @@ const user = await ums.signUp({
 <template v-slot:bash>
 
 ``` bash
-POST https://<project-id>.app.jexia.com/ums/signup
-{
-  "email": "myemail@mail.com",
+curl -X POST -d '{
+  "email": "user@company.com",
   "password": "my_password",
   "age": 25, 
   "address": { 
       "city": "Apeldoorn",
       "country": "NL"
    }
-}
+}' "https://$PROJECT_ID.app.jexia.com/ums/signup" | jq .
 ```
+
+Below you can find possible errors:
 
 |Code | Description|
 |-----|------------|
-201 | User created successfully. Response contains the full user (except password) including default fields.
-400 | Bad request. Request was somehow malformed and was not executed.
+201 | User created successfully. The response contains the full user (except the password) including default fields.
+400 | Bad request. The request was somehow malformed and was not executed.
 409 | User is already registered.
 500 | There is an internal error
 
@@ -63,7 +65,7 @@ As respond you will get next JSON object:
 ``` json
 {  
  id: "005c8679-3fad-46fd-a93f-9484ea8ff738",
- email: "robert@company.com", 
+ email: "user@company.com", 
  active: true,
  age: 25,
  address: { 
@@ -77,7 +79,7 @@ As respond you will get next JSON object:
 ```
 
 ## Sign In user
-UMS uses email and password as user credentials. User account should exist in a project.
+UMS is using email and password as user credentials. The user account should exist in a project.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -105,21 +107,25 @@ Additional options (both are optional):
 * alias - account alias. You can use it to clarify which account is going to be used to perform data operation
 
 ::: tip
-There are possibility to do sign in with many users and run request with different users. For this you need to use alias.
-If you did not specify under which user to run query, SDK will use user with **default:true**.   
+With JS SDK there is a possibility to do sign in with many users and run requests with different users. For this, you need to use an alias.If you did not specify under which user to run query, SDK will use user with **default:true**.   
 :::
 
 </template>
 <template v-slot:bash>
 
 ``` bash
+export UMS_TOKEN=`curl -X POST -d '{
+  "method":"ums",
+  "email":"'"$TEST_USER"'",
+  "password":"'"$TEST_USER_PSW"'"
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq -r .access_token`
 ```
 
 </template>
 </CodeSwitcher>
 
 ## Fetch a user
-To get one of sign in user or current user you need to run next methods:
+To get current sign in user you need to run next methods:
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -134,6 +140,9 @@ const user = await ums.getUser('elon@tesla.com');
 <template v-slot:bash>
 
 ``` bash
+curl 
+-H "Authorization: Bearer $UMS_TOKEN"
+-X GET "https://$PROJECT_ID.app.jexia.com/ums/user/" | jq .
 ```
 
 </template>
@@ -141,9 +150,9 @@ const user = await ums.getUser('elon@tesla.com');
 
  
 ## Delete user
-To be able to delete user you need to provide password. It is needed mostly from security reason.
-You can do user management via CRUD operations. This method is mostly for current user to delete himself. 
-Will be depricated in future versions.
+To be able to delete the user you need to provide a password. It is needed most for security reasons.
+You can do user management via CRUD operations. This method is mostly for the current user to delete himself. 
+Will be deprecated in future versions.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -155,13 +164,16 @@ ums.deleteUser('Elon@tesla.com', password);
 <template v-slot:bash>
 
 ``` bash
+curl 
+-H "Authorization: Bearer $UMS_TOKEN"
+-X DELETE "https://$PROJECT_ID.app.jexia.com/ums/user/" | jq .
 ```
 
 </template>
 </CodeSwitcher>
 
 ## Change password
-There is two ways to change password for user by using his old password or by using automation.
+There are two ways to change the password for the user by using his old password or by using automation.
 
 By using his old password:
 
@@ -175,6 +187,12 @@ ums.changePassword('Elon@tesla.com', oldPassword, newPassword);
 <template v-slot:bash>
 
 ``` bash
+curl 
+-H "Authorization: Bearer $UMS_TOKEN"
+-X POST -d '{
+  "new_password": "my_new_password",
+  "old_password": "my_old_password"
+}' "https://$PROJECT_ID.app.jexia.com/ums/changepassword/" | jq .
 ```
 
 </template>
@@ -209,6 +227,8 @@ ums.delete()
 <template v-slot:bash>
 
 ``` bash
+curl -H "Authorization: Bearer $UMS_TOKEN"
+  -X GET "https://$PROJECT_ID.app.jexia.com/ums/users?cond=[....]" | jq .
 ```
 
 </template>
