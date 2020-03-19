@@ -5,7 +5,7 @@
 
 You can [create](https://app.jexia.com/signup) Jexia account by using email or GitHub account. 
 
-The first place after sign in, will be Jexia Dashboard. Here you can observe all your projects and switch between them. Inside project you can do all management operations as well as organize collaboration and integration. The same operation you can do via ours![CLI tool](https://jexia-cli.readthedocs.io/en/stable/)
+The first place after sign in, will be Jexia Dashboard. Here you can observe all your projects and switch between them. Inside project you can do all management operations as well as organize collaboration and integration. The same operation you can do via ours [CLI tool](https://jexia-cli.readthedocs.io/en/stable/)
 ![Jexia Dashboard](./dashboard.png)
 
 You can create a project by clicking on the Create Project button.
