@@ -5,7 +5,7 @@
 
 You can [create](https://app.jexia.com/signup) Jexia account by using email or GitHub account. 
 
-The first place after sign in, will be Jexia Dashboard. Here you can observe all your projects and switch between them. Inside project you can do all management operations as well as organize collaboration and integration. The same operation you can do via ours [CLI tool](https://jexia-cli.readthedocs.io/en/stable/)
+The first place after sign in will be Jexia Dashboard. Here you can observe all your projects and switch between them. Inside the project, you can do all management operations as well as organize collaboration and integration. The same operation you can do via ours [CLI tool](https://jexia-cli.readthedocs.io/en/stable/)
 ![Jexia Dashboard](./dashboard.png)
 
 You can create a project by clicking on the Create Project button.
@@ -14,7 +14,7 @@ You can have maximum **3** projects with the free plan after you need to upgrade
 
 ## Inside the project
 ![Jexia Services](./services.png)
-1. **Collaboration** - under this menu you can coordinate access to your project setup. For example, you are working with a team mate who is busy with operation or development. You can invite him to be a collaborator for your project and together you can finish all much faster.  
+1. **Collaboration** - under this menu you can coordinate access to your project setup. For example, you are working with a teammate who is busy with operation or development. You can invite him to be a collaborator for your project and together you can finish all much faster.  
 1. **Settings** - under this menu, you can find the basic setup for the project (project name, description, URL) as well as you can delete the project.
 1. **Integration** - this section allows you to set up a connection between Jexia project and external services. You will be able to use them in your automation setup. 
 
@@ -24,7 +24,7 @@ You can have maximum **3** projects with the free plan after you need to upgrade
 1. **Fileset** - is used to manage files for your application. For example avatars, blog images, product images, pdf documents, others.
 1. **Relations** - provide an easy way to establish data relations between Dataset-Fileset-Project Users. It allows you to get related data within one request. All connections and optimizations are managed by Jexia you do not need to care about this.    
 1. **RTC Channels** - is used to organize **Pub/Sub** solutions such as chats, online games others. As well this module is adding real-time notification functionality for Dataset, Fileset, Project Users modules. 
-1. **Project Users** - is used to manage users for your application. The module has some specific functions, like **change password**, **sing up**, **sign in** as well as supporting standard CRUD approach. You can choose any apprach. 
+1. **Project Users** - is used to manage users for your application. The module has some specific functions, like **change password**, **sing up**, **sign in** as well as supporting standard CRUD approach. You can choose any approach. 
 1. **Automation** - this module allows you to set up actions that will run based on some event.
 
 ## Access control
@@ -35,7 +35,7 @@ You can have maximum **3** projects with the free plan after you need to upgrade
 ![Dataset fields](./ds_fields.png)
 
 Let's create Dataset to have some cloud storage for our data.  
-Good things Jexia Dataset has a schema and schemaless support as well as field validation, default values for fields. So you do not need to spend time for developing and testing this. We will create Dataset Orders.
+Good things Jexia Dataset has a schema and schemaless support as well as field validation, default values for fields. So you do not need to spend time for development and testing this. We will create Dataset Orders.
 ![Dataset](./ds.png)
 
 The good thing about Dataset that it can store data with the Schema or Schemaless approach, it gives you the flexibility to start your development without any particular model and update all on the fly. 
@@ -43,7 +43,7 @@ The good thing about Dataset that it can store data with the Schema or Schemales
 ::: warning
 Please, be aware there are some rules related to the schema and schemaless data:
 
-1. When you create schema field data from schemaless filed is not transfer to a newly created field.
+1. When you create schema field data from the schemaless filed is not transfer to a newly created field.
 2. When you insert an object which has fields out of schema, Jexia will automatically create a schemaless field and put data there.
 3. When you delete schema field data will be deleted as well versus transfer it into a schemaless field.  
 :::
@@ -64,7 +64,7 @@ There are two ways to organize this:
 To have API-KEY access, first, you need to create API-KEY. For this, you need to go to Access Control - API-Keys and create a new one. **Please write somewhere API-secret, you will not be able to get it again.** 
 ![API-Key creation](./api-key.png)
 
-After go to **Access Control - Policies** to specify which resources and action available for this API-KEY. As a Subject you can selected newly created API-KEY, in Resources select needed Datasets(Filesets or Channels), select an allowed action: Create, Read, Update, Delete.  
+After go to **Access Control - Policies** to specify which resources and actions available for this API-KEY. As a Subject you can selected newly created API-KEY, in Resources select needed Datasets(Filesets or Channels), select an allowed action: Create, Read, Update, Delete.  
 ![Policy setup](./policy.png)
 
 ### Access via Project User
@@ -76,9 +76,9 @@ After go to **Access Control - Policies**, in Subject select **AllUsers** in Res
 Now let's make simple CRUD to our dataset. For this, you can use the REST API or JS SDK. ![JS SDK](https://www.npmjs.com/package/jexia-sdk-js) is built on top of the RxJS library, so you can use all power of this library.
 
 To install JS SDK into our project we need to run:
-::: tip
+```
 npm install jexia-sdk-js node-fetch ws --save
-:::
+```
 
 Below you can see an example with all modules imported into the project. This is optional. If you do not need Fileset or Projec User(UMSModule), real-time feel free to skip importing them.  
 

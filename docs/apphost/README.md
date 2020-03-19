@@ -124,7 +124,7 @@ The flow for private repos is almost the same. The only difference is that at th
 
 ![No Application](./step_8.png)
 
-As soon as you have a subscription you will be able to see another button which will allow you to authorize Jexia in your private repo
+As soon as you have a subscription you will be able to see another button that will allow you to authorize Jexia in your private repo
 to rest part of the process as previously described. 
 
 ## Custom domain
