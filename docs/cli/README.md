@@ -1,7 +1,7 @@
 #  CLI
 
 
-This is the official Jexia CLI for interacting with [Jexia's][jexia] platform.
+This is the official Jexia CLI for interacting with [Jexia's](https://jexia.com) platform.
 
 ## Compatibility
 

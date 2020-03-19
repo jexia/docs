@@ -1,4 +1,4 @@
-# Applicaion hosting
+# Application hosting
 
 Jexia Application Hosting can be used to organize your static files hosting or to add some logic that is missing from Jexia functionality yet. Currently, you can host your Node JS application.  All can be started in one click. Application Hosting can be used as Static File Hosting as well, using for example React, VueJs, and Angular as frameworks. Only what will be needed is to add the HTTP server as a dependency and make sure it listens on port 80. See the examples below.  
 
@@ -7,7 +7,7 @@ Jexia Application Hosting can be used to organize your static files hosting or t
 1. GitHub repo (open or private)
 2. project in Jexia
 3. your application is supporting NodeJS version 12 and NPM 
-4. your application must contain package.json file with build and start scripts
+4. your application must contain package.json file with the build and start scripts
 5. the application must use port 80 for its API
 6. application must listen 0.0.0.0
 
@@ -57,7 +57,11 @@ For example:
 
 If you need to run some Pre- / Post-install scripts you need to combine them under build script.
 
-As you can see in our example we use next to the start script:  "start": "HTTP-server ./dist -p 80". We use HTTP-server to organize serving for static file. Here we listen to port 80 and use the dist folder, which contains our release. More options can be found on the HTTP-server package page. Feel free to implement the approach that suits you. All you need to remember is to use PORT:80 for your server. 
+As you can see in our example we use next to the start script:  "start": "HTTP-server ./dist -p 80". We use HTTP-server to organize serving for a static file. Here we listen to port 80 and use the dist folder, which contains our release. More options can be found on the HTTP-server package page. Feel free to implement the approach that suits you. All you need to remember is to use PORT:80 for your server. 
+
+::: tip
+If you have a docker file present in your repo, we will use it to build & deploy the application. 
+:::
 
 ### Step 2: Organize your projects at Jexia
 
@@ -67,7 +71,7 @@ Go to the Application Hosting menu, then click on 'Setup Application'
 
 ![No Application](./step_1.png)
 
-The next page related to the GitHub repo setup. You can get it by clicking Clone or Download button on the GitHub webpage. It should look like: **https://github.com/jexia/test-node-app.git**
+The next page related to the GitHub repo setup. You can get it by clicking the Clone or Download button on the GitHub webpage. It should look like: **https://github.com/jexia/test-node-app.git**
 
 ![No Application](./step_2.png)
 
@@ -86,7 +90,7 @@ As soon as the setup is done and you are ready to go - click the Deploy button. 
 * process.env.API_KEY
 * process.env.API_SECRET
                                                                                                                                                                                         
-It is not possible to use process.env.* approach with Angular, VueJS, React applications. Otherwise, your API Key and Secret will be available on the frontend. In this case, we recommend using NodeJS backend, which will make additional validation. NodeJS can be run with Jexia Application Hosting.    
+It is not possible to use process.env.* approach with Angular, VueJS, React applications. Otherwise, your API Key and Secret will be available on the frontend. In this case, we recommend using the NodeJS backend, which will make additional validation. NodeJS can be run with Jexia Application Hosting.    
 
 ![No Application](./step_5.png)
 
@@ -94,9 +98,9 @@ by clicking Done the deployment process will start. You will be able to see an i
 
 ![No Application](./step_6.png)
 
-There are two states for deployment: Done (green dot) or Fail (red dot). In the case of a red dot confirm you can build your repo locally, check if you have a package.json with build and start sections and try to re-deploy by clicking the Deploy button again. As well feel free to contact our support team.
+There are two states for deployment: Done (green dot) or Fail (red dot). In the case of a red dot confirm you can build your repo locally, check if you have a package.json with the build and start sections and try to re-deploy by clicking the Deploy button again. As well feel free to contact our support team.
 
-Failures can also be caused if you try to use a private repo with a free project. Then the deployment will fail with the message: Could not clone repo.....
+Failures can also be caused if you try to use a private repo with a free project. Then the deployment will fail with the message: Could not clone repo...
 
 when all goes well you will see a green dot:
 
@@ -104,15 +108,15 @@ when all goes well you will see a green dot:
 
 As soon as the deployment is done your application will be accessible via a URL marked in blue on the screen.
 
-## How to update application once deployed?
+## How to update the application once deployed?
 
 There are two possibilities to make redeployment. Jexia is supporting deployment without rebuilding code - when you need to update environment variables only, or full rebuild  - when code will be downloaded from GitHub, build and redeploy with all mentioned environment variables.  
 
-To initiate redeployment, you need to click Redeploy button (top right), which will appear as soon as initial deployment will be finished instead of Deployment button. 
+To initiate redeployment, you need to click the Redeploy button (top right), which will appear as soon as the initial deployment will be finished instead of the Deployment button. 
 
 ![No Application](./step_8.png)
 
-after you will see window with deployment option, where you can specify your API_KEY and API_SECRET as well as  switch between building options. By default we redeploy only environment variables, without pulling repository from GitHub and rebuild source code.
+after you will see a window with deployment option, where you can specify your API_KEY and API_SECRET as well as switch between building options. By default, we redeploy only environment variables, without pulling repository from GitHub and rebuild source code.
 
 ## For private GitHub projects.
 
@@ -121,15 +125,15 @@ The flow for private repos is almost the same. The only difference is that at th
 ![No Application](./step_8.png)
 
 As soon as you have a subscription you will be able to see another button which will allow you to authorize Jexia in your private repo
-rest part of the process is the same to previously described. 
+to rest part of the process as previously described. 
 
 ## Custom domain
 
-There is a possibility to add to your application your own domain.
+There is a possibility to add to your application your domain.
 
 For this you need to have:
 1. Successfully deployed application 
-2. Domain have A DNS record and this record should point to the your application IP
+2. Domain have A DNS record and this record should point to your application IP
 3. Only one A record per domain should exist
 4. After domain will be added to Jexia configuration you would need to redeploy your application. You can redeploy without rebuild option (see above) 
 It might take some time until your application will be accessible via domain as DNS refreshment needs to happen.
@@ -137,9 +141,9 @@ It might take some time until your application will be accessible via domain as 
 ![No Application](./step_1.png)
 
 ## Delete application
-To delete the application you can go under Settings tab and then use Delete button. You would need to enter repo name to confirm deleteing operation. Be aware you are not able to delete project until you have application running. 
+To delete the application you can go under the Settings tab and then use the Delete button. You would need to enter the repo name to confirm the deleting operation. Be aware you are not able to delete the project until you have an application running. 
 
-In our example below repo name will be : jexia-vue-todo
+In our example, below repo name will be: jexia-vue-todo
 
 ![Delete Application](./step_1.png)
 

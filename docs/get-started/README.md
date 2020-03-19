@@ -174,3 +174,9 @@ Please, be aware. All data will be deleted and we will not be able to restore it
 :::
 
 ![Delete project](./delete_prj.png)
+
+## Examples & Open-source
+There many examples you can find in our [GitHub repo](https://github.com/jexia) as well as some part of our platform which was open-sourced. 
+
+In the long run, we plan to open-source most of the parts for the Jexia platform. From another side, we understand that ope-source is a big responsibility and time demand to support communities. As for now, we decided to focus on adding new functionality to the platform, to provide more opportunities for our friends.  
+Happy codding! 
