@@ -1,4 +1,7 @@
 # FileSets
+
+<iframe width="700" height="394" src="https://www.youtube.com/embed/S4Yz3I3MwGU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 JFS is used for indexing, fetching and manipulating files like any other user data. Fileset is a dataset but provides a way to maintain large data objects like files. At this point, we are working in cooperation with partners (Digital Ocean, AWS S3) so all your files will be saved under your cloud storage. On Jexia site we will keep only metadata and URL for the files and you can manipulate those data in the same way as with Dataset.
 
 To work with files you need to open access to specific Fileset via Policy.

@@ -416,6 +416,9 @@ As a result, you will get the next array of objects:
 
 ## Related data
 If you created multiple Datasets you can establish relations between them. You can do it under the Relations menu. Currently, Jexia supports **1-1, 1-m, m-1** relation types. 
+
+<iframe width="700" height="394" src="https://www.youtube.com/embed/E_wxTnQ3clQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ![Relations](./ds_relation.png)
 
 When do you need this? For example, you can keep users and their TODOs in separate Dataset's. With Jexia you do not need to care about external keys and index optimizations to organize all off this. All will be optimally managed by Jexia. 
@@ -562,7 +565,9 @@ action_range|JSON object|same as Filter parameter range
 </CodeSwitcher>
 
 ## Real-Time notification
-If you want to have a real-time update about changes on the sets, you can use real-time notification which is built-in into Dataset, Fileset and Project Users. This is Pro function and you need to have subscription for this. 
+If you want to have a real-time update about changes on the sets, you can use real-time notification which is built-in into Dataset, Fileset and Project Users. This is Pro function and you need to have a subscription for this. 
+
+<iframe width="700" height="394" src="https://www.youtube.com/embed/TR9fcT8gXtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 After the action, you will get a notification with records ID which was modified. You can re-fetch data from Jexia. We are sending ID only due to security reasons, as it might be a situation that many users will be subscribed to notifications but they should not have access to data itself. With current approach, you can decide whom to show what.
 

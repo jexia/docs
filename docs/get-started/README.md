@@ -10,6 +10,8 @@ The first place after sign in will be Jexia Dashboard. Here you can observe all 
 
 You can create a project by clicking on the Create Project button.
 
+<iframe width="700" height="395" src="https://www.youtube.com/embed/FY5QKc-gMj8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 You can have maximum **3** projects with the free plan after you need to upgrade at least 1 project to the paid version or delete some projects. 
 
 ## Inside the project
@@ -32,10 +34,13 @@ You can have maximum **3** projects with the free plan after you need to upgrade
 1. **Policy** - authorization access to resources in your application. To create the policy you need to have at least one Project User or API-Key. 
 
 ## Create DataSet
-![Dataset fields](./ds_fields.png)
+Let's create Dataset to have some cloud storage for our data.
+<iframe width="700" height="350" src="https://www.youtube.com/embed/3Dt79oYyAsU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Let's create Dataset to have some cloud storage for our data.  
+![Dataset fields](./ds_fields.png)
+  
 Good things Jexia Dataset has a schema and schemaless support as well as field validation, default values for fields. So you do not need to spend time for development and testing this. We will create Dataset Orders.
+
 ![Dataset](./ds.png)
 
 The good thing about Dataset that it can store data with the Schema or Schemaless approach, it gives you the flexibility to start your development without any particular model and update all on the fly. 
@@ -74,6 +79,8 @@ After go to **Access Control - Policies**, in Subject select **AllUsers** in Res
 
 ## Interact with data
 Now let's make simple CRUD to our dataset. For this, you can use the REST API or JS SDK. ![JS SDK](https://www.npmjs.com/package/jexia-sdk-js) is built on top of the RxJS library, so you can use all power of this library.
+
+<iframe width="700" height="394" src="https://www.youtube.com/embed/i7v8FOS7_WI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 To install JS SDK into our project we need to run:
 ```

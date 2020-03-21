@@ -5,7 +5,9 @@ The Project Users or User Management System is the central hub of all user-relat
 Jexia User Management System is only available for the project with a Professional subscription.
 :::
 
-UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources you need to use Policy where Project Users become a subject.   
+UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources you need to use Policy where Project Users become a subject. 
+
+<iframe width="700" height="394" src="https://www.youtube.com/embed/ZjffXZDuoGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
 
 ## Sign up user
 UMS is using email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place(user name, department, age, etc). As for now all fields stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 

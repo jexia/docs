@@ -6,6 +6,8 @@ Jexia provides to the way of authentication:
 By default, all data is closed for externals and you need to specify what and to whom to show.
 Does not meter what option for authentication you choose, you will need to have a policy either for API-Key or for Users. 
 
+<iframe width="700" height="394" src="https://www.youtube.com/embed/o2ZN3nvdhi8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## API-Keys
 API-Key can be used to organize public access (for example readers of your blog). 
 To create API-Key you need to navigate to *Access Control - API keys - Create API Keys*.
@@ -105,7 +107,9 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 
 ## Policies
 As was mentioned above to authorize access to your data you need to have **Policy** created for API-Keys or Project Users. 
-At this point in time you cannot manipulate `Policy` via consumption API. All management available only via Jexia administration panel.
+At this point in time, you cannot manipulate `Policy` via consumption API. All management is available only via Jexia administration panel.
+
+<iframe width="700" height="394" src="https://www.youtube.com/embed/i4dKznoXry0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 There are three main areas for Policy setup:
 1. Subject (who has access) - can be API-Key, AllUsers (all sign-in users), namespaces (grouped users under the same name).
