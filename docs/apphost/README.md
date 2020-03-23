@@ -2,18 +2,25 @@
 
 Jexia Application Hosting can be used to organize your static files hosting or to add some logic that is missing from Jexia functionality yet. Currently, you can host your Node JS application.  All can be started in one click. Application Hosting can be used as Static File Hosting as well, using for example React, VueJs, and Angular as frameworks. Only what will be needed is to add the HTTP server as a dependency and make sure it listens on port 80. See the examples below.  
 
-## Requarements 
+## Common requirements: 
 
 1. GitHub repo (open or private)
 2. project in Jexia
-3. your application is supporting NodeJS version 12 and NPM 
-4. your application must contain package.json file with the build and start scripts
-5. the application must use port 80 for its API
-6. application must listen 0.0.0.0
+3. the application must use port `80` for its API
+4. application must listen `0.0.0.0`
 
-## What do I get? 
+## Build and run requirements:
+### Dockerfile:
+If inside your repo will be Dockerfile it will be used for building and deployment process.
 
-1. hosting for your React, VueJS, Angular, NodeJS application 
+### NodeJS
+1. your application is supporting NodeJS version 12 and NPM 
+2. your application must contain package.json file with the build and start scripts
+
+
+## What do you get? 
+
+1. hosting for your React, VueJS, Angular, NodeJS, Python, Go, PHP, etc application 
 2. subdomain in zone jexia.app available in Internet
 3. possibility of adding your custom domain (available for paid projects only)
 4. SSL certificates for your subdomain
