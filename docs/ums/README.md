@@ -2,15 +2,15 @@
 The Project Users or User Management System is the central hub of all user-related aspects of an application. It manages and controls users like signing up and sign-in users, manage passwords, user groups, etc. 
 
 ::: tip
-Jexia User Management System is only available for the project with a Professional subscription.
+Jexia User Management System is only available for projects with a professional subscription.
 :::
 
-UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources you need to use Policy where Project Users become a subject. 
+UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources, you need to use policy where Project Users become a subject. 
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/ZjffXZDuoGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
 
 ## Sign up user
-UMS is using email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place(user name, department, age, etc). As for now all fields stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 
+UMS is using email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place(user name, department, age, etc). As for now, all fields are stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 
 
 Below you can find an example of how to make sign-up for a new user. 
 
@@ -104,12 +104,12 @@ const user = await ums.signIn({
 dom.dataset('rockets', 'Elon Mask').select();  
 dom.dataset('rockets').select();  
 ```
-Additional options (both are optional):
+Additional optional options:
 * default - if true, this user account will be used for all further data operations by default
 * alias - account alias. You can use it to clarify which account is going to be used to perform data operation
 
 ::: tip
-With JS SDK there is a possibility to do sign in with many users and run requests with different users. For this, you need to use an alias.If you did not specify under which user to run query, SDK will use user with **default:true**.   
+With the JS SDK there is a possibility to do sign in with many users and run requests with different users. For this, you need to use an alias. If you did not specify under which user to run query, the SDK will use user with **default:true**.   
 :::
 
 </template>
@@ -127,7 +127,7 @@ export UMS_TOKEN=`curl -X POST -d '{
 </CodeSwitcher>
 
 ## Fetch a user
-To get current sign in user you need to run next methods:
+To fetch an user you need to run the next methods:
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -152,8 +152,8 @@ curl
 
  
 ## Delete user
-To be able to delete the user you need to provide a password. It is needed most for security reasons.
-You can do user management via CRUD operations. This method is mostly for the current user to delete himself. 
+To be able to delete the user, you need to provide a password. This is needed for security reasons.
+You can do user management via CRUD operations. This method is mainly for the current user to delete himself. 
 Will be deprecated in future versions.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
@@ -177,7 +177,7 @@ curl
 ## Change password
 There are two ways to change the password for the user by using his old password or by using automation.
 
-By using his old password:
+Using his old password:
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -200,7 +200,7 @@ curl
 </template>
 </CodeSwitcher>
 
-by using Automation module. You need to set up automation which will catch `UMS: password reset request`. Then, when you initiate a reset password, the user will get an email with a templated message (see Automation). Inside you should create a link on a page with new password entry form. From this page you can make a call `resetPassword` with a token from URL, so Jexia will apply changes for a new password.     
+Using Automation module. You need to set up automation which will catch `UMS: password reset request`. Then, when you initiate a reset password, the user will get an email with a templated message (see Automation). Inside you should create a link on a page with new password entry form. From this page you can make a call `resetPassword` with a token from URL, so Jexia will apply changes for a new password.     
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
