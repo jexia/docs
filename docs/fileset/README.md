@@ -11,6 +11,7 @@ Fileset is very similar to Dataset with configuration and usage so you don't nee
 Fileset is similar to other modules but can be used independently. It gives you the flexibility to choose what modules to use in your project. The future fileset will have more features related to files operations.
 :::
 
+
 When uploading or updating a file record, the following things should be kept in mind:
 1. Each fileset contains a set of immutable fields: id, created_at, updated_at, size, type, url and status. These fields are generally used to contain the metadata of the file which is filled internally by our API. It is not possible to change validation, default values of these fields and their values.
 
@@ -72,17 +73,10 @@ fileset.upload(records).subscribe(fileRecord => {
 <template v-slot:bash>
 
 ``` bash
-POST https://<project-id>.app.jexia.com/fs/<fileset-name>
-"Content-Type": "multipart/form-data;boundary=boundary"
---boundary 
-Content-Disposition: form-data; name="description" 
- 
-this is my file 
---boundary 
-Content-Disposition: form-data; name="file"; filename="my_file.txt" 
- 
-<file data>
---boundary--
+curl 
+-F 'description="this is my file"' 
+-F 'file=@/path/to/file/my_file.txt' 
+-X POST "https://<project-id>.app.jexia.com/fs/<fileset-name>"
 ```
 ::: warning
 Only one file can be uploaded per request for now. If there are multiple files in the body, only the first one will be processed and the rest will be ignored.
