@@ -40,7 +40,7 @@ sudo easy_install jexia-cli
 
 ### Use
 
-For the use and full version of the CLI docs can be found [here].
+For the use of the CLI please check out the full CLI docs [here].
 
 
 ### Development
