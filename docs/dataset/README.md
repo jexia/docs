@@ -374,8 +374,9 @@ const user = await ums.signIn({
 });
 
 const orders = dataModule.dataset("orders");
-const updateQuery = orders.update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }]);  
-
+const updateQuery = orders
+                    .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }])
+                    .where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg')));  
 // Either way, the response will be an array  
 updateQuery.subscribe(records => { 
      // you will always get an array of created records, including their 
@@ -620,10 +621,10 @@ import { field } from "jexia-sdk-js/node";
    .where(field("total").isLessThan(100))
    .where(field("id").isInArray(my_val))   // my_val=[uuid1,uuid2];
    .where(field("id").isNotInArray(my_val)) // my_val=[uuid1,uuid1];
-   .where(field("title").isLike("Moby dick"))
+   .where(field("title").isLike("%oby"))
    .where(field("title").isNotNull())
    .where(field("title").isNull())
-   .where(field("title").satisfiesRegexp('a-z0-9')) 
+   .where(field("title").satisfiesRegexp('[A-Z][0-9]*')) 
 
 const isAuthorTom = field("user_name").isEqualTo("Tom");  
 const isAuthorDick = field("user_name").isEqualTo("Dick");  
