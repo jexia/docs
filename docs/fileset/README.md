@@ -12,7 +12,7 @@ Fileset similar to other modules but can be used independently. It gives you the
 :::
 
 When uploading or updating a file record the following things should be kept in mind:
-1. Each Fileset contains a set of immutable fields: id, created_at, updated_at, size, type, url and status. These fields are generally used to contain the metadata of the file which is filled internally by our API. It is not possible to change validation or default values of these fields neither their values. 
+1. Each Fileset contains a set of immutable fields: id, created_at, updated_at, size, type, url and status. These fields are generally used to contain the metadata of the file which is filled internally by our API. It is not possible to change the validation or default values of these fields neither their values. 
 
 2. If a request contains an immutable field, its value must be its current value. Otherwise, it'll fail with a bad request (400) error.
 
@@ -72,17 +72,10 @@ fileset.upload(records).subscribe(fileRecord => {
 <template v-slot:bash>
 
 ``` bash
-POST https://<project-id>.app.jexia.com/fs/<fileset-name>
-"Content-Type": "multipart/form-data;boundary=boundary"
---boundary 
-Content-Disposition: form-data; name="description" 
- 
-this is my file 
---boundary 
-Content-Disposition: form-data; name="file"; filename="my_file.txt" 
- 
-<file data>
---boundary--
+curl 
+-F 'description="this is my file"' 
+-F 'file=@/path/to/file/my_file.txt' 
+-X POST "https://<project-id>.app.jexia.com/fs/<fileset-name>"
 ```
 ::: warning
 Only one file can be uploaded per request for now. If there are multiple files in the body, only the first one will be processed and rest all will be ignored.
