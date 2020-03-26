@@ -1,64 +1,64 @@
 # Datasets
-Dataset is used to store your data in the cloud. You can interact with your data via REST API and our SDKs. All data protected with policy authorization. You can establish a relation between different Datasets or other parts of the platform. You do not need to take care of indexes, foreign keys, scaling, backups, SQL injections and other headaches related to database management. Each project has own instance of Dataset and other projects can't impact the stability and security of your project.   
+Dataset is used to store your data in the cloud. You can interact with your data via REST API and our SDKs. All data is protected with policy authorization. You can establish a relation between different datasets or other parts of the platform. You do not need to take care of indexes, foreign keys, scaling, backups, SQL injections and other things related to database management. Each project has it's own instance of dataset and other projects can't impact the stability and security of your project.   
 
-Datasets have built-in support for validation, schema, and schemaless support, default values for fields.  
+Datasets have built-in support for validation, schema support, schemaless support and default values for fields.  
 
-To create Dataset click "Go to project" button and on the next screen "Create dataset":
+To create a dataset, click on the "Go to project" button and then on the next screen "Create dataset":
 ![Create Dataset](./create_ds.png)
 
-The name of the Dataset is used as an endpoint (`*.app.jexia.com/ds/dataset_name`) to allow you to communicate with the JEXIA REST API.The name of your Dataset can contain only Latin characters and digits. The name of the Dataset has to start with a character.
+The name of the dataset is used as an endpoint (`*.app.jexia.com/ds/dataset_name`) to allow you to communicate with the JEXIA REST API. The name of your dataset can contain only Latin characters and digits. The name of the dataset has to start with a character.
 
 ## Configuration
 
 ## Schema:
 
-The next step is to add fields to your datasets. To create a field, click the "Add field" button. In the same window, you can select name, type, and validation for your field. You can also provide a default value for the field. Field name, validation parameters can be changed in the future via the edit field but not the field type. If you want to change the type then you can only delete and create the field again. However, by deleting the field you will also lose the data stored in the field. With the Schema approach in responding, you will get the field in specific types:  String, Integer, Float, Date, DateTime, Boolean, JSON or UUID. Before insert or update, data will be validated against the validators.
+The next step is to add fields to your datasets. To create a field, click the "Add field" button. In the same window, you can select name, type, and validation for your field. You can also provide a default value for the field. Field name and validation parameters can be changed in the future via the edit field but not the field type. If you want to change the type then you can only delete and create the field again. However, by deleting the field you will also lose the data stored in that field. With the Schema approach in responding, you will get the field in specific types: String, Integer, Float, Date, DateTime, Boolean, JSON or UUID. Before insert or update, the data will be validated against the validators.
 ![Create Field](./create_field.png)
 
 ::: tip
-If you will insert JSON object which has additional fields versus schema, those fields will be saved as schemaless fields. For those fields validation rules and default values are not applicable.  
+If you will insert a JSON object which has additional fields versus schema, those fields will be saved as schemaless fields. For those fields, validation rules and default values are not applicable.  
 :::
 
 ## Schemaless:
-To apply the schemaless approach just insert your JSON object into JEXIA without creating any schema fields inside Dataset. Data will be stored automatically with the type provided inside JSON. Please, note that validations and default values do not apply to schemaless data. You can convert from Schemaless to Schema when the design for your project is stabilized. Jexia supports String, Integer, Float, Date, DateTime, Boolean, JSON and UUID as field types.
+To apply the schemaless approach just insert your JSON object into JEXIA without creating any schema fields inside the dataset. The data will be stored automatically with the type provided inside the JSON. Please, note that validations and default values do not apply to schemaless data. You can convert from Schemaless to Schema when the design for your project is stabilized. Jexia supports the following types: String, Integer, Float, Date, DateTime, Boolean, JSON and UUID as field types.
 
 ::: warning
-Please, keep in mind when you convert the field from schemaless to schema data will not be migrated to schema fields. You need to do it on your own and control the quality of data. 
+Please, keep in mind when you convert the field from schemaless to schema, the data will not be migrated to schema fields. You need to do it on your own and control the quality of data. 
 
-If you delete fields from schema data will be deleted as well. It will not be converted back to schemaless.
+If you delete fields from schema, the data will be deleted as well. It will not be converted back to schemaless.
 
-During fetching data next priority applies for fields with the same name: Schema - Schemaless
+During fetching data, the next priority applies for fields with the same name: Schema - Schemaless
 
 In case you have established relation between datasets, you will get next priority for fields with the same name: Schema - Related Schema - Schemaless  
 :::
 
 ## Validation:
 
-Depends on field-type different validation parameters will be available for you. The most validators are available for String type. Such as: Required, UpperCase, LowerCase, Alphanumeric, Numeric, Alpha, Min/ Max length, RegEx.
+Depends on the field-type. The most validators are available for String type. Such as: Required, UpperCase, LowerCase, Alphanumeric, Numeric, Alpha, Min/ Max length, RegEx.
 
 For Float and Integer, there are Required, Min/ Max value validators.
 
-In the future, we plan to add Date range and other validators. 
+In the future, we plan to add Date range and other validators.
 
-You might admit that when you select some validators, another one might be unavailable. It is due to logical exclusion. For example, it is not logical to have Upper and Lower case validators at the same time. To reduce the possibility of human mistakes we decided to prevent selection for some combinations.  
+You might see that when you select some validators that another one, might be unavailable. It is due to logical exclusion. For example, it is not logical to have Upper and Lower case validators at the same time. To reduce the possibility of human mistakes we decided to disable selection for some combinations.
 
 ::: tip
-Please, keep in mind validation is applicable for schema fields only. Jexia applies the same validations for Create and Update actions.
+Please, keep in mind that validation is applicable for schema fields only. Jexia applies the same validations for Create and Update actions.
 :::
 
 ## Default values
-You can set up default values for the field. The value will be validated against type and constraints. 
+You can set up default values for the field. The value will be validated against type and constraints.
 
 ::: warning
-Please, keep in mind that for String type it is not possible to put default value as an empty string '', you can get either some value or **null**
+Please, keep in mind that for a String type it is not possible to put default value as an empty string '', you can get either some value or **null**
 :::
 
 ## Insert record
-To create a record in Jexia Dataset you need to Create action added for your User or API-Key Policy. 
-Below I will show the User approach as it will be a more common use case for record creation.
+To create a record in Jexia's dataset you need to create an action added for your User or API-Key Policy.
+Below you can see the User approach as it will be a more common use case for record creation.
 
 ::: tip
-Please, keep in mind in responds you always get back array of records, even if you insert only 1 record. With this you can apply same approach for data manipulation.  
+Please, keep in mind that responds you get back are always an array of records, even if you insert only 1 record. With this you can apply same approach for data manipulation. 
 :::
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
@@ -147,12 +147,12 @@ As a result, you will get the next array of objects:
 }]
 ```
 ## Read records
-To get your data you need to have Read action available for you for particular resource. You can apply different filters to get specific data. In example I will show example with API-Key usage as the most common approach.
+To get your data you need to have Read action available for you for particular resource. You can apply different filters to get specific data. In the follwing example you can see an  API-Key usage as the most common approach.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
 
-As soon as JS SDK built on top of RxJS you can use the power of this library and re-use all available methods from here.  
+As soon as the JS SDK built on top of RxJS is loaded you can use the power of this library and re-use all available methods from here.  
 
 ``` js
 // Jexia client
@@ -244,7 +244,7 @@ Array comparators|“in”, “not in”|Array of allowed values (matching field
 Pattern comparator|“like”|string value|textual
 Regex comparator|“regexp”|string value|textual
 
-You can use next operator to make advanced requests:
+You can use the following operators to make advanced requests:
 * "and" 
 * "&&" 
 * "or" 
@@ -278,8 +278,8 @@ As a result, you will get the next the array of objects:
 ```
 
 ## Delete a record
-To delete a record you need to have Delete action available in policy for this resource. 
-I will show examples with Project User usage as it will be common usage. 
+To delete a record you need to have Delete action available in the policy for this resource. 
+Some examples with Project User usage can be seen below. 
 
 When you run Delete, you will get back an array of affected records so you can sync changes with front end.  
 
@@ -344,13 +344,13 @@ As a result, you will get the next array of objects:
 ```
 ## Update records
 
-To update record you need to have Update action available for you for a particular resource. You can set up it in Policy area. 
-I will show examples with Project User usage as it will be common usage. 
+To update a record you need to have Update action available for you for a particular resource. You can set up it in the Policy area.
+Some examples with Project User usage can be seen below.
 
-When you run Update action you will get back an array of affected records so you can sync changes with front end as well.  
+When you run Update action you will get back an array of affected records, so you can sync changes with front end as well.
 
 ::: tip
-You can put id into update object, Jexia will find and update it automatically. 
+You can put an id into update object, Jexia will find and update it automatically.
 :::
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
@@ -361,7 +361,7 @@ import { jexiaClient, UMSModule, dataOperations } from "jexia-sdk-js/node";
 // to use .where and .outputs
 import { field } from "jexia-sdk-js/node"; 
 
-const ds = dataOperations();
+const ds = dataOperations();                      
 const ums = new UMSModule(); 
 
 jexiaClient().init({
@@ -416,15 +416,15 @@ As a result, you will get the next array of objects:
 ```
 
 ## Related data
-If you created multiple Datasets you can establish relations between them. You can do it under the Relations menu. Currently, Jexia supports **1-1, 1-m, m-1** relation types. 
+If you created multiple datasets you can establish relations between them. You can do it under the Relations menu. Currently, Jexia supports **1-1, 1-m, m-1** relation types.
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/E_wxTnQ3clQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ![Relations](./ds_relation.png)
 
-When do you need this? For example, you can keep users and their TODOs in separate Dataset's. With Jexia you do not need to care about external keys and index optimizations to organize all off this. All will be optimally managed by Jexia. 
+When do you need this? For example, you can keep users and their TODOs in separate datasets. With Jexia you do not need to care about external keys and index optimizations to organize all off this. All will be optimally managed by Jexia.
 
-Another cool thing, as soon as you set up relation, you can insert an object which has a parent - chield data inside and Jexia automatically put data in the proper places so you do not need care about this. For example, I have Dataset: `orders` and Dataset: `items` with 1 to many relations, between them. So I can insert into `orders` next object and data will land in the proper place: 
+Another cool thing, as soon as you set up relation, you can insert an object which has a parent - chield data inside and Jexia automatically put data in the proper places so you do not need care about this. For example, I have dataset: `orders` and dataset: `items` with 1 to many relations, between them. So I can insert into `orders` next object and data will land in the proper place:
 
 ```json
 {
@@ -494,7 +494,7 @@ https://{{projectID}}.app.jexia.com/ds/orders?outputs=["items.qty"]
 If you want to get other related data, you just need to add them to request, Jexia will do matching automatically and send it back in result JSON. Easier than GaphQL, yeh? :)
 
 ::: tip
-Please, keep in mind, currently, it is not possible to make a relation with Dataset itself(for example for multi-level menu). From another side, nobody stops you to store chield in a separate dataset and have 1-m relation between them. 
+Please, keep in mind, currently, it is not possible to make a relation with dataset itself(for example for multi-level menu). From another side, nobody stops you to store chield in a separate dataset and have 1-m relation between them. 
 :::
 
 
@@ -566,7 +566,7 @@ action_range|JSON object|same as Filter parameter range
 </CodeSwitcher>
 
 ## Real-Time notification
-If you want to have a real-time update about changes on the sets, you can use real-time notification which is built-in into Dataset, Fileset and Project Users. This is Pro function and you need to have a subscription for this. 
+If you want to have a real-time update about changes on the sets, you can use real-time notification which is built-in into dataset, fileset and project users. This is a pro function and you need to have a subscription for this. 
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/TR9fcT8gXtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -642,7 +642,7 @@ dataModule.dataset("posts")
 </template>
 <template v-slot:bash>
 
-Optional filtering parameters to specify which records to select. If it is not provided the request is applied on all records.
+Optional filtering parameters to specify which records to select. If it is not provided, the request is applied on all records.
 All filters build with the help of 3 variables: `field`, `comparator`, `value`.
 Multiple queries within a (nested) condition are combined using `operator`.
 
@@ -673,14 +673,14 @@ Array comparators|“in”, “not in”|Array of allowed values (matching field
 Pattern comparator|“like”|string value|textual
 Regex comparator|“regex”|string value|textual
 
-There are next operator available to combine filters: "and", "&&", "or" or "||"
+There following operators are available to combine filters: "and", "&&", "or" or "||"
 
 </template>
 </CodeSwitcher>
 
 
 ## Response fields
-Sometimes you want to show specific fields from record versus all record. With Jexia you can have this. During data fetching, you need to specify what fields to get back. It is applicable to related data as well. 
+Sometimes you want to show specific fields from record versus all record. With Jexia you can have this. During data fetching, you need to specify what fields you want to get back. It is applicable to related data as well. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -719,7 +719,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 
 
 ## Limit & Offset
-You can use limit and offset on a Query to paginate your records. They can be used separately or together. Only setting the limit (to a value X) will make the query operate on the first X records. Only setting the offset will make the query operate on the last Y records, starting from the offset value.
+You can use limit and offset on a query to paginate your records. They can be used separately or together. Only setting the limit (to a value X) will make the query operate on the first X records. Only setting the offset will make the query operate on the last Y records, starting from the offset value.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>

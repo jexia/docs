@@ -25,5 +25,12 @@ module.exports = {
             "/cli/"   
         ]
     },
-    plugins: [ 'code-switcher', '@vuepress/medium-zoom' ]
+    plugins: [ 'code-switcher', '@vuepress/medium-zoom', 
+          [
+            'vuepress-plugin-google-tag-manager',
+            {
+              'gtm': 'GTM-MNDDVVW' // UA-00000000-0
+            }
+          ]
+    ]
   };
