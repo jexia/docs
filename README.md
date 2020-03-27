@@ -1,6 +1,4 @@
 
-[![Runme](https://runme.io/static/button.svg)](https://runme.io/runme?repo_url=https://github.com/jexia/docs.git&repo_branch=master)
-
 ### As Easy as 1, 2, 3
 
 ```js
