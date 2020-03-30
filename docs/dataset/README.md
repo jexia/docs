@@ -13,7 +13,7 @@ The name of the dataset is used as an endpoint ( For example: `*.app.jexia.com/d
 
 ## Configuration
 
-## Schema:
+## Schema
 
 The next step is to add fields to your datasets. To create a field, click the **Add field** button. In the same window, you can input the different values for name, type, and validation of your field. You can also provide a default value for the field. Field name and validation parameters can be changed in the future via the edit field. However, the field type cannot be changed. If you want to change the type then you can only delete and create the field again. However, by deleting the field you will also lose the data stored in that field. With the Schema approach, you can set specific types for each field: String, Integer, Float, Date, DateTime, Boolean, JSON or UUID. Before a create or update action, the data will be validated against the validators.
 
@@ -23,7 +23,7 @@ The next step is to add fields to your datasets. To create a field, click the **
 If you send a JSON object which has additional fields that are not set within the schema, those fields will be saved as schemaless fields. For those fields, validation rules and default values are not applicable.  
 :::
 
-## Schemaless:
+## Schemaless
 To apply the schemaless approach, just insert your JSON object into a dataset without creating any schema fields for the dataset. The data will be stored automatically with the type provided inside the JSON. Please, note that validations and default values do not apply to schemaless data. You can convert from Schemaless to Schema when the design for your project is stabilized. Jexia supports the following types: String, Integer, Float, Date, DateTime, Boolean, JSON and UUID as field types.
 
 ::: warning
@@ -36,7 +36,7 @@ When fetching data, if a field matches one on the dataset, the schema data will 
 In case you have established relation between datasets, if a field matches one on parent dataset, the schema data will be returned, then the field will be search for in all child schemes. If a field does not match one on any of the related datasets, it will be searched for via a schemaless method. The declared schema field within the parent takes priority over that of both a child schema and schemaless field. However, the declared child schema field takes priority over that of any schemaless field.
 :::
 
-## Validation:
+## Validation
 
 This depends on the field type. The most validators are available for a string type. Such as: Required, UpperCase, LowerCase, Alphanumeric, Numeric, Alpha, Min/ Max length and RegEx pattern matching.
 
