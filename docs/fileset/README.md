@@ -1,42 +1,42 @@
-# FileSets
+# Filesets
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/S4Yz3I3MwGU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-JFS is used for indexing, fetching and manipulating files like any other user data. Fileset is a dataset but provides a way to maintain large data objects like files. At this point, we are working in cooperation with partners (Digital Ocean, AWS S3) so all your files will be saved under your cloud storage. On Jexia's site we will keep only metadata and the URL for the files and you can manipulate the data in the same way as with Dataset.
+JFS is used for indexing, fetching and manipulating files like any other data within your Jexia project. A fileset is a dataset but provides a way to maintain large data objects like files. At this point, we are working in cooperation with partners (Digital Ocean and AWS S3) so all of your files will be saved under your cloud storage. Jexia we will keep only metadata and the URL for the files, allowing you tto manipulate the data in the same way as with dataset.
 
-To work with files, you need to open access to specific fileset via policy.
-Fileset is very similar to Dataset with configuration and usage so you don't need to have a long learning curve to start using it.
+To work with files, you need to allow access to a specific fileset via a policy.
+A fileset is very similar to a dataset with configuration and usage. This means there is a small learning curve to start using it at its full potential.
 
 ::: tip
-Fileset is similar to other modules but can be used independently. It gives you the flexibility to choose what modules to use in your project. The future fileset will have more features related to files operations.
+A fileset is similar to other modules but can be used independently. It gives you the flexibility to choose what modules to use in your project. After future development, filesets will have more features related to files operations.
 :::
 
 
 When uploading or updating a file record, the following things should be kept in mind:
 1. Each fileset contains a set of immutable fields: id, created_at, updated_at, size, type, url and status. These fields are generally used to contain the metadata of the file which is filled internally by our API. It is not possible to change validation, default values of these fields and their values.
 
-2. If a request contains an immutable field, it's value must be it's current value. If this is not the case, it will fail with a bad request (400) error.
+2. If a request contains an immutable field, its value must be its current value. If this is not the case, it will fail with a bad request (400) error.
 
 3. If a request contains an unknown field, it gets added automatically as a schemaless field for this record.
 
 The fileset records contain the metadata of the file. Besides the custom fields there are some predefined ones:
-1. name - Name of the file
-2. size - Size of the file in bytes
-3. type - File type (supported types, note not mime-types and if the type is not found the extension is stored)
-4. url - Public URL to the file
-5. status:
-    * in_progress - Jexia is still processing the file
-    * succeeded - File got uploaded and processed successfully
-    * failed - something went wrong during the upload or processing of the file
+1. **name** - Name of the file.
+2. **size** - Size of the file in bytes.
+3. **type** - File type (there are a few supported types, however if the type is a mime-type, or if the type is not found, then extension is stored).
+4. **url** - Public URL to the file.
+5. **status**:
+    * **in_progress** - Jexia is still processing the file.
+    * **succeeded** - File got uploaded and processed successfully.
+    * **failed** - something went wrong during the upload or processing of the file.
 
-Same as Dataset you can get real-time notifications for fileset. Below you can find the example for this.
+Similarly to a dataset, you can get real-time notifications for a fileset. An example for this is shown below.
 
-## Upload a file
+## Upload a File
 Each request consists of two parts:
 
-1. data record - It can be used to add some metadata of your file. As mentioned above if the data object contains a field, which is not in the schema, it will be added automatically as a schemaless field for this record.
+1. **data record** - It can be used to add some metadata to your file. As mentioned above if the data object contains a field, which is not in the schema, it will be added automatically as a schemaless field for this record.
 
-2. file record - It contains your actual file.
+2. **file record** - It contains the actual file.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -50,9 +50,9 @@ const jfs = fileOperations({
 });
 
 jexiaClient().init({
-  projectID: "your-project-id",
-  key: "your-project-key",
-  secret: "your-project-secret"
+  projectID: "PROJECT_ID",
+  key: "API_KEY",
+  secret: "API_SECRET",
 }, jfs, realTime());
 
 const fileset = jfs.fileset("fileset_name");
@@ -79,50 +79,54 @@ curl
 -X POST "https://<project-id>.app.jexia.com/fs/<fileset-name>"
 ```
 ::: warning
-Only one file can be uploaded per request for now. If there are multiple files in the body, only the first one will be processed and the rest will be ignored.
+Only one file can be uploaded per request. In the future we hope to increase this. If there are multiple files in the body, only the first one will be processed and the rest will be ignored.
 :::
 
 </template>
 </CodeSwitcher>
 
-As a result, you will get next JSON
+After execution, you will receive an array similar to the following array of objects:
 ``` json
-    { id: "11a12f17-8367-4114-a588-ae98a6cb3cda",
-      created_at: "2019-05-24T07:17:37.325882Z",
-      updated_at: "2019-05-24T07:18:40.455764Z",
-      name: "logo.png",
-      size: 42341,
-      type: "png",
-      url: "https://...",
-      status: "completed" }
+[{ 
+  "id": "11a12f17-8367-4114-a588-ae98a6cb3cda",
+  "created_at": "2019-05-24T07:17:37.325882Z",
+  "updated_at": "2019-05-24T07:18:40.455764Z",
+  "name": "logo.png",
+  "size": 42341,
+  "type": "png",
+  "url": "https://...",
+  "status": "completed"
+}]
 ```
 
-or another result, in case file is under processing:
+Or, another response if the file is still being processed:
 
 ``` json
-  { id: "11a12f17-8367-4114-a588-ae98a6cb3cda",
-      created_at: "2019-05-24T07:17:37.325882Z",
-      updated_at: "2019-05-24T07:17:37.325882Z",
-      name: null,
-      size: null,
-      type: null,
-      url: null,
-      status: "in_progress" }
+[{ 
+  "id": "11a12f17-8367-4114-a588-ae98a6cb3cda",
+  "created_at": "2019-05-24T07:17:37.325882Z",
+  "updated_at": "2019-05-24T07:17:37.325882Z",
+  "name": null,
+  "size": null,
+  "type": null,
+  "url": null,
+  "status": "in_progress"
+}]
 ```
 
-When you submit a file request you will receive back the request ID along with status. Most of the other metadata will be either empty or null.
+When you submit a file request the response will contain the ID along with the status. In most cases, the other metadata will be either empty or null.
 
-This is because when you submit a request to us, we process the file and based on the size of the file it might take some time to process it. The response will be immediately returned when as soon as processing will be finished. The status at this time will be in progress.
+This is because when you submit a request we process the file immediately and return a response. However, if the file is of a large size, then it might take some time to process it, if this is the case, the status will be `in_progress`.
 
-When the process is finished and the file is uploaded we will send you an event via real-time to notify you of the status change. The final status can be a success or error depending on if the file was uploaded successfully.
+When the process is finished and the file is uploaded we will send you an event via our real-time notifications to notify you of the status change. The final status can be a success or error depending on if the file was uploaded successfully.
 
 ::: tip
-If you do not have real-time available for your project you can do a request to fileset to check metadata.  
+If you do not have real-time available for your project, you can do a request to the fileset and check the metadata.  
 :::
 
-## Fetch file (metadata)
-It's possible to query fileset in the same way as Datasets, except insert query - you need to use upload() instead.
-All fileset records will have fields such as name, size, URL, etc. These fields, as well as any custom fields, can be used for select queries (but you can't update them).
+## Fetch a File (metadata)
+It's possible to query a fileset in the same way as datasets. The only difference is when performing an insert query, you need to use the `upload()` method instead.
+All fileset records will have fields such as name, size, URL, etc. These fields, as well as any custom fields, can be used for select queries. Please keep in mind that these default fields are immutable.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -133,7 +137,7 @@ jfs.fileset("fileset_name")
  .where(field => field("size").isGreaterThan(1024000))  
  .subscribe();  
 
-// array of files that fit to the condition will be returned  
+// Array of files that fit to the condition will be returned  
 // files === [{ name: "file1.jpj", url: "https://..." }, {...}, ...]  
 ```
 </template>
@@ -148,11 +152,11 @@ $ curl -s
 </template>
 </CodeSwitcher>
 
-## Update file (metadata)
-Update a fileset in the same way as a Dataset. 
+## Update a File (metadata)
+Updating a fileset works the same way as a dataset. 
 
 ::: warning
-Updating a fileset record with a new file is not supported. Only the metadata can be changed. If you need to upload new file, please, create a new record. 
+Updating a fileset record with a new file is not supported. Only the metadata can be changed. If you need to upload a new file, please create a new record. 
 :::
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
@@ -180,7 +184,7 @@ $ curl -s
 </CodeSwitcher>
 
 
-## Delete file (metadata)
+## Delete a File (metadata)
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -204,62 +208,70 @@ $ curl -s
 </CodeSwitcher>
 
 ::: warning
-Please, keep in mind while deleting metadata we are not deleting the file itself. It is done for decoupling, managing and storage for files. When you delete metadata Jexia excludes the file from all fetching result but you can access the file itself by the direct link.
+Please, keep in mind when deleting metadata that we are not deleting the file itself. It is done for decoupling, managing and storage for files. When you delete metadata Jexia excludes the file from all fetching results, but you can access the file itself via the direct link.
 :::
 
 ## Setup for AWS S3
-Currently, Jexia supports the connector to AWS S3 bucket. Below you can see the steps that are needed to be done to setup S3.
+Currently, Jexia supports the ability to connect to an AWS S3 bucket. Below you can see the steps for connecting to an S3 bucket.
 
-As soon as you log in to AWS console, go to the S3 service. 
+As soon as you log in to AWS console, go to the **S3 service**.
+
 ![Create bucket](./s3_bucket.png)
 
-Here you need to click the Create bucket button and enter the name for your bucket. 
-![](./s3_createbacket.png)
+Here you need to click the **Create bucket** button and enter the name for your bucket.
 
-In the next, step you can choose to configure options if you wish or leave the default values.
+![Create bucket p2](./s3_createbacket.png)
 
-Then on the Set permissions page, select all points related to ACL and deselect the others.
+In the next step, you can choose to configure options or leave the default values as they are.
+
+Then on the **Set permissions** page, select all points related to ACL and deselect all others.
+
 ![S3 ACL setup](./s3_acl.png)
 
-Make your final review and then create the bucket. As soon as it's done, open the bucket and move it to Permissions -> Bucket Policy. Here you will be able to put a JSON to configure access policy for your bucket. You can find a template for this on our [GitHub page](https://github.com/jexia/aws-info/blob/master/permissions.json)
+Ensure to check your settings, if they're correct, then create the bucket. As soon as this is done, open the bucket and go to **Permissions -> Bucket Policy**. Here you will be able to copy a JSON object configure access policies for your bucket. You can find a template for this on our [GitHub page](https://github.com/jexia/aws-info/blob/master/permissions.json)
 
 ::: warning
-!!!Please, change this row from template with your bucket name:  "Resource": "arn:aws:s3:::bucket-name/*"
+**Please change this row within the template by adding your bucket name, your Jexia integration will not work otherwise:** `"Resource": "arn:aws:s3:::bucket-name/*"`
 :::
 
 ``` json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicAccess",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::bucket-name/*"
-        } 
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicAccess",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::bucket-name/*"
+    } 
+  ]
 }
 ```
+
 ![S3 Permission](./s3_permission.png)
 
-Now we need to create an access key for your bucket. Click on your account, then select My Security Credentials.
+We now need to create an access key for your bucket. Click on **My Account**, then select **My Security Credentials**.
+
 ![S3 Permission](./s3_mysecurity.png)
 
-Go to Access keys row and create a new one.
+Go to **Access keys** and create a new one.
+
 ![S3 Key Generation](./s3_keygen.png)
 
-A pop-up with credentials will appear. Make sure you save these credentials as you will need to use them later for Jexia configuration.
+A pop-up with credentials will appear. Make sure you save these credentials as you will need to use them later to finalise your configuration with Jexia.
 
 ![S3 Key](./s3_keys.png)
 
-Now let's jump to the Jexia admin panel and create a new fileset.
+Now, let's jump to the Jexia dashboard and create a new fileset.
+
 ![New Fileset](./newjfs.png)
 
-In this step, you need to enter your bucket name, the Access Key ID and Secret Access Key that you received from AWS.
+In this step, you need to enter your **bucket name**, the **Access Key ID** and **Secret Access Key** that you received from AWS in the steps previous.
+
 ![New Fileset](./jfs2.png)
 
-During creation, we will try to load an empty file to your bucket and then try to read it back. If all goes well, the new fileset will be created. In case of any error, the fileset will be created with an error sign. If that happens, you will need to double-check all steps described in this document.
+During creation, we will try to load an empty file to your bucket and then try to read it back. If all goes well, the new fileset will be created. In case of an error, the fileset will be created with an error sign. If this happens, you will need to double-check all steps described in this document.
 
 That's all, happy coding!
 
