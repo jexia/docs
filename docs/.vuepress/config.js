@@ -5,7 +5,7 @@ module.exports = {
     dest:"./dist",
     description: "Make development easier",
     themeConfig: {
-        logo: '/logo.jpg',
+        logo: '/logo-decorated.svg',
         smoothScroll: true,
         displayAllHeaders: false,
         nav: [
