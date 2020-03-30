@@ -44,10 +44,10 @@ jexiaClient().init({
 dataModule.dataset("clients")
   .select()
   .subscribe(records => { 
-     // You will always get an array of created records, including their 
-     // generated IDs (even when inserting a single record) 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
   }, 
   error => { 
-     // If something goes wrong, the error information is accessible here 
+    // If something goes wrong, the error information is accessible here 
 });
   ```
