@@ -1,18 +1,14 @@
-# Project Users (UMS)
-The Project Users or User Management System is the central hub of all user-related aspects of an application. It manages and controls users like signing up and sign-in users, manage passwords, user groups, etc. 
+# <pro/> Project Users (UMS)
+The **Project Users** or **User Management System** is the central hub of all user-related aspects of an application. It manages and controls users like signing up and sign-in, managing passwords, user groups, etc. 
 
-::: tip
-Jexia User Management System is only available for projects with a professional subscription.
-:::
-
-UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources, you need to use policy where Project Users become a subject. 
+UMS allows you to organize the sign-in process for your application without any development. To grant specific access to resources, you need to use policies where **Project Users** is the subject. 
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/ZjffXZDuoGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
 
-## Sign up user
-UMS is using email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place(user name, department, age, etc). As for now, all fields are stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 
+## Sign-up a User
+UMS uses an email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place (username, department and age etc). As for now, all fields are stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 
 
-Below you can find an example of how to make sign-up for a new user. 
+Below you can find an example of how to sign-up a new user. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -22,7 +18,7 @@ import { jexiaClient, UMSModule } from "jexia-sdk-js";
 
 const ums = new UMSModule();   
 jexiaClient().init({    
-  projectID: "your-project-id"
+  projectID: "PROJECT_ID"
 }, ums); 
 
 const user = await ums.signUp({    
@@ -51,7 +47,7 @@ curl -X POST -d '{
 }' "https://$PROJECT_ID.app.jexia.com/ums/signup" | jq .
 ```
 
-Below you can find possible errors:
+Below you can find possible errors that may be returned:
 
 |Code | Description|
 |-----|------------|
@@ -63,25 +59,25 @@ Below you can find possible errors:
 </template>
 </CodeSwitcher>
 
-As respond you will get next JSON object:
+After execution, you will receive an array similar to the following object:
 ``` json
 {  
- id: "005c8679-3fad-46fd-a93f-9484ea8ff738",
- email: "user@company.com", 
- active: true,
- age: 25,
- address: { 
-      city: "Apeldoorn",
-      country: "NL"
+ "id": "005c8679-3fad-46fd-a93f-9484ea8ff738",
+ "email": "user@company.com", 
+ "active": true,
+ "age": 25,
+ "address": { 
+      "city": "Apeldoorn",
+      "country": "NL"
  }, 
- created_at: "2017-12-31T23:59:59.123456Z", 
- updated_at: "2017-12-31T23:59:59.123456Z"
+ "created_at": "2017-12-31T23:59:59.123456Z", 
+ "updated_at": "2017-12-31T23:59:59.123456Z"
 }
 
 ```
 
-## Sign In user
-UMS is using email and password as user credentials. The user account should exist in a project.
+## Sign-in a User
+UMS uses an email and password as user credentials.  The user account should already exist in your project to successfully sign them in.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -91,7 +87,7 @@ import { jexiaClient, UMSModule } from "jexia-sdk-js";
 
 const ums = new UMSModule();   
 jexiaClient().init({    
-  projectID: "your-project-id",    
+  projectID: "PROJECT_ID",    
 }, ums); 
 
 const user = await ums.signIn({    
@@ -101,15 +97,15 @@ const user = await ums.signIn({
   alias: 'Elon Musk'  
 });  
 
-dom.dataset('rockets', 'Elon Mask').select();  
+dom.dataset('rockets', 'Elon Musk').select();  
 dom.dataset('rockets').select();  
 ```
 Additional optional options:
-* default - if true, this user account will be used for all further data operations by default
-* alias - account alias. You can use it to clarify which account is going to be used to perform data operation
+* **default** - if true, this user account will be used for all further data operations by default.
+* **alias** - account alias, you can use it to clarify which account is going to be used to perform data operation.
 
 ::: tip
-With the JS SDK there is a possibility to do sign in with many users and run requests with different users. For this, you need to use an alias. If you did not specify under which user to run query, the SDK will use user with **default:true**.   
+Within Jexia's SDKs there is a possibility to sign-in with many users and run requests with different users. For this, you need to use an alias. If you did not specify under which user to run a query, the SDK will use user with the value **default:true**.   
 :::
 
 </template>
@@ -126,8 +122,8 @@ export UMS_TOKEN=`curl -X POST -d '{
 </template>
 </CodeSwitcher>
 
-## Fetch a user
-To fetch an user you need to run the next methods:
+## Fetch a User
+To fetch an user you can look at the following methods:
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -151,11 +147,12 @@ curl
 </CodeSwitcher>
 
  
-## Delete user
-To be able to delete the user, you need to provide a password. This is needed for security reasons.
-You can do user management via CRUD operations. This method is mainly for the current user to delete himself. 
-Will be deprecated in future versions.
-
+## Delete a User
+To be able to delete a user, you need to provide a password. This is needed for security reasons.
+You can do user management via CRUD operations. This method is mainly for the current user to delete themselves.
+::: warning
+This will be deprecated in future versions.
+:::
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
 
@@ -174,10 +171,10 @@ curl
 </template>
 </CodeSwitcher>
 
-## Change password
-There are two ways to change the password for the user by using his old password or by using automation.
+## Change Password
+There are two ways to change the password for a user by using their old password or by using automation.
 
-Using his old password:
+### Using Their Password
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -200,7 +197,8 @@ curl
 </template>
 </CodeSwitcher>
 
-Using Automation module. You need to set up automation which will catch `UMS: password reset request`. Then, when you initiate a reset password, the user will get an email with a templated message (see Automation). Inside you should create a link on a page with new password entry form. From this page you can make a call `resetPassword` with a token from URL, so Jexia will apply changes for a new password.     
+### Using the Automation Module
+You need to set up automation which will catch the `UMS: password reset request` event. Then, when you initiate a reset password, the user will get an email with a pre-made template message ([see Automation](/automation)). Inside you should create a link to a page with a new password entry form. From this page you can make a call `resetPassword` with a token from URL, thjs will allow Jexia to handle the request and apply changes to the new user to enable a new password.     
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -237,24 +235,24 @@ curl
 ## Users CRUD
 It is also possible to use CRUD methods. 
 
-They have the same syntax and return values as corresponding data operations methods.
-For this you need to put in policy setup: 
-* subject:AllUsers 
-* resource:AllUsers
+They have the same syntax and return values as corresponding data operation methods.
+For this you need to create a policy with the following values: 
+* **Subject**: All Users 
+* **Resource**: All Users
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
-// select all active users  
+// Select all active users  
 ums.select()  
  .where(field => field("active").isEqualTo(true))  
  .subscribe();  
-// suspend Elon! 
+// Suspend Elon! 
 ums.update({ active: false })  
  .where(field => field("email").isEqualTo("Elon@tesla.com"))  
  .subscribe();  
-// delete all suspended users  
+// Delete all suspended users  
 ums.delete()  
  .where(field => field("active").isEqualTo(false))  
  .subscribe(); 
