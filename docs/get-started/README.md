@@ -28,14 +28,14 @@ You can have maximum **3** projects with the free plan after you need to upgrade
 1. **Fileset** - is used to manage files for your application. For example avatars, blog images, product images, pdf documents and others.
 1. **Relations** - provide an easy way to establish data relations between Dataset-Fileset-Project Users. It allows you to get related data within one request. All connections and optimizations are managed by Jexia you do not need to care about this.    
 1. **RTC Channels** - is used to organize **Pub/Sub** solutions such as chats, online games and others. As well this module is adding real-time notification functionality for Dataset, Fileset and Project Users modules.
-1. **Project Users** - is used to manage users for your application. The module has some specific functions, like **change password**, **sing up**, **sign in** as well as supporting standard CRUD approach. You can choose any approach.
+1. **Project Users** - is used to manage users for your application. The module has some specific functions, like **change password**, **sign up**, **sign in** as well as supporting standard CRUD approach. You can choose any approach.
 1. **Automation** - this module allows you to set up actions that will run based on some event.
 
 ## Access control
 1. **API-Keys** - module for API-Keys generations. You can make keys for public data, private data, partners, etc. By default ,all data is closed for the public. Authorization is managed via Policy.
 1. **Policy** - authorization access to resources in your application. To create the policy you need to have at least one Project User or API-Key.
 
-## Create DataSet
+## Create Dataset
 Let's create Dataset to have some cloud storage for our data.
 <iframe width="700" height="350" src="https://www.youtube.com/embed/3Dt79oYyAsU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -97,7 +97,7 @@ Below you can see an example with all modules imported into the project. This is
 ``` js
 // Jexia client
 import { jexiaClient } from "jexia-sdk-js/node";
-//DataSet operation
+//Dataset operation
 import { dataOperations } from "jexia-sdk-js/node";
 // FileSet operations
 import { fileOperations } from "jexia-sdk-js/node";
