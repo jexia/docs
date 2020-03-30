@@ -15,7 +15,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vuepress dev docs",
-    "start": "http-server ./dist -p 8080",
+    "start": "http-server ./dist -p 80",
     "build": "vuepress build docs"
   },
   "repository": {
