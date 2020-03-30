@@ -184,6 +184,10 @@ Please, be aware. All data will be deleted and we will not be able to restore it
 
 ![Delete project](./delete_prj.png)
 
+## Collaboration 
+With collaboration, you can share work with your team-mate. You can invite them to make a setup, do a deployment and other administration work. It can speed up the development process and decrease the overall delivery time. 
+Currently, you can invite Jexia users only.   
+
 ## Examples & Open-source
 There are many examples you can find in our [GitHub repo](https://github.com/jexia) as well as some part of our platform which was open-sourced.
 
