@@ -15,7 +15,7 @@ jexiaClient().init({
   secret: "API_SECRET",
 },dataModule);
 
-// Now you can run CRUD operations for DataSet: clients
+// Now you can run CRUD operations for Dataset: clients
 dataModule.dataset("clients")
   .select()
   .subscribe(records => { 
