@@ -63,7 +63,7 @@ selectQuery.subscribe(records => {
 <template v-slot:bash>
 
 ```bash
-# env variables to be set
+# Environment variables to be set
 export PROJECT_ID=<project_id>
 export API_KEY=<key_here>
 export API_SECRET=<secret_here>
