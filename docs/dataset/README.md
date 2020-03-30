@@ -132,7 +132,7 @@ curl -H "Authorization: Bearer $UMS_TOKEN" -X POST -d '[{
 </template>
 </CodeSwitcher>
 
-Once you have made a call, you will get a similar array of objects:
+After execution, you will receive an array similar to the following array of objects:
 ```JSON
 [{
     "id": "e0e17683-f494-4f33-8343-ffed792b324e",
