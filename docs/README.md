@@ -15,7 +15,7 @@ features:
   - title: High Performance
     details: No need to keep on eye on performance and security. We will do it for you!
   
-  - title: SDK's
+  - title: SDKs
     details: Our JS SDK and PySDK will help you to integrate your applications with Jexia faster. 
   
   - title: App Hosting
