@@ -38,18 +38,13 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
-}, ds, jfs, ums, rtc);
+}, ds);
 
-// Now you can run any CRUD operations for your Datasets
+// Now you can run the read operation for your Datasets
 const orders = dataModule.dataset("orders");
 const selectQuery = orders
   .select()
   .where(field => field("dislike").isEqualTo(true));
-
-// Other examples
-const insertQuery = orders.insert([order1, order2]);  
-const updateQuery = orders.update([{ title: "Updated title" }]);  
-const deleteQuery = orders.delete();  
 
 selectQuery.subscribe(records => {
     // You will always get an array of created records, including their 

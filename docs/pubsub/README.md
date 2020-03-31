@@ -3,7 +3,7 @@ Nowadays many applications use real-time communication. To make this happen, you
 
 With Jexia this is already setup. You can use our Pub/Sub service and enjoy real-time communication between clients. Furthermore, in 1-click you can activate log storage for your channels and retrieve logs when you need it.
 
-This service is commonly used for any kind of chat and messenger. IT can also be used to synchronize work for IoT devices, robots, drones and cars etc. 
+This service is commonly used for any kind of chat and messenger. It can also be used to synchronize work for IoT devices, robots, drones and cars etc. 
 
 This service is less integrated with other modules such as Dataset. But they still use real-time modules for communication and the same syntax for log management in persistent storage. You can grant access via **Policy** like you would other services, but you will not be able to set up relations. 
 
