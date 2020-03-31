@@ -64,7 +64,7 @@ channel.publish("Some text string here...");
 
 // Get channel Log
 channel
-.getLog(field => field("sender_id").isEqualTo(user.id))  // Same filters as in DataSet
+.getLog(field => field("sender_id").isEqualTo(user.id))  // Same filters as in Dataset
 .subscribe(
   messages => {
     console.log(messages); 
