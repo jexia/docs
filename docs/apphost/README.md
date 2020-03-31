@@ -4,14 +4,14 @@ Jexia's Application Hosting can be used to organize your static files. Currently
 
 ## Common requirements: 
 
-1. GitHub repo (open or private)
+1. GitHub repository (open or private)
 2. Project in Jexia
 3. The application must use port `80`
 4. The application must listen on `0.0.0.0`
 
 ## Build and run requirements:
 ### Dockerfile:
-If there is a Dockerfile inside your repo it will be used for the building and deployment process.
+If there is a Dockerfile inside your repository it will be used for the building and deployment process.
 
 ### NodeJS
 1. Your application must support NodeJS version 12 and the corresponding NPM version
@@ -28,13 +28,13 @@ If there is a Dockerfile inside your repo it will be used for the building and d
 
 ## How does it work? 
 
-When you initiate your application via Jexia's Application Hosting, Jexia will clone your GitHub repo into a secure environment. In this environment Jexia will run `npm install` and `npm run build`. As soon as it is finished, the repo will be deployed into the cloud environment and a URL will be generated for your application. When the deployment has been completed, Jexia will run the `npm run start` command from your `package.json` file. As a last step, the cloned repo will be deleted from the secure environment.
+When you initiate your application via Jexia's Application Hosting, Jexia will clone your GitHub repository into a secure environment. In this environment Jexia will run `npm install` and `npm run build`. As soon as it is finished, the repository will be deployed into the cloud environment and a URL will be generated for your application. When the deployment has been completed, Jexia will run the `npm run start` command from your `package.json` file. As a last step, the cloned repository will be deleted from the secure environment.
 
 ## How to deploy?
 
-### Step 1: Check if your GitHub repo has package.json file
+### Step 1: Check if your GitHub repository has package.json file
 
-First of all, you need to be sure that your repo contains a `package.json` file. Inside this file it must contain the `build` and `start` commands. See the example below:
+First of all, you need to be sure that your repository contains a `package.json` file. Inside this file it must contain the `build` and `start` commands. See the example below:
 
 ```json
 {
@@ -66,7 +66,7 @@ If you need to run some Pre- / Post-install scripts you need to combine these un
 As you can see in our example, `"start": "HTTP-server ./dist -p 80"`, we use a HTTP server to organize and deploy static files. Here we listen on port `80` and use the `/dist` folder, which contains our ready-built project. More options can be found on the **HTTP server** package page. Feel free to implement any approach that suits you, but remember that port `80` needs to be used. 
 
 ::: tip
-If you have a docker file present in your repo, we will use it to build & deploy the application. 
+If you have a docker file present in your repository, we will use it to build & deploy the application. 
 :::
 
 ### Step 2: Organize your projects at Jexia
@@ -77,17 +77,17 @@ Go to the Application Hosting menu, then click on **Setup Application**.
 
 ![No Application](./step_1.png)
 
-The next page is related to the GitHub repo setup. You can get it by clicking the **Clone or Download** button on the GitHub webpage. It should look like: **https://github.com/jexia/test-node-app.git**
+The next page is related to the GitHub repository setup. You can get it by clicking the **Clone or Download** button on the GitHub webpage. It should look like: **https://github.com/jexia/test-node-app.git**
 
 ![No Application](./step_2.png)
 
-Jexia will check if it can read the repo and will show the repo name on the page. Under the name, you will see the generated URL for your application. You can use this after your project has been deployed.
+Jexia will check if it can read the repository and will show the repository name on the page. Under the name, you will see the generated URL for your application. You can use this after your project has been deployed.
 
 ![No Application](./step_3.png)
 
 Under the **General** tab, you can add environment variables. Inside your NodeJS application, those variables will be available via `process.env.<env name>`.
 
-Under the **Settings** tab, you can adjust your GitHub repo.
+Under the **Settings** tab, you can adjust your GitHub repository.
 
 ![No Application](./step_4.png)
 
@@ -100,14 +100,14 @@ It is not possible to use the `process.env.*` approach with Angular, VueJS and R
 
 ![No Application](./step_5.png)
 
-After clicking **Done**, the deployment process will start. You will be able to see an indication to whether the deployment process has completed or not. Depending on the size of the repo, the deployment process can take around 3 to 7 minutes. 
+After clicking **Done**, the deployment process will start. You will be able to see an indication to whether the deployment process has completed or not. Depending on the size of the repository, the deployment process can take around 3 to 7 minutes. 
 
 ![No Application](./step_6.png)
 
-There are two states for deployment: Done (green dot) or Fail (red dot). In the case of a red dot, confirm you can build your repo locally and check if you have a `package.json` with the `build` and `start` commands. If these are correct and present, try to re-deploy by clicking the **Deploy** button again. If you need further support, feel free to contact our support team.
+There are two states for deployment: Done (green dot) or Fail (red dot). In the case of a red dot, confirm you can build your repository locally and check if you have a `package.json` with the `build` and `start` commands. If these are correct and present, try to re-deploy by clicking the **Deploy** button again. If you need further support, feel free to contact our support team.
 
 ::: tip
-Failures can also be caused if you try to deploy a private repo on a free project plan. This will result in the error message: "Could not clone repo".
+Failures can also be caused if you try to deploy a private repository on a free project plan. This will result in the error message: "Could not clone repository".
 :::
 
 If everything completes successfully, you will see a green dot:
@@ -118,7 +118,7 @@ As soon as the deployment is done your application will be accessible via a URL 
 
 ## How to update the application once deployed?
 
-There are two possibilities to make a re-deployment. Jexia is supports deployment without rebuilding code, this is useful when you need to update environment variables only. If you require a full re-build, the repo code will be downloaded from GitHub and the deploy process will begin again, with all previous environment variables.
+There are two possibilities to make a re-deployment. Jexia is supports deployment without rebuilding code, this is useful when you need to update environment variables only. If you require a full re-build, the repository code will be downloaded from GitHub and the deploy process will begin again, with all previous environment variables.
 
 To initiate a re-deployment, you need to click the **Redeploy** button (top right), which will appear as soon as the initial deployment has finished, instead of the **Deploy** button. 
 
@@ -128,11 +128,11 @@ After this, you will see a window with deployment options, this is where you can
 
 ## For private GitHub projects.
 
-The flow for private repos is almost the same. The only difference is that you need to allow Jexia to access your repo.
+The flow for private repositories is almost the same. The only difference is that you need to allow Jexia to access your repository.
 
 ![No Application](./step_8.png)
 
-You will see another button that will allow you to authorize Jexia to clone your private repo. The rest of the process is the same as previously described. 
+You will see another button that will allow you to authorize Jexia to clone your private repository. The rest of the process is the same as previously described. 
 
 ## Custom domain
 
@@ -149,9 +149,9 @@ It might take some time for your application to be be accessible via the new dom
 ![No Application](./step_1.png)
 
 ## Delete application
-To delete the application you can go to the **Settings** tab and then click the **Delete** button. You will need to enter the repo name to confirm the deleting operation. Please note, you are not able to delete the project until you have an application running. 
+To delete the application you can go to the **Settings** tab and then click the **Delete** button. You will need to enter the repository name to confirm the deleting operation. Please note, you are not able to delete the project until you have an application running. 
 
-In our example, the repo name will be: `jexia-vue-todo`
+In our example, the repository name will be: `jexia-vue-todo`
 
 ![Delete Application](./step_1.png)
 
