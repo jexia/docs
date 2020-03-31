@@ -1,4 +1,4 @@
-# Application Hosting
+# <pro/> Application Hosting
 
 Jexia's Application Hosting can be used to organize your static files. Currently, you can host your Node JS application, your Docker images or simply static files. You can fetch an application directly from a git repository and deploy it on our cloud. Application Hosting can be used for example with React, VueJs, and Angular as frameworks. The only requirement is that the project listens on port `80`, please see the examples below.
 
@@ -22,13 +22,13 @@ If there is a Dockerfile inside your repository it will be used for the building
 
 1. Hosting for your React, VueJS, Angular, NodeJS, Python, Go, PHP and many more projects built in a variety of languages 
 2. A subdomain provided by Jexia, such as `*.jexia.app`
-3. THe possibility of adding your custom domain
+3. The possibility of adding your custom domain
 4. SSL certificates for your subdomain
 5. More free time to develop without spending time on issues regarding your deployment, setup, control and monitor processes
 
 ## How does it work? 
 
-When you initiate your application via Jexia's Application Hosting, Jexia will clone your GitHub repository into a secure environment. In this environment Jexia will run `npm install` and `npm run build`. As soon as it is finished, the repository will be deployed into the cloud environment and a URL will be generated for your application. When the deployment has been completed, Jexia will run the `npm run start` command from your `package.json` file. As a last step, the cloned repository will be deleted from the secure environment.
+When you initiate your application via Jexia's Application Hosting, Jexia will clone your GitHub repository into a secure environment. In this environment, Jexia will run `npm install` and `npm run build`. As soon as it is finished, the repository will be deployed into the cloud environment and a URL will be generated for your application. When the deployment has been completed, Jexia will run the `npm run start` command from your `package.json` file. As a last step, the cloned repository will be deleted from the secure environment.
 
 ## How to deploy?
 
@@ -118,7 +118,7 @@ As soon as the deployment is done your application will be accessible via a URL 
 
 ## How to update the application once deployed?
 
-There are two possibilities to make a re-deployment. Jexia is supports deployment without rebuilding code, this is useful when you need to update environment variables only. If you require a full re-build, the repository code will be downloaded from GitHub and the deploy process will begin again, with all previous environment variables.
+There are two possibilities to make a re-deployment. Jexia is supporting deployment without rebuilding code, this is useful when you need to update environment variables only. If you require a full re-build, the repository code will be downloaded from GitHub and the deploy process will begin again, with all previous environment variables.
 
 To initiate a re-deployment, you need to click the **Redeploy** button (top right), which will appear as soon as the initial deployment has finished, instead of the **Deploy** button. 
 
@@ -136,7 +136,7 @@ You will see another button that will allow you to authorize Jexia to clone your
 
 ## Custom domain
 
-There is a possibility to add your own domain to your application.
+There is a possibility to add your domain to your application.
 
 For this you need to have:
 1. Successfully deployed application 
@@ -144,7 +144,7 @@ For this you need to have:
 3. Only one `A` record per domain should exist
 4. After the domain has been added to your Jexia configuration, you would need to redeploy your application. You can re-deploy without the rebuild option (see above) 
 
-It might take some time for your application to be be accessible via the new domain as your DNS needs to update its records.
+It might take some time for your application to be accessible via the new domain as your DNS needs to update its records.
 
 ![No Application](./step_1.png)
 
