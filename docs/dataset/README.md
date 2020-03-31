@@ -1,64 +1,67 @@
 # Datasets
-Dataset is used to store your data in the cloud. You can interact with your data via REST API and our SDKs. All data is protected with policy authorization. You can establish a relation between different datasets or other parts of the platform. You do not need to take care of indexes, foreign keys, scaling, backups, SQL injections and other things related to database management. Each project has it's own instance of dataset and other projects can't impact the stability and security of your project.   
+A Dataset is used to store your data in the cloud. You can interact with your data via a REST API and our SDKs. All data is protected with policy authorization. You can establish a relation between different datasets or other parts of the platform. You do not need to worry about database performance and security, such as: indexes, foreign keys, scaling, backups, SQL injections and other things related to database management, as we do all this for you to help speedup development. Each project has it's own instance of Dataset and other projects can't impact the stability and security of your project.
 
-Datasets have built-in support for validation, schema support, schemaless support and default values for fields.  
+Datasets have built-in support for validation, schema & schemaless data and default values for fields. 
 
-To create a dataset, click on the "Go to project" button and then on the next screen "Create dataset":
+To create a dataset, click on the **Go to project** button and then on the next screen **Create dataset**:
+
 ![Create Dataset](./create_ds.png)
 
-The name of the dataset is used as an endpoint (`*.app.jexia.com/ds/dataset_name`) to allow you to communicate with the JEXIA REST API. The name of your dataset can contain only Latin characters and digits. The name of the dataset has to start with a character.
+The name of the dataset is used as an endpoint ( For example: `*.app.jexia.com/ds/dataset_name`) to allow you to communicate with the automatically generated REST API for your project. There are a few rules regarding dataset names, these are:
+- The name of your dataset can contain only Latin characters and digits.
+- The name of the dataset has to start with a character.
 
 ## Configuration
 
-## Schema:
+## Schema
 
-The next step is to add fields to your datasets. To create a field, click the "Add field" button. In the same window, you can select name, type, and validation for your field. You can also provide a default value for the field. Field name and validation parameters can be changed in the future via the edit field but not the field type. If you want to change the type then you can only delete and create the field again. However, by deleting the field you will also lose the data stored in that field. With the Schema approach in responding, you will get the field in specific types: String, Integer, Float, Date, DateTime, Boolean, JSON or UUID. Before insert or update, the data will be validated against the validators.
+The next step is to add fields to your datasets. To create a field, click the **Add field** button. In the same window, you can input the different values for name, type, and validation of your field. You can also provide a default value for the field. Field name and validation parameters can be changed in the future via the edit field. However, the field type cannot be changed. If you want to change the type then you can only delete and create the field again. However, by deleting the field you will also lose the data stored in that field. With the Schema approach, you can set specific types for each field: String, Integer, Float, Date, DateTime, Boolean, JSON or UUID. Before a create or update action, the data will be validated against the validators.
+
 ![Create Field](./create_field.png)
 
 ::: tip
-If you will insert a JSON object which has additional fields versus schema, those fields will be saved as schemaless fields. For those fields, validation rules and default values are not applicable.  
+If you send a JSON object which has additional fields that are not set within the schema, those fields will be saved as schemaless fields. For those fields, validation rules and default values are not applicable.  
 :::
 
-## Schemaless:
-To apply the schemaless approach just insert your JSON object into JEXIA without creating any schema fields inside the dataset. The data will be stored automatically with the type provided inside the JSON. Please, note that validations and default values do not apply to schemaless data. You can convert from Schemaless to Schema when the design for your project is stabilized. Jexia supports the following types: String, Integer, Float, Date, DateTime, Boolean, JSON and UUID as field types.
+## Schemaless
+To apply the schemaless approach, just insert your JSON object into a dataset without creating any schema fields for the dataset. The data will be stored automatically with the type provided inside the JSON. Please, note that validations and default values do not apply to schemaless data. You can convert from Schemaless to Schema when the design for your project is stabilized. Jexia supports the following types: String, Integer, Float, Date, DateTime, Boolean, JSON and UUID as field types.
 
 ::: warning
-Please, keep in mind when you convert the field from schemaless to schema, the data will not be migrated to schema fields. You need to do it on your own and control the quality of data. 
+Please, keep in mind when you convert the field from schemaless to schema, the data will not be migrated to the appropriate schema field. You need to do it on your own and control the quality of data being inputted. 
 
-If you delete fields from schema, the data will be deleted as well. It will not be converted back to schemaless.
+If you delete fields from a schema, the data related to that field will be deleted as well. It will not be converted back to schemaless.
 
-During fetching data, the next priority applies for fields with the same name: Schema - Schemaless
+When fetching data, if a field matches one on the dataset, the schema data will be returned. However, if a field does not match one on the dataset, it will be searched for via a schemaless method. The declared schema field takes priority over that of a schemaless field.
 
-In case you have established relation between datasets, you will get next priority for fields with the same name: Schema - Related Schema - Schemaless  
+In case you have established relation between datasets, if a field matches one on parent dataset, the schema data will be returned, then the field will be search for in all child schemes. If a field does not match one on any of the related datasets, it will be searched for via a schemaless method. The declared schema field within the parent takes priority over that of both a child schema and schemaless field. However, the declared child schema field takes priority over that of any schemaless field.
 :::
 
-## Validation:
+## Validation
 
-Depends on the field-type. The most validators are available for String type. Such as: Required, UpperCase, LowerCase, Alphanumeric, Numeric, Alpha, Min/ Max length, RegEx.
+This depends on the field type. The most validators are available for a string type. Such as: Required, UpperCase, LowerCase, Alphanumeric, Numeric, Alpha, Min/ Max length and RegEx pattern matching.
 
-For Float and Integer, there are Required, Min/ Max value validators.
+For Float and Integer, there are only: Required and Min/ Max value validators.
 
 In the future, we plan to add Date range and other validators.
 
-You might see that when you select some validators that another one, might be unavailable. It is due to logical exclusion. For example, it is not logical to have Upper and Lower case validators at the same time. To reduce the possibility of human mistakes we decided to disable selection for some combinations.
+You might see that when you select some validators, others may become unavailable. This is due to logical exclusion. For example, it is not logical to have Upper and Lower case validators at the same time. To reduce the possibility of human mistakes we decided to disable selection for some combinations.
 
 ::: tip
-Please, keep in mind that validation is applicable for schema fields only. Jexia applies the same validations for Create and Update actions.
+Please keep in mind that validation is applicable for schema fields only. Jexia applies the same validation rules for every Create and Update action.
 :::
 
 ## Default values
-You can set up default values for the field. The value will be validated against type and constraints.
+You can set up default values for each field. This value will be validated against type and validation constraints.
 
 ::: warning
-Please, keep in mind that for a String type it is not possible to put default value as an empty string '', you can get either some value or **null**
+Please keep in mind that for a string type it is not possible to set a default value as an empty string `''`, you can get either set a value or input `null` which will be passed as a `null` type.
 :::
 
-## Insert record
-To create a record in Jexia's dataset you need to create an action added for your User or API-Key Policy.
-Below you can see the User approach as it will be a more common use case for record creation.
+## Insert a record
+To create a record in Jexia's dataset you need to create an action within either a policy for a User or API key. Below you can see the User approach as it has a wider use case for record creation.
 
 ::: tip
-Please, keep in mind that responds you get back are always an array of records, even if you insert only 1 record. With this you can apply same approach for data manipulation. 
+Please keep in mind that the API always returns an array of records, even if you only insert one record. Because of this, you can apply the same approach for data manipulation. 
 :::
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
@@ -70,7 +73,7 @@ const ds = dataOperations();
 const ums = new UMSModule(); 
 
 jexiaClient().init({
-  projectID: "project_id",
+  projectID: "PROJECT_ID",
 }, ds, ums);
 
 const user = await ums.signIn({    
@@ -90,22 +93,23 @@ let orders = [{
 const orders = dataModule.dataset("orders");
 const insertQuery = orders.insert(orders);  
 insertQuery.subscribe(records => { 
-    // you will always get an array of created records, including their 
-    //generated IDs (even when inserting a single record) 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
   }, 
   error => { 
-     // you can see the error info here, if something goes wrong 
+    // If something goes wrong, the error information is accessible here 
 });
 ```
 </template>
 <template v-slot:bash>
 
 ``` bash
-# env variables to be set
+# Environment variables to be set
 export PROJECT_ID=<project_id>
 export TEST_USER=<user_here>
 export TEST_USER_PSW=<password_here>
-# save UMS token to env in case you use Project Users
+
+# save UMS token to our environment as we need to access Project Users
 export UMS_TOKEN=`curl -X POST -d '{
   "method":"ums",
   "email":"'"$TEST_USER"'",
@@ -128,7 +132,7 @@ curl -H "Authorization: Bearer $UMS_TOKEN" -X POST -d '[{
 </template>
 </CodeSwitcher>
 
-As a result, you will get the next array of objects:
+After execution, you will receive an array similar to the following array of objects:
 ```JSON
 [{
     "id": "e0e17683-f494-4f33-8343-ffed792b324e",
@@ -146,60 +150,73 @@ As a result, you will get the next array of objects:
     "verified":true
 }]
 ```
-## Read records
-To get your data you need to have Read action available for you for particular resource. You can apply different filters to get specific data. In the follwing example you can see an  API-Key usage as the most common approach.
+
+## Read a record
+To fetch your data you need to have the **Read** action selected on a policy which also contains the particular resource you are trying to access. You can apply different filters to get specific data. In the following example you can see an API key usage as the most common approach.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
 
-As soon as the JS SDK built on top of RxJS is loaded you can use the power of this library and re-use all available methods from here.  
+Due to the JS SDK being built on top of RxJS. Once installed, you can use the power of the RxJS library and use all available methods provided by this library.  
 
 ``` js
 // Jexia client
 import { jexiaClient, dataOperations, field } from "jexia-sdk-js/node"; 
-// jexia-sdk-js/browser;
+
 const ds = dataOperations();
 
 jexiaClient().init({
-  projectID: "project_id",
+  projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
 }, ds);
 
 const orders = dataModule.dataset("orders");
 const selectQuery = orders
-      .select()
-      .where(field => field("verified").isEqualTo(true))
-   // .where(field("title").isDifferentFrom("test")) 
-   // .where(field("total").isBetween(1,30))
-   // .where(field("total").isEqualOrGreaterThan(15))
-   // .where(field("total").isEqualOrLessThan(7))
-   // .where(field("total").isEqualTo(100))
-   // .where(field("total").isGreaterThan(57))
-   // .where(field("total").isLessThan(100))
-   // .where(field("id").isInArray(my_val))   // my_val=[uuid1,uuid2];
-   // .where(field("id").isNotInArray(my_val)) // my_val=[uuid1,uuid1];
-   // .where(field("title").isLike("Moby dick"))
-   // .where(field("title").isNotNull())
-   // .where(field("title").isNull())
-   // .where(field("title").satisfiesRegexp('a-z0-9'))   
-      .pipe(
-        // put them into archive!
-        switchMap(records => archive.insert(records)),
-      );  
+  .select()
+  .where(field => field("verified").isEqualTo(true))
+  // .where(field("title").isDifferentFrom("test")) 
+  // .where(field("total").isBetween(1,30))
+  // .where(field("total").isEqualOrGreaterThan(15))
+  // .where(field("total").isEqualOrLessThan(7))
+  // .where(field("total").isEqualTo(100))
+  // .where(field("total").isGreaterThan(57))
+  // .where(field("total").isLessThan(100))
+  // .where(field("id").isInArray(my_val))   // my_val=[uuid1,uuid2];
+  // .where(field("id").isNotInArray(my_val)) // my_val=[uuid1,uuid1];
+  // .where(field("title").isLike("Charlotte's Web"))
+  // .where(field("title").isNotNull())
+  // .where(field("title").isNull())
+  // .where(field("title").satisfiesRegexp('a-z0-9'))   
+  .pipe(
+    // put them into archive!
+    switchMap(records => archive.insert(records)),
+  );  
 selectQuery.subscribe(records => { 
-     // you will always get an array of created records, including their 
-     //generated IDs (even when inserting a single record) 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
   }, 
   error => { 
-     // you can see the error info here, if something goes wrong 
+    // If something goes wrong, the error information is accessible here 
 });
 ```
+
+The following aggregation functions are supported when using one of the Jexia SDKs:
+
+Function|Argument type(s)|Description
+--------|----------------|-----------
+avg()|number|Returns the average value of the field for the selected records
+count()||Returns number of selected records
+max()|number|Returns maximum value of the field for the selected records
+min()|number|Returns minimum value of the field for the selected records
+now()||Returns current time(stamp)
+sum()|number|Returns the total value of the field for the selected records
+
 </template>
 <template v-slot:bash>
 
 ``` bash
-#Select all data
+# Select all data
 curl -H "Authorization: Bearer $UMS_TOKEN" 
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders" | jq .
 
@@ -219,21 +236,21 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
   outputs=\[\"title\",\"verified\"\]&cond=\[\{\"field\":\"total\"\},\">\",10\]" | jq .
 
 # Select special fields + where
-#Find any record that does not have total or total equals 1 or 2:
-#[GET] /ds/orders?cond=[{"field":"total"},"null",true, "or", {"field":"total"},"in",["1","2"]]
+# Find any record that does not have total or total equals 1 or 2:
+# [GET] /ds/orders?cond=[{"field":"total"},"null",true, "or", {"field":"total"},"in",["1","2"]]
 
-#Find any record that has title or its total equals 1 or 2, but the results must be older than one day:
-#[GET] /ds/orders?cond=[[{"field":"title"},"null",false, "or", {"field":"total"},"in",["1","2"]], "and", {"field":"created_at"}, ">", "24h"]
+# Find any record that has title or its total equals 1 or 2, but the results must be older than one day:
+# [GET] /ds/orders?cond=[[{"field":"title"},"null",false, "or", {"field":"total"},"in",["1","2"]], "and", {"field":"created_at"}, ">", "24h"]
 
-#Get any orders where title starts with the letter "A" and total > 21:
-#[GET] /ds/orders?cond=[{"field":"title"},"regexp","^A", "and", {"field":"total"},">",21]
+# Get any orders where title starts with the letter "A" and total > 21:
+# [GET] /ds/orders?cond=[{"field":"title"},"regexp","^A", "and", {"field":"total"},">",21]
 
-#Find a record by nested field where field some.field exists (is not null):
-#[GET] /ds/orders?cond=[{"field":"some.field"},"null", false]
+# Find a record by nested field where field some.field exists (is not null):
+# [GET] /ds/orders?cond=[{"field":"some.field"},"null", false]
  
 ```
 
-You can have the next comparator in `?cond` request:
+You can have any of the following comparators in a request containing `?cond`:
 
 Comparator group|**comparator**|**value**|Applicable field types
 ----------------|------------|-------|----------------------
@@ -244,27 +261,13 @@ Array comparators|“in”, “not in”|Array of allowed values (matching field
 Pattern comparator|“like”|string value|textual
 Regex comparator|“regexp”|string value|textual
 
-You can use the following operators to make advanced requests:
-* "and" 
-* "&&" 
-* "or" 
-* "||"
-
-Next aggregation functions are supported:
-
-Function|Argument type(s)|Description
---------|----------------|-----------
-avg()|number|Returns the average value of the field for the selected records
-count()||Returns number of selected records
-max()|number|Returns maximum value of the field for the selected records
-min()|number|Returns minimum value of the field for the selected records
-now()||Returns current time(stamp)
-sum()|number|Returns the total value of the field for the selected records
+You can use the following operators to make advanced requests: `and`, `&&`, `or` and `||`.
 
 </template>
 </CodeSwitcher>
 
-As a result, you will get the next the array of objects:
+After execution, you will receive an array similar to the following array of objects:
+
 
 ```JSON
 [{
@@ -278,10 +281,10 @@ As a result, you will get the next the array of objects:
 ```
 
 ## Delete a record
-To delete a record you need to have Delete action available in the policy for this resource. 
-Some examples with Project User usage can be seen below. 
+To delete a record you need to have selected the Delete action in the policy for the resource you intend to edit. 
+Some examples can be seen below using the Project User method. 
 
-When you run Delete, you will get back an array of affected records so you can sync changes with front end.  
+When you perform a Delete action, you will get back an array of affected records so you can sync changes with your front-end application.  
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -308,13 +311,12 @@ const deleteQuery = orders
 .delete()
 .where(field => field("verified").isEqualTo(true));  
 
-// Either way, the response will be an array  
 deleteQuery.subscribe(records => { 
-     // you will always get an array of created records, including their 
-     //generated IDs (even when inserting a single record) 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
   }, 
   error => { 
-     // you can see the error info here, if something goes wrong 
+    // If something goes wrong, the error information is accessible here 
 });
 ```
 </template>
@@ -330,7 +332,8 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 </template>
 </CodeSwitcher>
 
-As a result, you will get the next array of objects:
+After execution, you will receive an array similar to the following array of objects:
+
 
 ```JSON
 [{
@@ -342,15 +345,15 @@ As a result, you will get the next array of objects:
     "verified":true
 }]
 ```
-## Update records
+## Update a Record
 
-To update a record you need to have Update action available for you for a particular resource. You can set up it in the Policy area.
-Some examples with Project User usage can be seen below.
+To update a record you need to have selected the Update action in the policy for the resource you intend to edit.
+Some examples can be seen below using the Project User method.
 
-When you run Update action you will get back an array of affected records, so you can sync changes with front end as well.
+When you perform an Update action, you will get back an array of affected records so you can sync changes with your front-end application.  
 
 ::: tip
-You can put an id into update object, Jexia will find and update it automatically.
+You can add an `id` field into the update object, Jexia will find and update it automatically.
 :::
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
@@ -375,15 +378,15 @@ const user = await ums.signIn({
 
 const orders = dataModule.dataset("orders");
 const updateQuery = orders
-                    .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }])
-                    .where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg')));  
-// Either way, the response will be an array  
+  .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }])
+  .where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg')));  
+
 updateQuery.subscribe(records => { 
-     // you will always get an array of created records, including their 
-     //generated IDs (even when inserting a single record) 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
   }, 
   error => { 
-     // you can see the error info here, if something goes wrong 
+    // If something goes wrong, the error information is accessible here 
 });
 ```
 </template>
@@ -402,7 +405,8 @@ curl -H "Authorization: Bearer $UMS_TOKEN" -d '{
 </template>
 </CodeSwitcher>
 
-As a result, you will get the next array of objects:
+After execution, you will receive an array similar to the following array of objects:
+
 
 ```JSON
 [{
@@ -415,16 +419,21 @@ As a result, you will get the next array of objects:
 }]
 ```
 
-## Related data
-If you created multiple datasets you can establish relations between them. You can do it under the Relations menu. Currently, Jexia supports **1-1, 1-m, m-1** relation types.
+## Related Data
+If you created multiple datasets you can establish relations between them. You can do it under the **Relations** section. Currently, Jexia supports relation types of:
+- One to One
+- One to Many
+- Many to One
+- Many to Many
+
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/E_wxTnQ3clQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ![Relations](./ds_relation.png)
 
-When do you need this? For example, you can keep users and their TODOs in separate datasets. With Jexia you do not need to care about external keys and index optimizations to organize all off this. All will be optimally managed by Jexia.
+When do you need this? For example, you can keep users and their TODOs in separate datasets. With Jexia you do not need to worry about external keys and index optimizations to organize all of this, it will be automatically managed by Jexia.
 
-Another cool thing, as soon as you set up relation, you can insert an object which has a parent - chield data inside and Jexia automatically put data in the proper places so you do not need care about this. For example, I have dataset: `orders` and dataset: `items` with 1 to many relations, between them. So I can insert into `orders` next object and data will land in the proper place:
+Another cool thing, as soon as you set up a relation, you can insert an object which has a _parent / child_ relation inside and Jexia will automatically put data in the proper places. For example, I have dataset: `orders` and dataset: `items` with a one to many relation. So I can insert the following object into `orders` and the data will automatically be organized in its proper place:
 
 ```json
 {
@@ -443,7 +452,7 @@ Another cool thing, as soon as you set up relation, you can insert an object whi
     ]
 }
 ```
-During fetching data you can specify if you want to get only parent or parent + chiled data.
+During fetching data you can specify if you want to get only the parent or parent and child data.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -468,38 +477,39 @@ https://{{projectID}}.app.jexia.com/ds/orders?outputs=["items.qty"]
 </template>
 </CodeSwitcher>
 
+After execution, you will receive an array similar to the following array of objects:
+
+
 ```json
-[
-//   {
-//     id: ...
-//     created_at: ...
-//     updated_at: ...
-//     title:"Order1",
-//     total:10,
-//     verified:false,
-//     items: [
-//       {
-//         id: ...
-//         qty: 2
-//       },
-//       {
-//         id: ...
-//         qty:20
-//       }
-//     ]
-//   }
-// ]
+[{
+  "id": "...",
+  "created_at": "...",
+  "updated_at": "...",
+  "title":"Order1",
+  "total":10,
+  "verified":false,
+  "items": [
+    {
+      "id": "...",
+      "qty": 2
+    },
+    {
+      "id": "...",
+      "qty":20
+    }
+  ]
+}]
 ```
 
-If you want to get other related data, you just need to add them to request, Jexia will do matching automatically and send it back in result JSON. Easier than GaphQL, yeh? :)
+If you want to get other related data, you just need to add them to request, Jexia will do matching automatically and send it back in result JSON. Easier than GaphQL, yeh? :D
 
 ::: tip
-Please, keep in mind, currently, it is not possible to make a relation with dataset itself(for example for multi-level menu). From another side, nobody stops you to store chield in a separate dataset and have 1-m relation between them. 
+Please keep in mind that currently it is not possible to make a relation with a dataset itself (for example for multi-level menu). It is still possible to create a child and have a **one to many** relation between them and the dataset however.
 :::
 
 
-## Multi-levels relations
-You can have multiple levels of relation. For example: Article - Comments - Author - Salary. With Jexia you can build such a case and you will be able to get all data in one the response.   
+## Multi-level Relations
+You can have multiple levels of relation. For example: _Article / Comments / Author / Salary_. With Jexia you can build such a case and you will be able to fetch all data in one response.  
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -522,19 +532,18 @@ dom.dataset("article")
 <template v-slot:bash>
 
 ``` bash
-#Next call will return all parent and chiled records and fields 
+# Next call will return all parent and chiled records and fields 
 GET /ds/article/comments/authors/employee
-#To get some specific fields:
+# To get some specific fields:
 GET /ds/article?outputs=["article.comments.author.name", "article.comments.author.employee.salary"]
 ```
 
 </template>
 </CodeSwitcher>
 
-## Attach and detach records
-If you would need to relate already existing data you can use `.attach()` and `.detach()` methods.
-For this you need to specify to which parrent you want to attach chield record. In example I am adding to order with id = my_uuid
-two items with id's "b4961b6a-85a2-4ee8-b946-9001c978c801" and "e199d460-c88f-4ab9-8373-1d6ad0bd0acb". 
+## Attach and Detach records
+If you need create a relation between already existing data, you can use the `.attach()` and `.detach()` methods.
+For this you need to specify which parent for which you want to attach the child record. In the example that follows, it is creating a relation between order (with id = my_uuid ) and two `items` objects with the IDs `b4961b6a-85a2-4ee8-b946-9001c978c801` and `e199d460-c88f-4ab9-8373-1d6ad0bd0acb`. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -552,7 +561,7 @@ dom.dataset("order")
 <template v-slot:bash>
 
 ```bash
-#PUT https://<your-app-id>.app.jexia.com/ds/<your-dataset>?action=attach&cond=...&action_cond=...&action_resource=...&action_etc=...
+# PUT https://<your-app-id>.app.jexia.com/ds/<your-dataset>?action=attach&cond=...&action_cond=...&action_resource=...&action_etc=...
 ```
 Parameter|Type/Value|Description
 ---------|----------|-----------
@@ -565,28 +574,30 @@ action_range|JSON object|same as Filter parameter range
 </template>
 </CodeSwitcher>
 
-## Real-Time notification
-If you want to have a real-time update about changes on the sets, you can use real-time notification which is built-in into dataset, fileset and project users. This is a pro function and you need to have a subscription for this. 
+## <pro/> Real-Time Notifications
+
+
+If you want to have real-time updates regarding changes on datasets, you can use a real-time notification which is built into the dataset, fileset and project user modules.
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/TR9fcT8gXtM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-After the action, you will get a notification with records ID which was modified. You can re-fetch data from Jexia. We are sending ID only due to security reasons, as it might be a situation that many users will be subscribed to notifications but they should not have access to data itself. With current approach, you can decide whom to show what.
+After an action has taken place, you will get a notification containing the record ID which was modified. You can then re-fetch this data from Jexia. We only send the ID for security reasons, as there might be a situation where many users will be subscribed to notifications but they should not have access to data itself. With the current approach, you can decide whom to show the data.
 
-You can use `.watch()` method to subscribe to the notifications. Allowed actions can be provided either as arguments or as an array:
+You can use the `.watch()` method to subscribe to the notifications. Allowed actions can be provided either as arguments or as an array:
 1. created
 2. updated
 3. deleted
 4. all (used by default)
 
-You can unsubscribe from notifications any time by calling `.unsubscribe()` method.
-Keep in mind that you would need to import `realTime` module
+You can unsubscribe from notifications any time by calling the `.unsubscribe()` method.
+Keep in mind that you would need to import the `realTime` module from our SDKs.
 
 ``` js
 import { jexiaClient, dataOperations, realTime } from "jexia-sdk-js/node";
 const ds = dataOperations();
 const rtc = realTime();
 
-// initialize jexia client
+// Initialize Jexia client
 jexiaClient().init(credentials, ds, rtc);
 
 const subscription = dataModule.dataset("orders")
@@ -603,37 +614,39 @@ subscription.unsubscribe();
 
 
 ## Filtering
-With filtering, you can use to specify which data to fetch. As a result, you always will get an array of records, even if it will be only one record. There are different approaches applied to different languages. Please, check the preferable for you. 
+You can use filtering to specify which data to return. You will always receive an array of objects, independent on the number of objects. There are different approaches applied to different languages. Please check your preferable method.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 import { field } from "jexia-sdk-js/node"; 
-....
-// below possible examples for filters:
-   .where(field("title").isDifferentFrom("test")) 
-   .where(field("total").isBetween(1,30))
-   .where(field("total").isEqualOrGreaterThan(15))
-   .where(field("total").isEqualOrLessThan(7))
-   .where(field("total").isEqualTo(100))
-   .where(field("total").isGreaterThan(57))
-   .where(field("total").isLessThan(100))
-   .where(field("id").isInArray(my_val))   // my_val=[uuid1,uuid2];
-   .where(field("id").isNotInArray(my_val)) // my_val=[uuid1,uuid1];
-   .where(field("title").isLike("%oby"))
-   .where(field("title").isNotNull())
-   .where(field("title").isNull())
-   .where(field("title").satisfiesRegexp('[A-Z][0-9]*')) 
+...
+
+// Below are some examples using filters:
+.where(field("title").isDifferentFrom("test")) 
+.where(field("total").isBetween(1,30))
+.where(field("total").isEqualOrGreaterThan(15))
+.where(field("total").isEqualOrLessThan(7))
+.where(field("total").isEqualTo(100))
+.where(field("total").isGreaterThan(57))
+.where(field("total").isLessThan(100))
+.where(field("id").isInArray(["uuid1","uuid2"]))
+.where(field("id").isNotInArray(["uuid1","uuid2"]))
+.where(field("title").isLike("%oby"))
+.where(field("title").isNotNull())
+.where(field("title").isNull())
+.where(field("title").satisfiesRegexp('[A-Z][0-9]*')) 
 
 const isAuthorTom = field("user_name").isEqualTo("Tom");  
 const isAuthorDick = field("user_name").isEqualTo("Dick");  
 
-//example for applying AND / OR grouping.
+// Example for applying AND / OR grouping.
 const isAuthorTomOrDick = isAuthorTom.or(isAuthorDick);  
 const isAuthorTomOrDick = isAuthorTom.and(isAuthorDick);  
-// In order to use these conditions, they need to be added to a query through `.where` method  
 
+// In order to use these conditions,
+// they need to be added to a query through the `.where` method.
 dataModule.dataset("posts")  
  .select()
  .where(isAuthorTomOrDick)
@@ -642,9 +655,8 @@ dataModule.dataset("posts")
 </template>
 <template v-slot:bash>
 
-Optional filtering parameters to specify which records to select. If it is not provided, the request is applied on all records.
-All filters build with the help of 3 variables: `field`, `comparator`, `value`.
-Multiple queries within a (nested) condition are combined using `operator`.
+There are also some optional filtering parameters which allow you to specify which records to select. If they are not provided, the request is applied on all records. Each filter needs these three variables: `field`, `comparator` and `value`.
+Multiple queries within a (nested) condition are combined using an `operator`.
 
 ``` bash
 #cond=[<expression>, <comparator>, <expression>|<nested cond>, [<operator>, <expression>, <comparator>, <expression>|<nested cond>, [...]]]
@@ -673,14 +685,14 @@ Array comparators|“in”, “not in”|Array of allowed values (matching field
 Pattern comparator|“like”|string value|textual
 Regex comparator|“regex”|string value|textual
 
-There following operators are available to combine filters: "and", "&&", "or" or "||"
+There following operators are available to combine filters: `and`, `&&`, `or` and `||`
 
 </template>
 </CodeSwitcher>
 
 
-## Response fields
-Sometimes you want to show specific fields from record versus all record. With Jexia you can have this. During data fetching, you need to specify what fields you want to get back. It is applicable to related data as well. 
+## Response Fields
+Sometimes you will want to show specific fields from record instead of the whole record. Jexia enables you to do this by allowing you to specifying what fields you want have returned. This is applicable to related data.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -689,8 +701,8 @@ Sometimes you want to show specific fields from record versus all record. With J
 const orders = dataModule.dataset("orders");
 
 orders.select()
-  .fields("title", "items.qty") // you can also pass an array of field names 
-  .subscribe(records => {}); // you will get array of {id, title, author} records (id is always returned));
+  .fields("title", "items.qty") // You can also pass an array of field names 
+  .subscribe(records => {}); // You will get array of {id, title, author} please keep in mind "id" is always returned
 ```
 </template>
 <template v-slot:bash>
@@ -709,7 +721,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
     "id": "bc3f13fd-5e0c-4319-98d4-f4373222488f",
     "items":[
       {
-        "id":....,
+        "id":"...",
         "qty":2
       }
     ]
@@ -718,8 +730,8 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 ```
 
 
-## Limit & Offset
-You can use limit and offset on a query to paginate your records. They can be used separately or together. Only setting the limit (to a value X) will make the query operate on the first X records. Only setting the offset will make the query operate on the last Y records, starting from the offset value.
+## Limits & Offsets
+You can use `limit` and `offset` on a query to paginate your records. They can be used separately or together. Only setting the limit (to a value of `X`) will make the query operate on the first `X` records. Only setting the offset (to a value of `Y`) will make the query operate on the following `Y` records, starting from the offset value.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -730,12 +742,13 @@ const orders = dataModule.dataset("orders");
 orders.select()
   .limit(2)
   .offset(5)
-  .subscribe(records => // paginatedPosts will be an array of 2 records, starting from position 5);
+  .subscribe(records => // Will return an array of 2 records, starting from position 5
 ```
 </template>
 <template v-slot:bash>
 
 ``` bash
+# Will return an array of 5 records, starting from position 3
 $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?range={\"limit\": 5, \"offset\": 3}" | jq .
 
 ```
@@ -744,7 +757,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 </CodeSwitcher>
 
 ## Sorting
-To sort output you can apply sort methods of Jexia, you can apply `Asc` and `Desc` directions. 
+To sort the data before it is returned, you can apply sort methods. These can be `Asc` and `Desc` directions. 
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -757,14 +770,14 @@ posts
   .sortAsc("total")
 //.sortDesc("total")
   .subscribe(records => { 
-    // you've got sorted records here 
+    // You've got sorted records here 
   });
 ```
 </template>
 <template v-slot:bash>
 
 ``` bash
-#order={"direction":"asc|desc","fields":["field_one","field_two","field_N"]}
+# order={"direction":"asc|desc","fields":["field_one","field_two","field_N"]}
 $ curl -s -H "Authorization: Bearer $UMS_TOKEN" 
 -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?order={\"direction\":\"desc\",\"fields\":[\"total\",\"created_at\"]}" | jq .
 ```
@@ -774,8 +787,8 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN"
 
 
 
-## Aggregation functions
-There are a few aggregation functions you can use in order to calculations before obtaining data:
+## Aggregation Functions
+There are a few aggregation functions you can use in order to complete calculations before obtaining data:
 1. max
 2. min
 3. sum
@@ -806,7 +819,7 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 </template>
 </CodeSwitcher>
 
-As a result, you will get next JSON
+After execution, you will receive an array similar to the following array of objects:
 ```json
 [
   {
@@ -816,7 +829,7 @@ As a result, you will get next JSON
 ```
 
 ## REST API Errors
-During REST API request you can get next errors:
+During REST API request you can get the following errors:
 
 Code|Description
 ----|-----------

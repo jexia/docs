@@ -1,27 +1,23 @@
 #  CLI
 
-
-This is the official Jexia CLI for interacting with [Jexia's](https://jexia.com) platform.
+This is the official Jexia CLI for interacting with the [Jexia](https://jexia.com) platform.
 
 ## Compatibility
 
-Jexia CLI requires Python 2.7.15+.
+Jexia CLI requires Python version 2.7.15 or higher.
 
-
-## Getting started
-  
-### Installation
+## Installation
 
 #### Unix-like OS
 Install Jexia CLI with `pip`:
 ```
 sudo pip install jexia-cli
 ```
-or with easy_install:
+or with `easy_install`:
 ```
 sudo easy_install jexia-cli
 ```
-or to virtualenv:
+or with `virtualenv`:
 ```
 virtualenv env
 env/bin/pip install jexia-cli
@@ -33,17 +29,17 @@ Install Jexia CLI with `pip`:
 ```
 sudo pip install jexia-cli
 ```
-or with easy_install:
+or with `easy_install`:
 ```
 sudo easy_install jexia-cli
 ```
 
-### Use
+## Usage
 
-For the use of the CLI please check out the full CLI docs [here].
+For the correct usage documentation of the CLI please check out the full CLI docs [here].
 
 
-### Development
+## Other releases
 
 The development version can be downloaded from [GitHub].
 
