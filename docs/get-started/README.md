@@ -1,4 +1,4 @@
-# Getting started
+# Getting Started
 ## Create a project
 
 **Jexia** is a platform with a set of services natively integrated between each other which takes out the routine task for application development and operation. The good thing is that you can use services together or independently. It gives you the flexibility to choose the functionality that you need and allows easy integration with your projects via our REST API and SDKs.  
