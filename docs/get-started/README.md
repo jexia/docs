@@ -1,7 +1,7 @@
 # Getting Started
-**Jexia** - platform that provides backend as a service solution, with a nice set of tools to cover most of the routine tasks during the development and operation process. 
+**Jexia** - a platform that provides a 'backend as a service' solution, with a nice set of tools to cover most of the routine tasks during the development and operation process. 
 ![About Jexia](./about.png)
-By using Jexia you can save time by skipping development and integration for basic services, as well as host your application on our cloud and do not spend time for preparing, scale, secure and monitoring your environments.   
+By using Jexia, you can save time by skipping development and integration for basic services, as well as host your application in our cloud. Doing this means you do not need to spend time preparing, scaling, securing and monitoring your environments.
 
 ## Create a project
 
