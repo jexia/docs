@@ -2,7 +2,7 @@
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/S4Yz3I3MwGU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-JFS is used for indexing, fetching and manipulating files like any other data within your Jexia project. A fileset is a dataset but provides a way to maintain large data objects like files. At this point, we are working in cooperation with partners (Digital Ocean and AWS S3) so all of your files will be saved under your cloud storage. Jexia we will keep only metadata and the URL for the files, allowing you tto manipulate the data in the same way as with dataset.
+JFS is used for indexing, fetching and manipulating files like any other data within your Jexia project. A fileset is a dataset but provides a way to maintain large data objects like files. At this point, we are working in cooperation with partners (Digital Ocean and AWS S3) so all of your files will be saved under your cloud storage. Jexia we will keep only metadata and the URL for the files, allowing you to manipulate the data in the same way as with dataset.
 
 To work with files, you need to allow access to a specific fileset via a policy.
 A fileset is very similar to a dataset with configuration and usage. This means there is a small learning curve to start using it at its full potential.
@@ -22,7 +22,7 @@ When uploading or updating a file record, the following things should be kept in
 The fileset records contain the metadata of the file. Besides the custom fields there are some predefined ones:
 1. **name** - Name of the file.
 2. **size** - Size of the file in bytes.
-3. **type** - File type (there are a few supported types, however if the type is a mime-type, or if the type is not found, then extension is stored).
+3. **type** - File type (there are a few supported types, however, if the type is a mime-type, or if the type is not found, then extension is stored).
 4. **url** - Public URL to the file.
 5. **status**:
     * **in_progress** - Jexia is still processing the file.
@@ -211,7 +211,20 @@ $ curl -s
 Please, keep in mind when deleting metadata that we are not deleting the file itself. It is done for decoupling, managing and storage for files. When you delete metadata Jexia excludes the file from all fetching results, but you can access the file itself via the direct link.
 :::
 
-## Setup for AWS S3
+## Setup Fileset for Digital Ocean
+Setup Digital Oceant space is very easy. As a first step, you need to create **public space** in Digital Ocean. How to do this you can find in this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key). After you need to do simple 3 steps: 
+
+1. As soon as got credentials for space you can create new Fileset
+![Create bucket](./s3_do_create.png) 
+
+2. For next step you need to fill in all needed credentials: 
+![Configuration](./s3_do_config.png) 
+
+3. We will check connectivity by loading simple test file. If all operations will be succesfull you are ready to go:
+![Added](./s3_do_added.png) 
+
+
+## Setup Fileset for AWS S3
 Currently, Jexia supports the ability to connect to an AWS S3 bucket. Below you can see the steps for connecting to an S3 bucket.
 
 As soon as you log in to AWS console, go to the **S3 service**.
