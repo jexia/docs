@@ -220,7 +220,7 @@ The process of setting up a Digital Ocean Space is very easy. As a first step, y
 1. Next, you need to fill in all the necessary credentials: 
 ![Configuration](./s3_do_config.png) 
 
-3. We will check the connection by loading simple test file. If all operations are successful, you are ready to go:
+3. We will check the connection by loading a simple test file. If all operations are successful, you are ready to go:
 ![Added](./s3_do_added.png) 
 
 
