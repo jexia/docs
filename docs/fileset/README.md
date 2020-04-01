@@ -217,7 +217,7 @@ The process of setting up a Digital Ocean Space is very easy. As a first step, y
 1. As soon as you have your credentials for a space you can create a new Fileset
 ![Create bucket](./s3_do_create.png) 
 
-1. Next, you need to fill in all the necessary credentials: 
+2. Next, you need to fill in all the necessary credentials: 
 ![Configuration](./s3_do_config.png) 
 
 3. We will check the connection by loading a simple test file. If all operations are successful, you are ready to go:
