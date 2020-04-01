@@ -22,7 +22,7 @@ When uploading or updating a file record, the following things should be kept in
 The fileset records contain the metadata of the file. Besides the custom fields there are some predefined ones:
 1. **name** - Name of the file.
 2. **size** - Size of the file in bytes.
-3. **type** - File type (there are a few supported types, however, if the type is a mime-type, or if the type is not found, then extension is stored).
+3. **type** - File type (there are a few supported types, however, if the type is a mime-type, or if the type is not found, then the file's extension is stored).
 4. **url** - Public URL to the file.
 5. **status**:
     * **in_progress** - Jexia is still processing the file.
@@ -212,15 +212,15 @@ Please, keep in mind when deleting metadata that we are not deleting the file it
 :::
 
 ## Setup Fileset for Digital Ocean
-Setup Digital Oceant space is very easy. As a first step, you need to create **public space** in Digital Ocean. How to do this you can find in this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key). After you need to do simple 3 steps: 
+The process of setting up a Digital Ocean Space is very easy. As a first step, you need to create a **public space**. You can see the full tutorial for this on [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-create-a-digitalocean-space-and-api-key). After this, you need to do 3 simple steps: 
 
-1. As soon as got credentials for space you can create new Fileset
+1. As soon as you have your credentials for a space you can create a new Fileset
 ![Create bucket](./s3_do_create.png) 
 
-2. For next step you need to fill in all needed credentials: 
+1. Next, you need to fill in all the necessary credentials: 
 ![Configuration](./s3_do_config.png) 
 
-3. We will check connectivity by loading simple test file. If all operations will be succesfull you are ready to go:
+3. We will check the connection by loading simple test file. If all operations are successful, you are ready to go:
 ![Added](./s3_do_added.png) 
 
 
