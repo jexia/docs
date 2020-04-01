@@ -7,6 +7,10 @@ By default, all data is inaccessible and you need to specify what resources can 
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/o2ZN3nvdhi8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+::: warning
+Please, keep in mind that the access token is valid for 2 hours. 
+:::
+
 ## API Keys
 An API key can be used to organize public access (for example your blog visitors). To create an API-Key you need to navigate to the **API keys** section and click **Create API Key** button.
 

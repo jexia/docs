@@ -1,4 +1,8 @@
 # Getting Started
+**Jexia** - platform that provides backend as a service solution, with a nice set of tools to cover most of the routine tasks during the development and operation process. 
+![About Jexia](./about.png)
+By using Jexia you can save time by skipping development and integration for basic services, as well as host your application on our cloud and do not spend time for preparing, scale, secure, monitoring your environments.   
+
 ## Create a project
 
 **Jexia** is a platform with a set of services natively integrated between each other which takes out the routine task for application development and operation. The good thing is that you can use services together or independently. It gives you the flexibility to choose the functionality that you need and allows easy integration with your projects via our REST API and SDKs.  
@@ -18,7 +22,7 @@ You can have a maximum of **3** projects on the free plan, after you need to upg
 ## Inside the project
 ![Jexia Services](./services.png)
 1. **Collaboration** - Within this section, you can coordinate access to your project. For example, you can invite a team member or a developer to be a collaborator on the same project. This will allow them access to the project from their Jexia account. 
-1. **Settings** - Within this section, you can find the basic settings and information for the project (project name, description and URL). You may also delete the project within this section.
+1. **Settings** - Within this section, you can find the basic settings and information for the project (project name, description, and URL). You may also delete the project within this section.
 1. **Integration** - Within this section, you can set up a connection between your Jexia project and external services. This will allow you to use them within your automatons.
 
 ## Application Hosting
