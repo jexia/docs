@@ -118,7 +118,7 @@ As soon as the deployment is done your application will be accessible via a URL 
 
 ## How to update the application once deployed?
 
-There are two possibilities to make a re-deployment. Jexia is supporting deployment without rebuilding code, this is useful when you need to update environment variables only. If you require a full re-build, the repository code will be downloaded from GitHub and the deploy process will begin again, with all previous environment variables.
+There are two possibilities to make a re-deployment. Jexia supports deployment without rebuilding code, this is useful when you need to update environment variables only. If you require a full re-build, the repository code will be downloaded from GitHub and the deploy process will begin again, with all previous environment variables.
 
 To initiate a re-deployment, you need to click the **Redeploy** button (top right), which will appear as soon as the initial deployment has finished, instead of the **Deploy** button. 
 
