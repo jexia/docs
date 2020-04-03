@@ -8,7 +8,7 @@ By default, all data is inaccessible and you need to specify what resources can 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/o2ZN3nvdhi8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ::: warning
-Please, keep in mind that the access token is valid for 2 hours. 
+Please keep in mind that the access token is valid for 2 hours. 
 :::
 
 ## API Keys

@@ -201,17 +201,6 @@ selectQuery.subscribe(records => {
 });
 ```
 
-The following aggregation functions are supported when using one of the Jexia SDKs:
-
-Function|Argument type(s)|Description
---------|----------------|-----------
-avg()|number|Returns the average value of the field for the selected records
-count()||Returns number of selected records
-max()|number|Returns maximum value of the field for the selected records
-min()|number|Returns minimum value of the field for the selected records
-now()||Returns current time(stamp)
-sum()|number|Returns the total value of the field for the selected records
-
 </template>
 <template v-slot:bash>
 
@@ -795,6 +784,10 @@ There are a few aggregation functions you can use in order to complete calculati
 4. avg
 5. count
 
+::: warning
+Please keep in mind that you can aggregate fields only from schema. We do not support aggregation for fields from schemaless. 
+:::
+
 You can combine output with other fields. 
 
 
@@ -805,7 +798,7 @@ You can combine output with other fields.
 const posts = dataModule.dataset("orders");
 
 posts.select()
-  .fields({ fn: "sum", field: "total" })
+  .fields({ fn: "sum", field: "total", alias: "sum_total"})
   .subscribe(result => {
   });
 ```
@@ -823,7 +816,7 @@ After execution, you will receive an array similar to the following array of obj
 ```json
 [
   {
-    "sum": 202
+    "sum_total": 202
   }
 ]
 ```
