@@ -660,7 +660,7 @@ $ curl -s
 #?cond=[{"field":"total"},"in",[0,5,15]]  // "not in"
 #?cond=[{"field":"title"},"like","as"]
 #?cond=[{"field":"title"},"regex","^[a-z]+$"]
-#?cond=[{"field":"total"},">",100,["and",{"field":"title"},"like","as"]]
+#?cond=[{"field":"total"},">",100,"and",{"field":"title"},"like","as"]
 ```
 
 Below you can find examples for available comparators:

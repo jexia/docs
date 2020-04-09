@@ -102,16 +102,15 @@ Below you can see an example with all the modules imported into the project. The
 <template v-slot:js>
 
 ``` js
-// Jexia client
-import { jexiaClient } from "jexia-sdk-js/node";
-// Dataset operation
-import { dataOperations } from "jexia-sdk-js/node";
-// Fileset operations
-import { fileOperations } from "jexia-sdk-js/node";
-// Project Users
-import { UMSModule } from "jexia-sdk-js/node";
-// Real-time notifications & channels
-import { realTime } from "jexia-sdk-js/node";
+import { 
+  // requred main object
+  jexiaClient,
+  // optional modules (import only what you need)
+  dataOperations, // To work with DataSets
+  fileOperations, // To work with FileSets 
+  UMSModule, // To work with Project Users
+  realTime // To get real-time notification for data changes and work channels  
+} from "jexia-sdk-js/node";
 
 const ds = dataOperations();
 const jfs = fileOperations();
