@@ -16,7 +16,7 @@ module.exports = {
     description: "Make development easier",
     themeConfig: {
         logo: '/logo-decorated.svg',
-        smoothScroll: true,
+        smoothScroll: false,
         displayAllHeaders: false,
         nav: [
           { text: "SignUp", link: "https://app.jexia.com/signup" },
@@ -32,6 +32,7 @@ module.exports = {
             "/apphost/",
             "/automation/",
             "/integration/",
+            "/mgm/",   
             "/cli/"   
         ]
     },
