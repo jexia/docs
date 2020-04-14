@@ -41,6 +41,10 @@ build/Release
 node_modules/
 jspm_packages/
 
+# rought contracts
+*.yaml
+*.go
+
 # TypeScript v1 declaration files
 typings/
 

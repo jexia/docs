@@ -160,7 +160,7 @@ export TEST_USER_PSW=<password_here>
 
 # save API key token to our environment in case we need to use it
 export API_TOKEN=`curl -X POST -d '{
-  "method":"api",
+  "method":"apk",
   "key":"'"$API_KEY"'",
   "secret":"'"$API_SECRET"'"
 }' "https://$PROJECT_ID.app.jexia.com/auth" | jq .access_token`
