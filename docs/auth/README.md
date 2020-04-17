@@ -45,7 +45,7 @@ jexiaClient().init({
 }, ds);
 
 // Now you can run the read operation for your Datasets
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 const selectQuery = orders
   .select()
   .where(field => field("dislike").isEqualTo(true));

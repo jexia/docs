@@ -90,7 +90,7 @@ let orders = [{
     "total":100,
     "verified":false
 }]
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 const insertQuery = orders.insert(orders);  
 insertQuery.subscribe(records => { 
     // You will always get an array of created records, including their 
@@ -171,7 +171,7 @@ jexiaClient().init({
   secret: "API_SECRET",
 }, ds);
 
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 const selectQuery = orders
   .select()
   .where(field => field("verified").isEqualTo(true))
@@ -295,7 +295,7 @@ const user = await ums.signIn({
   password: 'secret-password'
 });
 
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 const deleteQuery = orders
 .delete()
 .where(field => field("verified").isEqualTo(true));  
@@ -365,7 +365,7 @@ const user = await ums.signIn({
   password: 'secret-password'
 });
 
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 const updateQuery = orders
   .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }])
   .where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg')));  
@@ -589,7 +589,7 @@ const rtc = realTime();
 // Initialize Jexia client
 jexiaClient().init(credentials, ds, rtc);
 
-const subscription = dataModule.dataset("orders")
+const subscription = ds.dataset("orders")
   .watch("created", "deleted")
   .subscribe(messageObject => {
     console.log("Realtime message received:", messageObject.data);
@@ -636,10 +636,10 @@ const isAuthorTomOrDick = isAuthorTom.and(isAuthorDick);
 
 // In order to use these conditions,
 // they need to be added to a query through the `.where` method.
-dataModule.dataset("posts")  
+ds.dataset("posts")  
  .select()
  .where(isAuthorTomOrDick)
- .subscribe(records => // posts of Tom and Dick); 
+ .subscribe(records => {}) // posts of Tom and Dick); 
 ```
 </template>
 <template v-slot:bash>
@@ -687,7 +687,7 @@ Sometimes you will want to show specific fields from record instead of the whole
 <template v-slot:js>
 
 ``` js
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 
 orders.select()
   .fields("title", "items.qty") // You can also pass an array of field names 
@@ -726,12 +726,12 @@ You can use `limit` and `offset` on a query to paginate your records. They can b
 <template v-slot:js>
 
 ``` js
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 
 orders.select()
   .limit(2)
   .offset(5)
-  .subscribe(records => // Will return an array of 2 records, starting from position 5
+  .subscribe(records =>()} // Will return an array of 2 records, starting from position 5
 ```
 </template>
 <template v-slot:bash>
@@ -752,7 +752,7 @@ To sort the data before it is returned, you can apply sort methods. These can be
 <template v-slot:js>
 
 ``` js
-const orders = dataModule.dataset("orders");
+const orders = ds.dataset("orders");
 
 posts
   .select()
@@ -795,7 +795,7 @@ You can combine output with other fields.
 <template v-slot:js>
 
 ``` js
-const posts = dataModule.dataset("orders");
+const posts = ds.dataset("orders");
 
 posts.select()
   .fields({ fn: "sum", field: "total", alias: "sum_total"})
