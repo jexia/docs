@@ -97,8 +97,8 @@ const user = await ums.signIn({
   alias: 'Elon Musk'  
 });  
 
-dom.dataset('rockets', 'Elon Musk').select();  
-dom.dataset('rockets').select();  
+ds.dataset('rockets', 'Elon Musk').select();  
+ds.dataset('rockets').select();  
 ```
 Additional optional options:
 * **default** - if true, this user account will be used for all further data operations by default.

@@ -126,8 +126,8 @@ jexiaClient().init({
 }, ds, jfs, ums, rtc);
 
 // Now you can run any CRUD operations for your Datasets
-const orders = dataModule.dataset("orders");
-const archive = dataModule.dataset("arch");
+const orders = ds.dataset("orders");
+const archive = ds.dataset("arch");
 const selectQuery = orders
   .select()
   .where(field => field("dislike").isEqualTo(true))
