@@ -133,7 +133,8 @@ All fileset records will have fields such as name, size, URL, etc. These fields,
 
 ``` js
 jfs.fileset("fileset_name")  
- .select("name", "url")  
+ .select()
+ .fields("name", "url")  
  .where(field => field("size").isGreaterThan(1024000))  
  .subscribe();  
 

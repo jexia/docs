@@ -76,29 +76,32 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
 }, ds, ums);
 
-const user = await ums.signIn({    
-  email: 'Elon@tesla.com',    
-  password: 'secret-password'
-});  
+async function main() {
+  const user = await ums.signIn({    
+    email: 'Elon@tesla.com',    
+    password: 'secret-password'
+  });  
 
-let orders = [{
-    "title":"Order1",
-    "total":10,
-    "verified":false
-}, {
-    "title":"Order2",
-    "total":100,
-    "verified":false
-}]
-const orders = ds.dataset("orders");
-const insertQuery = orders.insert(orders);  
-insertQuery.subscribe(records => { 
-    // You will always get an array of created records, including their 
-    // generated IDs (even when inserting a single record) 
-  }, 
-  error => { 
-    // If something goes wrong, the error information is accessible here 
-});
+  let orders_data = [{
+      "title":"Order1",
+      "total":10,
+      "verified":false
+  }, {
+      "title":"Order2",
+      "total":100,
+      "verified":false
+  }]
+  const orders = ds.dataset("orders");
+  const insertQuery = orders.insert(orders_data);  
+  insertQuery.subscribe(records => { 
+      // You will always get an array of created records, including their 
+      // generated IDs (even when inserting a single record) 
+    }, 
+    error => { 
+      // If something goes wrong, the error information is accessible here 
+  });
+}
+main()
 ```
 </template>
 <template v-slot:bash>
@@ -147,7 +150,7 @@ After execution, you will receive an array similar to the following array of obj
     "updated_at": "2020-02-15T19:43:39.784342Z",
     "title":"Order2",
     "total":100,
-    "verified":true
+    "verified":false
 }]
 ```
 
@@ -188,10 +191,6 @@ const selectQuery = orders
   // .where(field("title").isNotNull())
   // .where(field("title").isNull())
   // .where(field("title").satisfiesRegexp('a-z0-9'))   
-  .pipe(
-    // put them into archive!
-    switchMap(records => archive.insert(records)),
-  );  
 selectQuery.subscribe(records => { 
     // You will always get an array of created records, including their 
     // generated IDs (even when inserting a single record) 
@@ -289,24 +288,26 @@ const ums = new UMSModule();
 jexiaClient().init({
   projectID: "project_id",
 }, ds, ums);
+async function main() {
+  const user = await ums.signIn({    
+    email: 'Elon@tesla.com',    
+    password: 'secret-password'
+  });
 
-const user = await ums.signIn({    
-  email: 'Elon@tesla.com',    
-  password: 'secret-password'
-});
+  const orders = ds.dataset("orders");
+  const deleteQuery = orders
+  .delete()
+  .where(field => field("verified").isEqualTo(true));  
 
-const orders = ds.dataset("orders");
-const deleteQuery = orders
-.delete()
-.where(field => field("verified").isEqualTo(true));  
-
-deleteQuery.subscribe(records => { 
-    // You will always get an array of created records, including their 
-    // generated IDs (even when inserting a single record) 
-  }, 
-  error => { 
-    // If something goes wrong, the error information is accessible here 
-});
+  deleteQuery.subscribe(records => { 
+      // You will always get an array of created records, including their 
+      // generated IDs (even when inserting a single record) 
+    }, 
+    error => { 
+      // If something goes wrong, the error information is accessible here 
+  });
+}
+main()
 ```
 </template>
 <template v-slot:bash>
@@ -360,23 +361,26 @@ jexiaClient().init({
   projectID: "project_id",
 }, ds, ums);
 
-const user = await ums.signIn({    
-  email: 'Elon@tesla.com',    
-  password: 'secret-password'
-});
+async function main() {
+  const user = await ums.signIn({    
+    email: 'Elon@tesla.com',    
+    password: 'secret-password'
+  });
 
-const orders = ds.dataset("orders");
-const updateQuery = orders
-  .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }])
-  .where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg')));  
+  const orders = ds.dataset("orders");
+  const updateQuery = orders
+    .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }]) // To update 1 record with specific ID
+    //.where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg'))); // To update update batch of records 
 
-updateQuery.subscribe(records => { 
-    // You will always get an array of created records, including their 
-    // generated IDs (even when inserting a single record) 
-  }, 
-  error => { 
-    // If something goes wrong, the error information is accessible here 
-});
+  updateQuery.subscribe(records => { 
+      // You will always get an array of created records, including their 
+      // generated IDs (even when inserting a single record) 
+    }, 
+    error => { 
+      // If something goes wrong, the error information is accessible here 
+  });
+}
+main()
 ```
 </template>
 <template v-slot:bash>
@@ -597,6 +601,7 @@ const subscription = ds.dataset("orders")
     console.log(error);
   });
 
+// here put Insert or Delete operations
 
 subscription.unsubscribe();
 ```
@@ -639,7 +644,7 @@ const isAuthorTomOrDick = isAuthorTom.and(isAuthorDick);
 ds.dataset("posts")  
  .select()
  .where(isAuthorTomOrDick)
- .subscribe(records => {}) // posts of Tom and Dick); 
+ .subscribe(records => {}, error=>{}) // posts of Tom and Dick); 
 ```
 </template>
 <template v-slot:bash>
@@ -691,7 +696,7 @@ const orders = ds.dataset("orders");
 
 orders.select()
   .fields("title", "items.qty") // You can also pass an array of field names 
-  .subscribe(records => {}); // You will get array of {id, title, author} please keep in mind "id" is always returned
+  .subscribe(records => {}, err=>{}); // You will get array of {id, title, author} please keep in mind "id" is always returned
 ```
 </template>
 <template v-slot:bash>
@@ -731,7 +736,7 @@ const orders = ds.dataset("orders");
 orders.select()
   .limit(2)
   .offset(5)
-  .subscribe(records =>()} // Will return an array of 2 records, starting from position 5
+  .subscribe(records =>{}, err=>{}) // Will return an array of 2 records, starting from position 5
 ```
 </template>
 <template v-slot:bash>
@@ -760,7 +765,7 @@ posts
 //.sortDesc("total")
   .subscribe(records => { 
     // You've got sorted records here 
-  });
+  }, err=>{});
 ```
 </template>
 <template v-slot:bash>
@@ -800,7 +805,7 @@ const posts = ds.dataset("orders");
 posts.select()
   .fields({ fn: "sum", field: "total", alias: "sum_total"})
   .subscribe(result => {
-  });
+  }, err=>{});
 ```
 </template>
 <template v-slot:bash>
