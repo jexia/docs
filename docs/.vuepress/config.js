@@ -15,6 +15,10 @@ module.exports = {
     dest:"./dist",
     description: "Make development easier",
     themeConfig: {
+        algolia: {
+          apiKey: 'a1d16f60a5b8bbe85fe2d92cb852bc62',
+          indexName: 'jexia'
+        },
         logo: '/logo-decorated.svg',
         smoothScroll: false,
         displayAllHeaders: false,
