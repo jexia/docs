@@ -1,7 +1,9 @@
 # Getting Started
 **Jexia** is a Backend-as-a-Service (BaaS) solution featuring a comprehensive set of tools to cater for most of the routine tasks specific to the application development and operations processes. 
+
 ![About Jexia](./about.png)
-By using Jexia you can save time by simply integrating existing, basic services rather than developing them yourself. Moreover, you can host your application on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
+
+By using Jexia, you save time through the integration of existing, basic services (authentication, user management, data storage, etc.) rather than developing them yourself. Moreover, you can host your application on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
 
 ## Create a project
 
