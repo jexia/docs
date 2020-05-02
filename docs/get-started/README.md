@@ -3,7 +3,7 @@
 
 ![About Jexia](./about.png)
 
-By using Jexia, you save time through the integration of existing, basic services (authentication, user management, data storage, etc.) rather than developing them yourself. Moreover, you can host your application on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
+By using Jexia, you save time through the integration of existing, [basic services](#services) (data and file storage, user management, [access control](#access-control), etc.) rather than developing them yourself. Moreover, you can host your application on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
 
 ## Create a project
 
