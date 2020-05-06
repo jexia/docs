@@ -3,7 +3,7 @@
 
 ![About Jexia](./about.png)
 
-By using Jexia, you save time through the integration of existing, [basic services](#services) (data and file storage, user management, [access control](#access-control), etc.) rather than developing them yourself. Moreover, you can host your application on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
+By using Jexia, you save time through the integration of existing, [basic services](#services) ([data](https://docs.jexia.com/dataset/) and [file](https://docs.jexia.com/fileset/) storage, [user management](https://docs.jexia.com/ums/), [authentication](https://docs.jexia.com/auth/), etc.) rather than developing them yourself. Moreover, you can [host your application](https://docs.jexia.com/apphost/) on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
 
 ## Create a project
 
@@ -31,12 +31,12 @@ You can have a maximum of **3** projects on the free plan, after you need to upg
 1. **Deploy Application** - This area allows you to **host applications in the cloud**. You can fetch an application directly from a git repository and deploy it on our cloud. Currently, you can host your Node JS application, your Docker images or simply static files.
 
 ## Services
-1. **Datasets** - these are used to store your application data. For example products, orders, transactions, configurations and anything else.
-1. **Filesets** - these are used to manage files for your application. For example avatars, blog images, product images, pdf documents and any other file you may need.
-1. **Relations** - these provide an easy way to establish data relations between Datasets, Filesets and Project Users. It allows you to get related data within one request. But, no need to worry, all connections and optimizations are managed by Jexia.    
-1. **RTC Channels** - these are used to organize **Pub/Sub** solutions such as chats, online games and any other real-time application. We also provide a built-in real-time notification functionality for Datasets, Filesets and Project User modules.
-1. **Project Users** - these are the users within your application. Within this module, you can perform some specific functions, such as **changing passwords**, **creating users** and **deleting users** as well as supporting standard the CRUD approach over your API. You can choose any approach.
-1. **Automation** - this module allows you to set up actions that will run based on when different events occur.
+1. [**Datasets**](https://docs.jexia.com/dataset/) - these are used to store your application data. For example products, orders, transactions, configurations and anything else.
+1. [**Filesets**](https://docs.jexia.com/fileset/) - these are used to manage files for your application. For example avatars, blog images, product images, pdf documents and any other file you may need.
+1. [**Relations**](https://docs.jexia.com/dataset/#related-data) - these provide an easy way to establish data relations between Datasets, Filesets and Project Users. It allows you to get related data within one request. But, no need to worry, all connections and optimizations are managed by Jexia.    
+1. [**RTC Channels**](https://docs.jexia.com/pubsub/) - these are used to organize **Pub/Sub** solutions such as chats, online games and any other real-time application. We also provide a built-in real-time notification functionality for Datasets, Filesets and Project User modules.
+1. [**Project Users**](https://docs.jexia.com/ums/) - these are the users within your application. Within this module, you can perform some specific functions, such as **changing passwords**, **creating users** and **deleting users** as well as supporting standard the CRUD approach over your API. You can choose any approach.
+1. [**Automation**](https://docs.jexia.com/automation/) - this module allows you to set up actions that will run based on when different events occur.
 
 ## Access control
 1. **API-Keys** - module for generating API keys. You can make keys that allow access to public data, private data or partners etc. By default, all data is private. Different access levels can be set via a **Policy**.
