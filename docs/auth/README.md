@@ -154,7 +154,7 @@ There are four main areas within a **Policy**:
 2. **Resources** (access to what) - can be any dataset, fileset or channel. Selecting **All Users** means you allow  operations for all Project Users. 
 3. **Actions** (what CRUD actions can be performed) - here you can specify which actions are allowed to be performed. These can be: Create, Read, Update and Delete. For Channels you have specific actions: Subscribe (read) and Publish (write). 
 4. **Filters** - for actions you can use additional filtering options to specify access of current namespace, API or user. It is useful when you want to segrigate data access for different instances of your business, such as offices and e-shops etc.
-We have predefined filter - Owner which says to the platform to filter out only records where user is an owner. It can combine with additional filters to specify even more. All filters joind with **AND** logical operator. Changes for policy applies immediately.
+We have a predefined filter - **Owner** which filters and shows only records where the user is an owner. It can be combined with additional filters to specify even more. All filters join with the **AND** logical operator. Changes for a policy are applied immediately.
 
 ![Policy](./policy.png)
 
