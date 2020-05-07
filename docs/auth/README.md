@@ -88,7 +88,7 @@ Another way to authenticate within Jexia is to use **Project Users**. Usually, y
 
 ![UMS Users](./ums-2.png)
 
-After this, you need go to the **Policies** section and create a new policy, ensuring that **Subject** is selected for some specific **Namespace** or **User account** and **Resource** are selected to specific dataset, fileset or AllUsers(for user table) what you want these users be able to run actions. Finally, select all **Actions** you wanted these users to perform.
+After this, you need go to the **Policies** section and create a new policy, ensuring that **Subject** is selected for a specific **Namespace** or **User account** and the **Resource** is selected to the specific dataset, fileset or the 'AllUsers' option (for user table) if you want these users to be able to run the actions. Finally, select all **Actions** you wanted these users to perform.
 
 ![Policy](./policy.png)
 
