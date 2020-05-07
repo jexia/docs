@@ -158,7 +158,7 @@ We have a predefined filter - **Owner** which filters and shows only records whe
 
 ![Policy](./policy.png)
 
-If namespace or particular user is part of multiple policies, access will be joined via **OR** operations. 
+If a namespace or particular user is part of multiple policies, access will be joined via the **OR** operator. 
 
 For example:
 1. User A -> Policy 1 -> Has CRUD for Orders dataset
