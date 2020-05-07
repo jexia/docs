@@ -225,7 +225,7 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 
 ## Delete project
 
-To delete your project you need to first remove the application from within the **Application Hosting** section. Then go to **Settings** and click **Delete**, with this email with one time token will be sent to your email. Please use this token to confirm project deletion. 
+To delete your project you need to first remove the application from within the **Application Hosting** section. Then go to **Settings** and click **Delete**, a one time token will be sent to the accounts email. You will need to use this token to confirm project deletion. 
 ![Delete project](./delete_prj.png)
 ![Confirm project deletion](./delete_prj_otp.png)
 ::: danger
@@ -243,4 +243,3 @@ There are many examples you can find on our [GitHub](https://github.com/jexia). 
 In the long run, we plan to open-source most of the Jexia platform. From another side, we understand that open-source projects come with big responsibilities to ensure they are well maintained and have a large time demand for supporting communities. As for now, we have decided to focus on adding new functionality to the platform, to provide more opportunities for our friends.  
 
 Happy coding! 
-
