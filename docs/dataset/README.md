@@ -11,6 +11,8 @@ The name of the dataset is used as an endpoint ( For example: `*.app.jexia.com/d
 - The name of your dataset can contain only Latin characters and digits.
 - The name of the dataset has to start with a character.
 
+**Strict mode** - informs the platform to apply strict rules about input data validation. If an input object has extra fields that do not exist in the dataset schema's insert or update operation, it will be rejected.   
+
 ## Configuration
 
 ## Schema
