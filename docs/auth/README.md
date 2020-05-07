@@ -80,7 +80,7 @@ curl -H "Authorization: Bearer $API_TOKEN"
 </CodeSwitcher>
 
 ::: warning
-Keep in mind at this point in time only JS SDK is automatically refresh access token. If you use REST API or Python SDK you need to handle this situation by your own. Token live time 2h 
+Keep in mind at this point in time only the JS SDK automatically refreshes the access token. If you use the REST API or the Python SDK you need to handle this situation yourself. Each token lasts 2 hours. 
 :::
 
 ## Project Users
