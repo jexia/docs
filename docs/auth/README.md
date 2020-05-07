@@ -150,7 +150,7 @@ Currently, you cannot manipulate a **policy** via the API. All admin actions are
 _* video shows previous version of policy screen_
 
 There are four main areas within a **Policy**:
-1. **Subject** (who has access) - can be an **API key**, **Namespace** (grouped users under the same name), **User account**.
+1. **Subject** (who has access) - can be an **API key**, **Namespace** (grouped users under the same name) or a **User account**.
 2. **Resources** (access to what) - can be any dataset, fileset or channel. Selecting **All Users** means you allow  operations for all Project Users. 
 3. **Actions** (what CRUD actions can be performed) - here you can specify which actions are allowed to be performed. These can be: Create, Read, Update and Delete. For Channels you have specific actions: Subscribe (read) and Publish (write). 
 4. **Filters** - for actions you can use additional filtering options to specify access of current namespace, api or user. It is useful when you want to segrigate data access for different instances of your business(offices, e-shops, etc).
