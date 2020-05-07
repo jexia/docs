@@ -70,7 +70,7 @@ As a next step, we would need to establish access rules. By default, all data is
 There are two ways to organize this:
 1. **API Key** - this is useful when you need to allow data access for many visitors. For example, show all blog posts, books or comments.
 2. **Project User** - this is useful when you need to open access to a specific action, like **Update** or **Delete**. Setting this via project users ensures only specific people can perform certain actions.
-3. **Namespace _(under development)_** - this allows you to group users together and provide common access to specific actions and records, such as creating an admin group and allowing these to delete records.
+3. **Namespace** - this allows you to group users together and provide common access to specific actions and records, such as creating an admin group and allowing these to delete records.
 
 ### Access via API Key
 To have API key access, you firstly need to create an API key. For this, you need to visit the **API Keys** section and create a new key. **Please ensure you write the API secret somewhere as you will not be able to view it again.**
