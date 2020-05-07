@@ -92,7 +92,7 @@ After this, you need go to the **Policies** section and create a new policy, ens
 
 ![Policy](./policy.png)
 
-This will allow any user from namespace `registered` or user with email `admin@x.com` to have Update & Delete operations for all own records and Read operation for all records which has schema field `confirmed` equal to `true`
+This will allow any user from the namespace `registered` or the user with the email `admin@x.com` to have **Update & Delete** operations for all their records and the **Read** operation for all the records which have a schema field `confirmed` equal to `true`.
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
