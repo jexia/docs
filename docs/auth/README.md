@@ -30,9 +30,7 @@ Using the automatically generated API, we can now interact with our data.
 
 ``` js
 // Jexia client
-import { jexiaClient } from "jexia-sdk-js/node";
-// Dataset operation
-import { dataOperations } from "jexia-sdk-js/node";
+import { jexiaClient, dataOperations } from "jexia-sdk-js/node";
 
 const ds = dataOperations();
 
@@ -81,16 +79,20 @@ curl -H "Authorization: Bearer $API_TOKEN"
 </template>
 </CodeSwitcher>
 
+::: warning
+Keep in mind at this point in time only JS SDK is automatically refresh access token. If you use REST API or Python SDK you need to handle this situation by your own. Token live time 2h 
+:::
+
 ## Project Users
-Another way to authenticate within Jexia is to use **Project Users**. Usually, you need this when you want to provide more rights to specific users. Let's say **Update** and **Delete** actions for your blog. Firstly, you need to create a user under the **Project Users** section.
+Another way to authenticate within Jexia is to use **Project Users**. Usually, you need this when you want to provide more rights to specific users. Let's say **Update** and **Delete** actions for your blog can be done by owners only. Firstly, you need to create a user under the **Project Users** section.
 
 ![UMS Users](./ums-2.png)
 
-After this, you need go to the **Policies** section and create a new policy, ensuring that **Subject** is selected as **AllUsers** and the selected Datasets within **Resource** are what you want these users to be able to access. Finally, sselect all **Actions** you want these users to perform.
+After this, you need go to the **Policies** section and create a new policy, ensuring that **Subject** is selected for some specific **Namespace** or **User account** and **Resource** are selected to specific dataset, fileset or AllUsers(for user table) what you want these users be able to run actions. Finally, select all **Actions** you wanted these users to perform.
 
 ![Policy](./policy.png)
 
-This will allow any registered user to have full CRUD access to the example `orders` dataset. 
+This will allow any user from namespace `registered` or user with email `admin@x.com` to have Update & Delete operations for all own records and Read operation for all records which has schema field `confirmed` equal to `true`
 
 <CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
 <template v-slot:js>
@@ -135,18 +137,35 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 </template>
 </CodeSwitcher>
 
+::: warning
+Keep in mind at this point in time only JS SDK is automatically refresh access token. If you use REST API or Python SDK you need to handle this situation by your own. Token live time 2h 
+:::
+
 ## Policies
-As was mentioned above to authorize access to your data you need to have a **policy** created for your API keys and Project Users. 
+As was mentioned above to authorize access to your data you need to have a **policy** created for your API keys and/or Project Users. 
 Currently, you cannot manipulate a **policy** via the API. All admin actions are only available via Jexia's administration dashboard.
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/i4dKznoXry0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-There are three main areas within a **Policy**:
-1. **Subject** (who has access) - can be an **API key**, **All Users** (all project users) or a **namespace** (grouped users under the same name).
-2. **Resources** (access to what) - can be any dataset, fileset or channel. Selecting **All Users** means you allow these operations to be performed by all Project Users. 
-3. **Actions** (what CRUD actions can be performed) - here you can specify which actions are allowed to be performed. These can be: Create, Read, Update and Delete. For Channels you have specific actions: Subscribe (read) and Publish (write).
+_* video shows previous version of policy screen_
+
+There are four main areas within a **Policy**:
+1. **Subject** (who has access) - can be an **API key**, **Namespace** (grouped users under the same name), **User account**.
+2. **Resources** (access to what) - can be any dataset, fileset or channel. Selecting **All Users** means you allow  operations for all Project Users. 
+3. **Actions** (what CRUD actions can be performed) - here you can specify which actions are allowed to be performed. These can be: Create, Read, Update and Delete. For Channels you have specific actions: Subscribe (read) and Publish (write). 
+4. **Filters** - for actions you can use additional filtering options to specify access of current namespace, api or user. It is useful when you want to segrigate data access for different instances of your business(offices, e-shops, etc).
+We have predefined filter - Owner which says to the platform to filter out only records where user is an owner. It can combine with additional filters to specify even more. All filters joind with **AND** logical operator. Changes for policy applies immediately.
 
 ![Policy](./policy.png)
+
+If namespace or particular user is part of multiple policies, access will be joined via **OR** operations. 
+
+For example:
+1. User A -> Policy 1 -> Has CRUD for Orders dataset
+1. User A -> Policy 2 -> Has R + filter (total>100) for Orders dataset
+
+Result: User A will have full access to Orders dataset as Policy 2 is subset of Police 1
+
 
 ::: tip
 You can create as many policies as you need. All of them will be evaluated during the request. Changes in a policy have an immediate effect. 

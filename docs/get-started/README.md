@@ -79,12 +79,12 @@ To have API key access, you firstly need to create an API key. For this, you nee
 
 After go to the **Policies** section to specify which resources and actions should be made available for this API key. Once you have clicked **Create policy**, the **Subject** should be the newly created API key, in **Resources** select the required Datasets, Filesets or Channels. It is also important to select all allowed actions. These are: Create, Read, Update and Delete.
 
-![Policy setup](./policy.png)
+![Policy setup](./api-policy.png)
 
 ### Access via Project User
 Go to the **Project Users** section and create a new user with an email and password. After this, go to the **Policies** area and click **Create policy**. As the **Subject** you should select **All Users**. When selecting the **Resources** needed, select the required Datasets, Filesets or Channels as well as actions. Once this has been done, all registered and activated users will have access to the resources selected.
 
-![AllUsers policy](./allusers.png)
+![AllUsers policy](./policy.png)
 
 ## Interacting with data
 Now let's make simple CRUD to access our Dataset. For this, you can use the REST API or one of our SDKs. Our [JS SDK](https://www.npmjs.com/package/jexia-sdk-js) is built on top of the RxJS library, so you can use all the power of this library. Other SDKs can be found on our [GitHub](https://github.com/jexia).
@@ -98,7 +98,7 @@ npm install jexia-sdk-js node-fetch ws --save
 
 Below you can see an example with all the modules imported into the project. These are optional. If you do not need to access Filesets, Project Users (UMSModule) or real-time events, feel free to skip importing them.  
 
-<CodeSwitcher :languages="{js:'JavaScript', bash:'cURL'}">
+<CodeSwitcher :languages="{js:'Node', html:'Browser', bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
@@ -144,6 +144,50 @@ selectQuery.subscribe(records => {
 });
 ```
 </template>
+<template v-slot:html>
+
+``` html
+<html>
+<head>
+     <script src="https://unpkg.com/jexia-sdk-js/bundle/browser.umd.min.js"></script>
+</head>
+<body>
+<i>loading...</i>
+<ul></ul>
+<script type="text/javascript">
+  window.onload = function() {
+    if (!jexia) {
+      throw new Error("Please check inform support team of Jexia.");
+    }
+    //Initialize dataOperationsModule
+    const dataModule = jexia.dataOperations();
+    const credentials = {
+      projectID: "<your-project-id>",
+      key: "<your-project-api-key>",
+      secret: "<your-project-api-secret>",
+    };
+    jexia.jexiaClient().init(credentials, dataModule);
+    const postsList = document.querySelector("ul");
+    dataModule.dataset("posts")
+      .select()
+      .execute()
+      .then((posts) => {
+        posts.forEach((post) => {
+          const postTitle = document.createElement("li");
+          postTitle.innerText(post.title);
+          postsList.appendChild(postTitle);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+</script>
+</body>
+</html>
+```
+
+</template>
 <template v-slot:bash>
 
 ``` bash
@@ -181,13 +225,14 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 
 ## Delete project
 
-To delete your project you need to first remove the application from within the **Application Hosting** section. Then go to **Settings** and click **Delete**, you would need to provide your password to ensure it's you.
-
+To delete your project you need to first remove the application from within the **Application Hosting** section. Then go to **Settings** and click **Delete**, with this email with one time token will be sent to your email. Please use this token to confirm project deletion. 
+![Delete project](./delete_prj.png)
+![Confirm project deletion](./delete_prj_otp.png)
 ::: danger
 Please, be aware. All data will be deleted and we will not be able to restore it. Please, use these function carefully.
 :::
 
-![Delete project](./delete_prj.png)
+
 
 ## Collaboration 
 With collaboration, you can share work with members of your team. You can invite them to help with setting up, helping with a deployment and other administration work. This can speed up the development process and decrease the overall delivery time. Currently, you can only invite users with a Jexia account.   
