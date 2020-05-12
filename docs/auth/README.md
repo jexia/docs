@@ -106,7 +106,7 @@ curl -H "Authorization: Bearer $API_TOKEN"
 </CodeSwitcher>
 
 ::: warning
-Keep in mind at this point in time only JS SDK is automatically refresh access token. If you use REST API or Python SDK you need to handle this situation by your own. Token live time 2h 
+Keep in mind at this point in time only the JS SDK automatically refreshes the access token. If you use the REST API or the Python SDK you need to handle this situation yourself. Each token lasts 2 hours. 
 :::
 
 ## Project Users
@@ -114,11 +114,11 @@ Another way to authenticate within Jexia is to use **Project Users**. Usually, y
 
 ![UMS Users](./ums-2.png)
 
-After this, you need go to the **Policies** section and create a new policy, ensuring that **Subject** is selected for some specific **Namespace** or **User account** and **Resource** are selected to specific dataset, fileset or AllUsers(for user table) what you want these users be able to run actions. Finally, select all **Actions** you wanted these users to perform.
+After this, you need go to the **Policies** section and create a new policy, ensuring that **Subject** is selected for a specific **Namespace** or **User account** and the **Resource** is selected to the specific dataset, fileset or the 'AllUsers' option (for user table) if you want these users to be able to run the actions. Finally, select all **Actions** you wanted these users to perform.
 
 ![Policy](./policy.png)
 
-This will allow any user from namespace `registered` or user with email `admin@x.com` to have Update & Delete operations for all own records and Read operation for all records which has schema field `confirmed` equal to `true`
+This will allow any user from the namespace `registered` or the user with the email `admin@x.com` to have **Update & Delete** operations for all their records and the **Read** operation for all the records which have a schema field `confirmed` equal to `true`.
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:py>
@@ -196,7 +196,7 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 </CodeSwitcher>
 
 ::: warning
-Keep in mind at this point in time only JS SDK is automatically refresh access token. If you use REST API or Python SDK you need to handle this situation by your own. Token live time 2h 
+Keep in mind at this point in time only the JS SDK automatically refreshes the access token. If you use the REST API or the Python SDK you need to handle this situation yourself. Each token lasts 2 hours. 
 :::
 
 ## Policies
@@ -208,15 +208,15 @@ Currently, you cannot manipulate a **policy** via the API. All admin actions are
 _* video shows previous version of policy screen_
 
 There are four main areas within a **Policy**:
-1. **Subject** (who has access) - can be an **API key**, **Namespace** (grouped users under the same name), **User account**.
+1. **Subject** (who has access) - can be an **API key**, **Namespace** (grouped users under the same name) or a **User account**.
 2. **Resources** (access to what) - can be any dataset, fileset or channel. Selecting **All Users** means you allow  operations for all Project Users. 
 3. **Actions** (what CRUD actions can be performed) - here you can specify which actions are allowed to be performed. These can be: Create, Read, Update and Delete. For Channels you have specific actions: Subscribe (read) and Publish (write). 
-4. **Filters** - for actions you can use additional filtering options to specify access of current namespace, api or user. It is useful when you want to segrigate data access for different instances of your business(offices, e-shops, etc).
-We have predefined filter - Owner which says to the platform to filter out only records where user is an owner. It can combine with additional filters to specify even more. All filters joind with **AND** logical operator. Changes for policy applies immediately.
+4. **Filters** - for actions you can use additional filtering options to specify access of current namespace, API or user. It is useful when you want to segrigate data access for different instances of your business, such as offices and e-shops etc.
+We have a predefined filter - **Owner** which filters and shows only records where the user is an owner. It can be combined with additional filters to specify even more. All filters join with the **AND** logical operator. Changes for a policy are applied immediately.
 
 ![Policy](./policy.png)
 
-If namespace or particular user is part of multiple policies, access will be joined via **OR** operations. 
+If a namespace or particular user is part of multiple policies, access will be joined via the **OR** operator. 
 
 For example:
 1. User A -> Policy 1 -> Has CRUD for Orders dataset
