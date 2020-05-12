@@ -22,7 +22,7 @@ features:
     details: With our Application Hosting you will be able to host you static site and Node applications with ease. 
   
   - title: CLI
-    details: You can integrate Jexia into your CI/CD process by using our CLI tool. 
+    details: You can integrate Jexia into your CI/CD process by using our CLI tool.
 footer: Copyright © 2020 Jexia company
 ---
 

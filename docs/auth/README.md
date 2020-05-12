@@ -25,7 +25,33 @@ For example, let's show how to provide **Read Only** access to our `orders` Data
 
 Using the automatically generated API, we can now interact with our data. 
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+JEXIA_PROJECT_ID = ''
+JEXIA_API_KEY = ''
+JEXIA_API_SECRET = ''
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='apk',
+      key=JEXIA_API_KEY,
+      secret=JEXIA_API_SECRET,
+  )
+  res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          cond='[{"field":"dislike"},"=",true]',
+          outputs='["id","total","title"]'
+        ) 
+  print(res)
+  
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -94,7 +120,36 @@ After this, you need go to the **Policies** section and create a new policy, ens
 
 This will allow any user from namespace `registered` or user with email `admin@x.com` to have Update & Delete operations for all own records and Read operation for all records which has schema field `confirmed` equal to `true`
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+
+JEXIA_PROJECT_ID = 'project_id'
+USER_EMAIL = 'admin@x.com'
+USER_PASSWORD = 'secret-password'
+
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='ums',
+      email=USER_EMAIL,
+      password=USER_PASSWORD
+  )
+  # Make future requests with user access rights
+  res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          cond='[{"field":"dislike"},"=",true]',
+          outputs='["id","total","title"]'
+        ) 
+  print(res)
+  
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -109,9 +164,12 @@ jexiaClient().init({
 
 // Sign in with the user created in your Jexia project
 ums.signIn({  
-  email: 'user@jexia.com',  
+  email: 'admin@x.com',  
   password: 'secret-password'
-});  
+}).subscribe(
+  data=>{ ...do future selects... },
+  error=>{... error handle...}
+);  
 ```
 </template>
 <template v-slot:bash>
@@ -119,7 +177,7 @@ ums.signIn({
 ``` bash
 # Environment variables to be set
 export PROJECT_ID=<project_id>
-export TEST_USER=<user_here>
+export TEST_USER=admin@x.com
 export TEST_USER_PSW=<password_here>
 
 # save UMS token to our environment in case we need to access Project Users

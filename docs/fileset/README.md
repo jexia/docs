@@ -38,7 +38,40 @@ Each request consists of two parts:
 
 2. **file record** - It contains the actual file.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+
+JEXIA_PROJECT_ID = 'project_id'
+USER_EMAIL = 'user@jexia.com'
+USER_PASSWORD = 'secret-password'
+
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='ums',
+      email=USER_EMAIL,
+      password=USER_PASSWORD
+  )
+  data = {
+     "email":"user@email"
+  }
+  files = open('./file.txt','rb')
+  
+  res = client.request(
+          method='POST',
+          data=user,
+          files=files,
+          url='/fs/<fileset-name>'
+        ) 
+  print(res)
+  
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -66,6 +99,8 @@ const records = [{
 
 fileset.upload(records).subscribe(fileRecord => {
   console.log(fileRecord);
+}, err=>{
+  console.log(err)
 });
 
 ```
@@ -128,7 +163,21 @@ If you do not have real-time available for your project, you can do a request to
 It's possible to query a fileset in the same way as datasets. The only difference is when performing an insert query, you need to use the `upload()` method instead.
 All fileset records will have fields such as name, size, URL, etc. These fields, as well as any custom fields, can be used for select queries. Please keep in mind that these default fields are immutable.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+...
+  res = client.request(
+          method='GET',
+          url='/fs/<fileset-name>',
+          cond=[{"field":"size"},">",1024000]
+        ) 
+  print(res)
+  
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -136,7 +185,10 @@ jfs.fileset("fileset_name")
  .select()
  .fields("name", "url")  
  .where(field => field("size").isGreaterThan(1024000))  
- .subscribe();  
+ .subscribe(
+   data=>{},
+   err=>{}
+ );  
 
 // Array of files that fit to the condition will be returned  
 // files === [{ name: "file1.jpj", url: "https://..." }, {...}, ...]  
@@ -160,22 +212,39 @@ Updating a fileset works the same way as a dataset.
 Updating a fileset record with a new file is not supported. Only the metadata can be changed. If you need to upload a new file, please create a new record. 
 :::
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 jfs.fileset("fileset_name")  
  .update({ "isDefaultImage": false })  
  .where(field => field("name").isEqualTo("companyLogo.png"))
- .subscribe();  
+ .subscribe(data=>{}, err=>{});  
 ```
+</template>
+<template v-slot:py>
+
+``` py
+...
+  to_update={
+    "id":"3005a8f8-b849-4525-b535-a0c765e1ef8e",
+    "isDefaultImage":false
+  }
+  res = client.request(
+          method='PATCH',
+          data=to_update,
+          url='/fs/<fileset-name>'
+        ) 
+  print(res)
+  
+```
+
 </template>
 <template v-slot:bash>
 
 ``` bash
 $ curl -s 
 -H "Authorization: Bearer $JEXIA_TOKEN" -d '{
-  "id":"3005a8f8-b849-4525-b535-a0c765e1ef8e",
   "isDefaultImage":false
 }'
 -X PATCH "https://$PROJECT_ID/ds/fileset_name?cond=\[\{\"field\":\"size\"\},\">\",1024000\]" | jq .
@@ -187,15 +256,28 @@ $ curl -s
 
 ## Delete a File (metadata)
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 jfs.fileset("fileset_name")  
  .delete()  
  .where(field => field("size").isGreaterThan(1024000))  
- .subscribe();
+ .subscribe(data=>{},err=>{});
 ```
+</template>
+<template v-slot:py>
+
+``` py
+  res = client.request(
+          method='DELETE',
+          url='/fs/<fileset-name>',
+          cond=[{"field":"size"},">",1024000]
+        ) 
+  print(res)
+  
+```
+
 </template>
 <template v-slot:bash>
 
