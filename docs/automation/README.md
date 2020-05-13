@@ -27,20 +27,20 @@ An example of this is below:
 <template v-slot:py>
 
 ``` py
-...
-  #to request password reset
-  res = client.request(
-          method='POST',
-          data={"email":"user@email"},
-          url='/ums/resetpassword/'
-        ) 
-  #to apply changes
-  res = client.request(
-          method='POST',
-          data={"new_password": "jexia_super"},
-          url='ums/resetpassword/token' #token - user will get by email if you have Integration for SMTP
-        ) 
-  print(res)
+ # to request password reset
+res = client.request(
+      method='POST',
+      data={"email": "user@email"},
+      url='/ums/resetpassword/'
+    )
+# to apply changes
+res = client.request(
+      method='POST',
+      data={"new_password": "jexia_super"},
+      # token - user will get by email if you have Integration for SMTP
+      url='ums/resetpassword/token'
+    )
+print(res)
   
 ```
 
@@ -72,7 +72,7 @@ curl
 curl 
 -X POST -d '{
   "new_password": "jexia_super"
-}' "https://$PROJECT_ID.app.jexia.com/ums/resetpassword/"+token | jq .
+}' "https://$PROJECT_ID.app.jexia.com/ums/resetpassword/token" | jq .
 ```
 
 </template>

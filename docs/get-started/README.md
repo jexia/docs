@@ -121,12 +121,7 @@ easy_install jexia-sdk
 <template v-slot:bash>
 
 ``` bash
-# Environment variables to be set
-export PROJECT_ID=<project_id>
-export API_KEY=<key_here>
-export API_SECRET=<secret_here>
-export TEST_USER=<user_here>
-export TEST_USER_PSW=<password_here>
+cURL should be intalled
 ```
 
 </template>
@@ -261,25 +256,26 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 
 ``` py
 from jexia_sdk.http import HTTPClient
+
 JEXIA_PROJECT_ID = ''
 JEXIA_API_KEY = ''
 JEXIA_API_SECRET = ''
+
 if __name__ == '__main__':
-  client = HTTPClient()
-  client.auth_consumption(
+    client = HTTPClient()
+    client.auth_consumption(
       project=JEXIA_PROJECT_ID,
       method='apk',
       key=JEXIA_API_KEY,
       secret=JEXIA_API_SECRET,
-  )
-  res = client.request(
-          method='GET', 
+    )
+    res = client.request(
+          method='GET',
           url='/ds/orders',
           cond='[{"field":"dislike"},"=",true]',
           outputs='["id","total","title"]'
-        ) 
-  print(res)
-  
+    )
+    print(res)  
 ```
 
 </template>

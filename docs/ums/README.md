@@ -22,13 +22,15 @@ jexiaClient().init({
 }, ums); 
 
 ums.signUp({    
-  email: "user@company.com",    
-  password: "my_password", 
-  age: 25, 
-  address: { 
+    email: "user@company.com",    
+    password: "my_password"
+  }, 
+  {
+    age: 25, 
+    address: { 
       city: "Apeldoorn",
       country: "NL"
-  }
+    }
   }).subscribe(
     user => {..do something with registered user}, 
     error=>{..handle error}
@@ -46,24 +48,24 @@ USER_EMAIL = 'user@jexia.com'
 USER_PASSWORD = 'secret-password'
 
 if __name__ == '__main__':
-  client = HTTPClient()
-  user = {
-    "email": "user@company.com",
-    "password": "my_password",
-    "age": 25, 
-    "address": { 
-        "city": "Apeldoorn",
-        "country": "NL"
-    }
-  }
-  #to request password reset
-  res = client.request(
+    client = HTTPClient()
+    user = {{
+      "email": "user@company.com",
+      "password": "my_password"
+    }, {
+        "age": 25,
+        "address": {
+            "city": "Apeldoorn",
+            "country": "NL"
+        }
+    }}
+    # to request password reset
+    res = client.request(
           method='POST',
           data=user,
           url='/ums/signup'
-        ) 
-  print(res)
-  
+    )
+    print(res)
 ```
 
 </template>
@@ -196,13 +198,11 @@ ums.getUser('elon@tesla.com').subscribe(user => {}, error=>{});
 <template v-slot:py>
 
 ``` py
-...
-  currUser = client.request(
-                method='GET',
-                url='/ums/user/'
-              ) 
-  print(currUser)
-  
+currUser = client.request(
+            method='GET',
+            url='/ums/user/'
+          ) 
+print(currUser)
 ```
 
 </template>
@@ -235,13 +235,10 @@ ums.deleteUser('Elon@tesla.com', password)
 <template v-slot:py>
 
 ``` py
-...
-  res = client.request(
-          method='DELETE',
-          url='/ums/user/'
-        ) 
-  print(res)
-  
+res = client.request(
+        method='DELETE',
+        url='/ums/user/'
+      ) 
 ```
 
 </template>
@@ -273,18 +270,16 @@ ums
 <template v-slot:py>
 
 ``` py
-...
-  user = {
-      "new_password": "my_new_password",
-      "old_password": "my_old_password"
-  }
-  res = client.request(
-          method='POST',
-          data=user,
-          url='/ums/changepassword/'
-        ) 
-  print(res)
-  
+user = {
+    "new_password": "my_new_password",
+    "old_password": "my_old_password"
+}
+res = client.request(
+        method='POST',
+        data=user,
+        url='/ums/changepassword/'
+      ) 
+print(res)  
 ```
 
 </template>
@@ -324,24 +319,23 @@ ums
 <template v-slot:py>
 
 ``` py
-...
-  user = {
-     "email":"user@email"
-  }
-  #to request password reset
-  res = client.request(
-          method='POST',
-          data=user,
-          url='/ums/resetpassword/'
-        ) 
-  #to apply changes
-  res = client.request(
-          method='POST',
-          data={"new_password": "jexia_super"},
-          url='ums/resetpassword/token' #token - user will get by email if you have Integration for SMTP
-        ) 
-  print(res)
-  
+user = {
+    "email": "user@email"
+}
+# to request password reset
+res = client.request(
+      method='POST',
+      data=user,
+      url='/ums/resetpassword/'
+    )
+# to apply changes
+res = client.request(
+      method='POST',
+      data={"new_password": "jexia_super"},
+      # token - user will get by email if you have Integration for SMTP
+      url='ums/resetpassword/token'
+    )
+print(res)  
 ```
 
 </template>

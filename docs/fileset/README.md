@@ -59,15 +59,14 @@ if __name__ == '__main__':
   data = {
      "email":"user@email"
   }
-  files = open('./file.txt','rb')
-  
-  res = client.request(
-          method='POST',
-          data=user,
-          files=files,
-          url='/fs/<fileset-name>'
-        ) 
-  print(res)
+  with open('./file.txt','rb') as file:
+    res = client.request(
+        method='POST',
+        data=user,
+        files=file,
+        url='/fs/<fileset-name>'
+    )
+    print(res)
   
 ```
 
@@ -167,14 +166,12 @@ All fileset records will have fields such as name, size, URL, etc. These fields,
 <template v-slot:py>
 
 ``` py
-...
-  res = client.request(
-          method='GET',
-          url='/fs/<fileset-name>',
-          cond=[{"field":"size"},">",1024000]
-        ) 
-  print(res)
-  
+res = client.request(
+        method='GET',
+        url='/fs/<fileset-name>',
+        cond=[{"field":"size"},">",1024000]
+      ) 
+print(res)
 ```
 
 </template>
@@ -225,18 +222,16 @@ jfs.fileset("fileset_name")
 <template v-slot:py>
 
 ``` py
-...
-  to_update={
-    "id":"3005a8f8-b849-4525-b535-a0c765e1ef8e",
-    "isDefaultImage":false
-  }
-  res = client.request(
-          method='PATCH',
-          data=to_update,
-          url='/fs/<fileset-name>'
-        ) 
-  print(res)
-  
+to_update={
+  "id":"3005a8f8-b849-4525-b535-a0c765e1ef8e",
+  "isDefaultImage":false
+}
+res = client.request(
+        method='PATCH',
+        data=to_update,
+        url='/fs/<fileset-name>'
+      ) 
+print(res)
 ```
 
 </template>

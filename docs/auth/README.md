@@ -30,25 +30,26 @@ Using the automatically generated API, we can now interact with our data.
 
 ``` py
 from jexia_sdk.http import HTTPClient
+
 JEXIA_PROJECT_ID = ''
 JEXIA_API_KEY = ''
 JEXIA_API_SECRET = ''
+
 if __name__ == '__main__':
-  client = HTTPClient()
-  client.auth_consumption(
-      project=JEXIA_PROJECT_ID,
-      method='apk',
-      key=JEXIA_API_KEY,
-      secret=JEXIA_API_SECRET,
-  )
-  res = client.request(
-          method='GET', 
-          url='/ds/orders',
-          cond='[{"field":"dislike"},"=",true]',
-          outputs='["id","total","title"]'
-        ) 
-  print(res)
-  
+    client = HTTPClient()
+    client.auth_consumption(
+        project=JEXIA_PROJECT_ID,
+        method='apk',
+        key=JEXIA_API_KEY,
+        secret=JEXIA_API_SECRET,
+    )
+    res = client.request(
+        method='GET',
+        url='/ds/orders',
+        cond='[{"field":"dislike"},"=",true]',
+        outputs='["id","total","title"]'
+    )
+    print(res)
 ```
 
 </template>
@@ -131,22 +132,21 @@ USER_EMAIL = 'admin@x.com'
 USER_PASSWORD = 'secret-password'
 
 if __name__ == '__main__':
-  client = HTTPClient()
-  client.auth_consumption(
+    client = HTTPClient()
+    client.auth_consumption(
       project=JEXIA_PROJECT_ID,
       method='ums',
       email=USER_EMAIL,
       password=USER_PASSWORD
-  )
-  # Make future requests with user access rights
-  res = client.request(
-          method='GET', 
+    )
+    # Make future requests with user access rights
+    res = client.request(
+          method='GET',
           url='/ds/orders',
           cond='[{"field":"dislike"},"=",true]',
           outputs='["id","total","title"]'
-        ) 
-  print(res)
-  
+    )
+    print(res)
 ```
 
 </template>
@@ -177,7 +177,7 @@ ums.signIn({
 ``` bash
 # Environment variables to be set
 export PROJECT_ID=<project_id>
-export TEST_USER=admin@x.com
+export TEST_USER=<user_here>
 export TEST_USER_PSW=<password_here>
 
 # save UMS token to our environment in case we need to access Project Users
