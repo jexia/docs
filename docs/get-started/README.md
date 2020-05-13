@@ -1,11 +1,13 @@
 # Getting Started
-**Jexia** - platform that provides backend as a service solution, with a nice set of tools to cover most of the routine tasks during the development and operation process. 
+**Jexia** is a Backend-as-a-Service (BaaS) solution featuring a comprehensive set of tools to cater for most of the routine tasks specific to the application development and operations processes. 
+
 ![About Jexia](./about.png)
-By using Jexia you can save time by skipping development and integration for basic services, as well as host your application on our cloud and do not spend time for preparing, scale, secure and monitoring your environments.   
+
+By using Jexia, you save time through the integration of existing, [basic services](#services) ([data](/dataset/) and [file](/fileset/) storage, [user management](/ums/), [authentication](/auth/), etc.) rather than developing them yourself. Moreover, you can [host your application](/apphost/) on the Jexia cloud thus eliminating the need to prepare, secure, scale, and monitor your environments.
 
 ## Create a project
 
-**Jexia** is a platform with a set of services natively integrated between each other which takes out the routine task for application development and operation. The good thing is that you can use services together or independently. It gives you the flexibility to choose the functionality that you need and allows easy integration with your projects via our REST API and SDKs.  
+The **Jexia** platform encompasses a set of natively integrated services which take out the routine tasks of application development and operations. You can use these services either together or independently of each other, giving you the flexibility to choose only those functionalities that you need while allowing easy integration with your projects via our REST API and SDKs.
 
 You can [create](https://app.jexia.com/signup) your Jexia account by using an email or GitHub account.
 
@@ -29,12 +31,12 @@ You can have a maximum of **3** projects on the free plan, after you need to upg
 1. **Deploy Application** - This area allows you to **host applications in the cloud**. You can fetch an application directly from a git repository and deploy it on our cloud. Currently, you can host your Node JS application, your Docker images or simply static files.
 
 ## Services
-1. **Datasets** - these are used to store your application data. For example products, orders, transactions, configurations and anything else.
-1. **Filesets** - these are used to manage files for your application. For example avatars, blog images, product images, pdf documents and any other file you may need.
-1. **Relations** - these provide an easy way to establish data relations between Datasets, Filesets and Project Users. It allows you to get related data within one request. But, no need to worry, all connections and optimizations are managed by Jexia.    
-1. **RTC Channels** - these are used to organize **Pub/Sub** solutions such as chats, online games and any other real-time application. We also provide a built-in real-time notification functionality for Datasets, Filesets and Project User modules.
-1. **Project Users** - these are the users within your application. Within this module, you can perform some specific functions, such as **changing passwords**, **creating users** and **deleting users** as well as supporting standard the CRUD approach over your API. You can choose any approach.
-1. **Automation** - this module allows you to set up actions that will run based on when different events occur.
+1. [**Datasets**](/dataset/) - these are used to store your application data. For example products, orders, transactions, configurations and anything else.
+1. [**Filesets**](/fileset/) - these are used to manage files for your application. For example avatars, blog images, product images, pdf documents and any other file you may need.
+1. [**Relations**](/dataset/#related-data) - these provide an easy way to establish data relations between Datasets, Filesets and Project Users. It allows you to get related data within one request. But, no need to worry, all connections and optimizations are managed by Jexia.    
+1. [**RTC Channels**](/pubsub/) - these are used to organize **Pub/Sub** solutions such as chats, online games and any other real-time application. We also provide a built-in real-time notification functionality for Datasets, Filesets and Project User modules.
+1. [**Project Users**](/ums/) - these are the users within your application. Within this module, you can perform some specific functions, such as **changing passwords**, **creating users** and **deleting users** as well as supporting standard the CRUD approach over your API. You can choose any approach.
+1. [**Automation**](/automation/) - this module allows you to set up actions that will run based on when different events occur.
 
 ## Access control
 1. **API-Keys** - module for generating API keys. You can make keys that allow access to public data, private data or partners etc. By default, all data is private. Different access levels can be set via a **Policy**.

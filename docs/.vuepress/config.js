@@ -20,7 +20,8 @@ module.exports = {
         displayAllHeaders: false,
         nav: [
           { text: "SignUp", link: "https://app.jexia.com/signup" },
-          { text: "Login", link: "https://app.jexia.com/login" }
+          { text: "Login", link: "https://app.jexia.com/login" },
+          { text: "Jexia.com", link: "https://www.jexia.com/"}
         ],
         sidebar: [
             "/get-started/",

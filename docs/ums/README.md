@@ -6,8 +6,11 @@ UMS allows you to organize the sign-in process for your application without any 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/ZjffXZDuoGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
 
 ## Sign-up a User
-UMS uses an email and password as user credentials. You can add as many extra fields as you need to keep all the needed information in one place (username, department and age etc). As for now, all fields are stored as schemaless so you are not able to setup validation or default values. We are working hard to make it available as soon as possible. 
-
+UMS uses an email and password as user credentials.
+You can pass extra fields as second argument to the `ums.signUp()` method. 
+All extra fields will be stored as schemaless (unless you have created appropriated field at the UMS page of 
+our management application https://app.jexia.com) therefore you are able to save as many fields as you need.
+  
 Below you can find an example of how to sign-up a new user. 
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
@@ -95,7 +98,7 @@ Below you can find possible errors that may be returned:
 </template>
 </CodeSwitcher>
 
-After execution, you will receive an array similar to the following object:
+After execution, you will receive a JSON object similar to the following:
 ``` json
 {  
  "id": "005c8679-3fad-46fd-a93f-9484ea8ff738",
@@ -113,7 +116,8 @@ After execution, you will receive an array similar to the following object:
 ```
 
 ## Sign-in a User
-UMS uses an email and password as user credentials.  The user account should already exist in your project to successfully sign them in.
+Provide email and password as user credentials to sign in to the project.  
+The user account should already exist in your project.
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -136,15 +140,16 @@ ums.signIn({
 }, error=>{
   console.log(error)
 });  
-
-
 ```
+
 Additional optional options:
 * **default** - if true, this user account will be used for all further data operations by default.
 * **alias** - account alias, you can use it to clarify which account is going to be used to perform data operation.
 
 ::: tip
-Within Jexia's SDKs there is a possibility to sign-in with many users and run requests with different users. For this, you need to use an alias. If you did not specify under which user to run a query, the SDK will use user with the value **default:true**.   
+Within Jexia's SDKs there is a possibility to sign-in with many users and run requests with different users. 
+For this, you need to use an alias. If you did not specify under which user to run a query, 
+the SDK will use user with the value **default: true**.
 :::
 
 </template>
@@ -183,7 +188,7 @@ export UMS_TOKEN=`curl -X POST -d '{
 </CodeSwitcher>
 
 ## Fetch a User
-To fetch an user you can look at the following methods:
+To fetch a user you can look at the following methods:
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -217,7 +222,6 @@ curl
 </template>
 </CodeSwitcher>
 
- 
 ## Delete a User
 To be able to delete a user, you need to provide a password. This is needed for security reasons.
 You can do user management via CRUD operations. This method is mainly for the current user to delete themselves.
