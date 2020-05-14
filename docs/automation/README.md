@@ -23,15 +23,37 @@ We expect your application will be managing endpoints to generate and accept a n
 
 An example of this is below:
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+ # to request password reset
+res = client.request(
+      method='POST',
+      data={"email": "user@email"},
+      url='/ums/resetpassword/'
+    )
+# to apply changes
+res = client.request(
+      method='POST',
+      data={"new_password": "jexia_super"},
+      # token - user will get by email if you have Integration for SMTP
+      url='ums/resetpassword/token'
+    )
+print(res)
+  
+```
+
+</template>
 <template v-slot:js>
  
 ```js
 // To request email with new token: 
-ums.requestResetPassword('Elon@tesla.com');
+ums.requestResetPassword('Elon@tesla.com').subscribe(user => {}, error=>{}); ;
 
 // To apply newPassword
-ums.resetPassword(Token, newPassword);
+// token - user will get by email if you have Integration for SMTP
+ums.resetPassword(Token, newPassword).subscribe(user => {}, error=>{}); ;
 ```
 
 </template>
@@ -46,6 +68,7 @@ curl
 
 
 # To apply new password
+# token - user will get by email if you have Integration for SMTP
 curl 
 -X POST -d '{
   "new_password": "jexia_super"

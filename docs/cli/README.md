@@ -49,6 +49,6 @@ The development version can be downloaded from [GitHub].
 
 
    [GitHub]: <https://github.com/jexia/jexia-cli>
-   [here]: <https://jexia-cli.readthedocs.io/en/stable/t>
+   [here]: <https://jexia-cli.readthedocs.io/en/stable/>
    [jexia]: <https://www.jexia.com>
 

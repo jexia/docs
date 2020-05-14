@@ -13,7 +13,7 @@ our management application https://app.jexia.com) therefore you are able to save
   
 Below you can find an example of how to sign-up a new user. 
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
@@ -25,15 +25,50 @@ jexiaClient().init({
 }, ums); 
 
 ums.signUp({    
-  email: "user@company.com",    
-  password: "my_password"
-}, {
-  age: 25, 
-  address: { 
+    email: "user@company.com",    
+    password: "my_password"
+  }, 
+  {
+    age: 25, 
+    address: { 
       city: "Apeldoorn",
       country: "NL"
-  }
-}).subscribe(user => console.log(user));  
+    }
+  }).subscribe(
+    user => {..do something with registered user}, 
+    error=>{..handle error}
+  );  
+```
+
+</template>
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+
+JEXIA_PROJECT_ID = 'project_id'
+USER_EMAIL = 'user@jexia.com'
+USER_PASSWORD = 'secret-password'
+
+if __name__ == '__main__':
+    client = HTTPClient()
+    user = {{
+      "email": "user@company.com",
+      "password": "my_password"
+    }, {
+        "age": 25,
+        "address": {
+            "city": "Apeldoorn",
+            "country": "NL"
+        }
+    }}
+    # to request password reset
+    res = client.request(
+          method='POST',
+          data=user,
+          url='/ums/signup'
+    )
+    print(res)
 ```
 
 </template>
@@ -84,7 +119,7 @@ After execution, you will receive a JSON object similar to the following:
 Provide email and password as user credentials to sign in to the project.  
 The user account should already exist in your project.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
@@ -95,15 +130,16 @@ jexiaClient().init({
   projectID: "PROJECT_ID",    
 }, ums); 
 
-const user = ums.signIn({    
+ums.signIn({    
   email: 'Elon@tesla.com',    
   password: 'secret-password',    
   default: true,   
   alias: 'Elon Musk'  
-}).subscribe(() => {
-  ds.dataset('rockets', 'Elon Musk').select();  
-  ds.dataset('rockets').select();
-});
+}).subscribe(user => {
+  // run request with current user token
+}, error=>{
+  console.log(error)
+});  
 ```
 
 Additional optional options:
@@ -115,6 +151,27 @@ Within Jexia's SDKs there is a possibility to sign-in with many users and run re
 For this, you need to use an alias. If you did not specify under which user to run a query, 
 the SDK will use user with the value **default: true**.
 :::
+
+</template>
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+
+JEXIA_PROJECT_ID = 'project_id'
+USER_EMAIL = 'user@jexia.com'
+USER_PASSWORD = 'secret-password'
+
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='ums',
+      email=USER_EMAIL,
+      password=USER_PASSWORD
+  )
+  
+```
 
 </template>
 <template v-slot:bash>
@@ -133,15 +190,26 @@ export UMS_TOKEN=`curl -X POST -d '{
 ## Fetch a User
 To fetch a user you can look at the following methods:
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 // via alias
-getUser('Elon Musk').subscribe(user => console.log(user)); 
+ums.getUser('Elon Musk').subscribe(user => {}, error=>{});    
 // via email 
-ums.getUser('elon@tesla.com').subscribe(user => console.log(user));
+ums.getUser('elon@tesla.com').subscribe(user => {}, error=>{});   
 ```
+</template>
+<template v-slot:py>
+
+``` py
+currUser = client.request(
+            method='GET',
+            url='/ums/user/'
+          ) 
+print(currUser)
+```
+
 </template>
 <template v-slot:bash>
 
@@ -160,12 +228,23 @@ You can do user management via CRUD operations. This method is mainly for the cu
 ::: warning
 This will be deprecated in future versions.
 :::
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
-ums.deleteUser('Elon@tesla.com', password).subscribe(); 
+ums.deleteUser('Elon@tesla.com', password)
+.subscribe(user => {}, error=>{});    
 ```
+</template>
+<template v-slot:py>
+
+``` py
+res = client.request(
+        method='DELETE',
+        url='/ums/user/'
+      ) 
+```
+
 </template>
 <template v-slot:bash>
 
@@ -183,12 +262,30 @@ There are two ways to change the password for a user by using their old password
 
 ### Using Their Password
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
-ums.changePassword('Elon@tesla.com', oldPassword, newPassword).subscribe(); 
+ums
+.changePassword('Elon@tesla.com', oldPassword, newPassword)
+.subscribe(user => {}, error=>{});   
 ```
+</template>
+<template v-slot:py>
+
+``` py
+user = {
+    "new_password": "my_new_password",
+    "old_password": "my_old_password"
+}
+res = client.request(
+        method='POST',
+        data=user,
+        url='/ums/changepassword/'
+      ) 
+print(res)  
+```
+
 </template>
 <template v-slot:bash>
 
@@ -207,15 +304,42 @@ curl
 ### Using the Automation Module
 You need to set up automation which will catch the `UMS: password reset request` event. Then, when you initiate a reset password, the user will get an email with a pre-made template message ([see Automation](/automation)). Inside you should create a link to a page with a new password entry form. From this page you can make a call `resetPassword` with a token from URL, thjs will allow Jexia to handle the request and apply changes to the new user to enable a new password.     
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
  
 ```js
 // To request email with new token: 
-ums.requestResetPassword('Elon@tesla.com').subscribe();
+ums
+.requestResetPassword('Elon@tesla.com')
+.subscribe(user => {}, error=>{});   
 
 // To apply newpassword
-ums.resetPassword(Token, newPassword).subscribe();
+ums
+.resetPassword(Token, newPassword)
+.subscribe(user => {}, error=>{});   
+```
+
+</template>
+<template v-slot:py>
+
+``` py
+user = {
+    "email": "user@email"
+}
+# to request password reset
+res = client.request(
+      method='POST',
+      data=user,
+      url='/ums/resetpassword/'
+    )
+# to apply changes
+res = client.request(
+      method='POST',
+      data={"new_password": "jexia_super"},
+      # token - user will get by email if you have Integration for SMTP
+      url='ums/resetpassword/token'
+    )
+print(res)  
 ```
 
 </template>
@@ -247,23 +371,36 @@ For this you need to create a policy with the following values:
 * **Subject**: All Users 
 * **Resource**: All Users
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 // Select all active users  
 ums.select()  
  .where(field => field("active").isEqualTo(true))  
- .subscribe();  
+ .subscribe(user => {}, error=>{});   
 // Suspend Elon! 
 ums.update({ active: false })  
  .where(field => field("email").isEqualTo("Elon@tesla.com"))  
- .subscribe();  
+ .subscribe(user => {}, error=>{});    
 // Delete all suspended users  
 ums.delete()  
  .where(field => field("active").isEqualTo(false))  
- .subscribe(); 
+ .subscribe(user => {}, error=>{});   
 ```
+</template>
+<template v-slot:py>
+
+``` py
+  res = client.request(
+          method='GET',
+          url='/ums/users',
+          cond='[....]'
+        ) 
+  print(res)
+  
+```
+
 </template>
 <template v-slot:bash>
 

@@ -66,7 +66,40 @@ To create a record in Jexia's dataset you need to create an action within either
 Please keep in mind that the API always returns an array of records, even if you only insert one record. Because of this, you can apply the same approach for data manipulation. 
 :::
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+
+JEXIA_PROJECT_ID = 'project_id'
+USER_EMAIL = 'user@jexia.com'
+USER_PASSWORD = 'secret-password'
+
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='ums',
+      email=USER_EMAIL,
+      password=USER_PASSWORD
+  )
+  to_save = {
+    'title':"Order1",
+    'total':10,
+    'verified':false
+  }
+  res = client.request(
+          method='POST',
+          data=to_save,
+          url='/ds/orders',
+          outputs='["id"]'
+        ) 
+  print(res)
+  
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -78,32 +111,38 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
 }, ds, ums);
 
-async function main() {
-  const user = await ums.signIn({    
+  ums.signIn({    
     email: 'Elon@tesla.com',    
     password: 'secret-password'
-  });  
+  }).subscribe(
+    data=>{
+      let orders_data = [{
+            "title":"Order1",
+            "total":10,
+            "verified":false
+        }, {
+            "title":"Order2",
+            "total":100,
+            "verified":false
+        }]
+        const orders = ds.dataset("orders");
+        const insertQuery = orders.insert(orders_data);  
+        insertQuery.subscribe(records => { 
+            // You will always get an array of created records, including their 
+            // generated IDs (even when inserting a single record) 
+          }, 
+          error => { 
+            // If something goes wrong, the error information is accessible here 
+        });
+    },
+    error=>{
+      console.log(error)
+    }
+  );  
 
-  let orders_data = [{
-      "title":"Order1",
-      "total":10,
-      "verified":false
-  }, {
-      "title":"Order2",
-      "total":100,
-      "verified":false
-  }]
-  const orders = ds.dataset("orders");
-  const insertQuery = orders.insert(orders_data);  
-  insertQuery.subscribe(records => { 
-      // You will always get an array of created records, including their 
-      // generated IDs (even when inserting a single record) 
-    }, 
-    error => { 
-      // If something goes wrong, the error information is accessible here 
-  });
+  
 }
-main()
+
 ```
 </template>
 <template v-slot:bash>
@@ -159,7 +198,37 @@ After execution, you will receive an array similar to the following array of obj
 ## Read a record
 To fetch your data you need to have the **Read** action selected on a policy which also contains the particular resource you are trying to access. You can apply different filters to get specific data. In the following example you can see an API key usage as the most common approach.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+JEXIA_PROJECT_ID = ''
+JEXIA_API_KEY = ''
+JEXIA_API_SECRET = ''
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='apk',
+      key=JEXIA_API_KEY,
+      secret=JEXIA_API_SECRET,
+  )
+  res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          cond='[{"field":"dislike"},"=",true]',
+          #cond=[{"field":"total"},"null",true, "or", {"field":"total"},"in",["1","2"]]
+          #cond=[[{"field":"title"},"null",false, "or", {"field":"total"},"in",["1","2"]], "and", {"field":"created_at"}, ">", "24h"]
+          #cond=[{"field":"title"},"regexp","^A", "and", {"field":"total"},">",21]
+          #cond=[{"field":"some.field"},"null", false]
+          outputs='["id","total","title"]',
+          range='{"limit": 10}'
+        ) 
+  print(res)
+```
+
+</template>
 <template v-slot:js>
 
 Due to the JS SDK being built on top of RxJS. Once installed, you can use the power of the RxJS library and use all available methods provided by this library.  
@@ -276,7 +345,31 @@ Some examples can be seen below using the Project User method.
 
 When you perform a Delete action, you will get back an array of affected records so you can sync changes with your front-end application.  
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+JEXIA_PROJECT_ID = ''
+USER_EMAIL = ''
+USER_PASSWORD = ''
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='ums',
+      key=USER_EMAIL,
+      secret=USER_PASSWORD
+  )
+  res = client.request(
+          method='DELETE', 
+          url='/ds/orders',
+          cond='[{"field":"id"},"=","2a51593d-e99f-4025-b20b-159e226fc47d"]'
+        ) 
+  print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -290,26 +383,31 @@ const ums = new UMSModule();
 jexiaClient().init({
   projectID: "project_id",
 }, ds, ums);
-async function main() {
-  const user = await ums.signIn({    
+
+ums.signIn({    
     email: 'Elon@tesla.com',    
     password: 'secret-password'
-  });
+}).subscribe(
+  good=>{
+    const orders = ds.dataset("orders");
+    const deleteQuery = orders
+    .delete()
+    .where(field => field("id").isEqualTo("2a51593d-e99f-4025-b20b-159e226fc47d"));  
 
-  const orders = ds.dataset("orders");
-  const deleteQuery = orders
-  .delete()
-  .where(field => field("verified").isEqualTo(true));  
+    deleteQuery.subscribe(
+      records => { 
+        // You will always get an array of created records, including their 
+        // generated IDs (even when inserting a single record) 
+      }, 
+      error => { 
+        // If something goes wrong, the error information is accessible here 
+    });
+  },
+  error=>{
+    console.log(error)
+  }
+);
 
-  deleteQuery.subscribe(records => { 
-      // You will always get an array of created records, including their 
-      // generated IDs (even when inserting a single record) 
-    }, 
-    error => { 
-      // If something goes wrong, the error information is accessible here 
-  });
-}
-main()
 ```
 </template>
 <template v-slot:bash>
@@ -348,12 +446,41 @@ When you perform an Update action, you will get back an array of affected record
 You can add an `id` field into the update object, Jexia will find and update it automatically.
 :::
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+JEXIA_PROJECT_ID = ''
+USER_EMAIL = ''
+USER_PASSWORD = ''
+if __name__ == '__main__':
+  client = HTTPClient()
+  client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='ums',
+      key=USER_EMAIL,
+      secret=USER_PASSWORD
+  )
+  #if you will have ID in objects you do not need cond='....'
+  to_save={
+              'id':'recID',
+              'verified':true
+          }
+  res = client.request(
+          method='PUT', #PATCH - partial update for record
+          data=to_save, 
+          url='/ds/orders'
+        ) 
+  print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
 import { jexiaClient, UMSModule, dataOperations } from "jexia-sdk-js/node"; 
-// to use .where and .outputs
+// to use .where(field("total").isBetween(0,50)) and .outputs
 import { field } from "jexia-sdk-js/node"; 
 
 const ds = dataOperations();                      
@@ -363,26 +490,31 @@ jexiaClient().init({
   projectID: "project_id",
 }, ds, ums);
 
-async function main() {
-  const user = await ums.signIn({    
+ums.signIn({    
     email: 'Elon@tesla.com',    
     password: 'secret-password'
-  });
+}).subscribe(
+  user=>{
+    const orders = ds.dataset("orders");
+    const updateQuery = orders
+      .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }]) // To update 1 record with specific ID
+      //.where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg'))); // To update update batch of records 
 
-  const orders = ds.dataset("orders");
-  const updateQuery = orders
-    .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }]) // To update 1 record with specific ID
-    //.where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg'))); // To update update batch of records 
+    updateQuery.subscribe(records => { 
+        // You will always get an array of created records, including their 
+        // generated IDs (even when inserting a single record) 
+      }, 
+      error => { 
+        // If something goes wrong, the error information is accessible here 
+    });
+  },
+  error=>{
+    console.log(error)
+  }
+)
 
-  updateQuery.subscribe(records => { 
-      // You will always get an array of created records, including their 
-      // generated IDs (even when inserting a single record) 
-    }, 
-    error => { 
-      // If something goes wrong, the error information is accessible here 
-  });
-}
-main()
+  
+
 ```
 </template>
 <template v-slot:bash>
@@ -449,16 +581,35 @@ Another cool thing, as soon as you set up a relation, you can insert an object w
 ```
 During fetching data you can specify if you want to get only the parent or parent and child data.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+...
+
+  res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          outputs=["items.qty"],
+          range='{"limit": 10}'
+        ) 
+  print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
 sdk.dataset("orders")
   .select()
   .related("items", items => items.fields("qty"))
-  .subscribe(res => {
-    console.log(res);
-  });
+  .subscribe(
+    res => {
+      console.log(res);
+    },
+    error=>{
+      console.log(error)
+    });
 ```
 </template>
 <template v-slot:bash>
@@ -506,7 +657,21 @@ Please keep in mind that currently it is not possible to make a relation with a 
 ## Multi-level Relations
 You can have multiple levels of relation. For example: _Article / Comments / Author / Salary_. With Jexia you can build such a case and you will be able to fetch all data in one response.  
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+...
+  res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          outputs=["article.comments.author.name", "article.comments.author.employee.salary"],
+          range='{"limit": 10}'
+        ) 
+  print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -521,7 +686,7 @@ dom.dataset("article")
       )
     )
   )
-  .subscribe()
+  .subscribe(...)
 ```
 </template>
 <template v-slot:bash>
@@ -540,7 +705,23 @@ GET /ds/article?outputs=["article.comments.author.name", "article.comments.autho
 If you need create a relation between already existing data, you can use the `.attach()` and `.detach()` methods.
 For this you need to specify which parent for which you want to attach the child record. In the example that follows, it is creating a relation between order (with id = my_uuid ) and two `items` objects with the IDs `b4961b6a-85a2-4ee8-b946-9001c978c801` and `e199d460-c88f-4ab9-8373-1d6ad0bd0acb`. 
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+    ....
+    res = client.request(
+          method='PUT', 
+          url='/ds/orders',
+          cond='[{"field":"id"},"=","b4961b6a-85a2-4ee8-b946-9001c978c801"]',
+          action='attach',
+          action_resource='items',
+          action_cond='[{"field":"id"},"in",["b4961b6a-85a2-4ee8-b946-9001c978c801","e199d460-c88f-4ab9-8373-1d6ad0bd0acb"]]'
+        ) 
+    print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ```js
@@ -556,7 +737,7 @@ dom.dataset("order")
 <template v-slot:bash>
 
 ```bash
-# PUT https://<your-app-id>.app.jexia.com/ds/<your-dataset>?action=attach&cond=...&action_cond=...&action_resource=...&action_etc=...
+PUT https://<your-app-id>.app.jexia.com/ds/<your-dataset>?action=attach&cond=...&action_cond=...&action_resource=...&action_etc=...
 ```
 Parameter|Type/Value|Description
 ---------|----------|-----------
@@ -612,7 +793,27 @@ subscription.unsubscribe();
 ## Filtering
 You can use filtering to specify which data to return. You will always receive an array of objects, independent on the number of objects. There are different approaches applied to different languages. Please check your preferable method.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+    ....
+    #cond='[{"field":"total"},">",0]' // “<”, “=”, “!=”, “>=”, “<=”
+    #cond='[{"field":"total"},"=",null]'
+    #cond='[{"field":"total"},"between",[0,8]]'
+    #cond='[{"field":"total"},"in",[0,5,15]]'  // "not in"
+    #cond='[{"field":"title"},"like","as"]'
+    #cond='[{"field":"title"},"regex","^[a-z]+$"]'
+    #cond='[{"field":"total"},">",100,"and",{"field":"title"},"like","as"]'
+    res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          cond='[{"field":"id"},"=","b4961b6a-85a2-4ee8-b946-9001c978c801"]'
+        ) 
+    print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -690,7 +891,20 @@ There following operators are available to combine filters: `and`, `&&`, `or` an
 ## Response Fields
 Sometimes you will want to show specific fields from record instead of the whole record. Jexia enables you to do this by allowing you to specifying what fields you want have returned. This is applicable to related data.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+    ....
+    res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          outputs='["titels","items.qty"]'
+        ) 
+    print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -704,7 +918,8 @@ orders.select()
 <template v-slot:bash>
 
 ``` bash
-$ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?&outputs=\[\"titels\",\"items.qty\"\]" | jq .
+$ curl -s -H "Authorization: Bearer $UMS_TOKEN" 
+-X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?&outputs=\[\"titels\",\"items.qty\"\]" | jq .
 ```
 
 </template>
@@ -729,7 +944,20 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 ## Limits & Offsets
 You can use `limit` and `offset` on a query to paginate your records. They can be used separately or together. Only setting the limit (to a value of `X`) will make the query operate on the first `X` records. Only setting the offset (to a value of `Y`) will make the query operate on the following `Y` records, starting from the offset value.
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+    ....
+    res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          range='{"limit": 5, "offset": 3}'
+        ) 
+    print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -745,7 +973,8 @@ orders.select()
 
 ``` bash
 # Will return an array of 5 records, starting from position 3
-$ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?range={\"limit\": 5, \"offset\": 3}" | jq .
+$ curl -s -H "Authorization: Bearer $UMS_TOKEN" 
+-X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?range={\"limit\": 5, \"offset\": 3}" | jq .
 
 ```
 
@@ -755,7 +984,20 @@ $ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.
 ## Sorting
 To sort the data before it is returned, you can apply sort methods. These can be `Asc` and `Desc` directions. 
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+    ....
+    res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          order='{"direction":"desc","fields":["total","created_at"]}'
+        ) 
+    print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -798,7 +1040,20 @@ Please keep in mind that you can aggregate fields only from schema. We do not su
 You can combine output with other fields. 
 
 
-<CodeSwitcher :languages="{js:'JavaScript',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:py>
+
+``` py
+    ....
+    res = client.request(
+          method='GET', 
+          url='/ds/orders',
+          outputs='[{"sum_total": "sum(total)"}]'
+        ) 
+    print(res)
+```
+
+</template>
 <template v-slot:js>
 
 ``` js
@@ -813,7 +1068,8 @@ posts.select()
 <template v-slot:bash>
 
 ``` bash
-$ curl -s -H "Authorization: Bearer $UMS_TOKEN" -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?outputs=\[\"sum(total)\"\]" | jq .
+$ curl -s -H "Authorization: Bearer $UMS_TOKEN" 
+-X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?outputs=\[{\"sum_total\": \"sum(total)\"}\]" | jq .
 ```
 
 </template>

@@ -93,15 +93,46 @@ Now let's make simple CRUD to access our Dataset. For this, you can use the REST
 
 <iframe width="700" height="394" src="https://www.youtube.com/embed/i7v8FOS7_WI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-In this example, we are using the **JS SDK**. To install it, we need to run:
+<CodeSwitcher :languages="{js:'JavaScript',html:'Browser',py:'Python',bash:'cURL'}">
+<template v-slot:js>
+
 ```
 npm install jexia-sdk-js node-fetch ws --save
 ```
 
-Below you can see an example with all the modules imported into the project. These are optional. If you do not need to access Filesets, Project Users (UMSModule) or real-time events, feel free to skip importing them.  
+</template>
+<template v-slot:html>
 
-<CodeSwitcher :languages="{js:'Node', html:'Browser', bash:'cURL'}">
+``` html
+<html>
+<head>
+     <script src="https://unpkg.com/jexia-sdk-js/bundle/browser.umd.min.js"></script>
+</head>
+```
+
+</template>
+<template v-slot:py>
+
+```
+pip install jexia-sdk
+//or
+easy_install jexia-sdk
+```
+
+</template>
+<template v-slot:bash>
+
+``` bash
+cURL should be intalled
+```
+
+</template>
+</CodeSwitcher>
+
+<CodeSwitcher :languages="{js:'JavaScript', html:'Browser', py:'Python', bash:'cURL'}">
 <template v-slot:js>
+
+Below you can see an example with all the modules imported into the project. These are optional. If you do not need to access Filesets, Project Users (UMSModule) or real-time events, feel free to skip importing them. 
 
 ``` js
 import { 
@@ -220,6 +251,33 @@ curl -H "Authorization: Bearer $API_TOKEN"
 # or with ums token
 curl -H "Authorization: Bearer $UMS_TOKEN"
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders" | jq .
+```
+
+</template>
+<template v-slot:py>
+
+``` py
+from jexia_sdk.http import HTTPClient
+
+JEXIA_PROJECT_ID = ''
+JEXIA_API_KEY = ''
+JEXIA_API_SECRET = ''
+
+if __name__ == '__main__':
+    client = HTTPClient()
+    client.auth_consumption(
+      project=JEXIA_PROJECT_ID,
+      method='apk',
+      key=JEXIA_API_KEY,
+      secret=JEXIA_API_SECRET,
+    )
+    res = client.request(
+          method='GET',
+          url='/ds/orders',
+          cond='[{"field":"dislike"},"=",true]',
+          outputs='["id","total","title"]'
+    )
+    print(res)  
 ```
 
 </template>
