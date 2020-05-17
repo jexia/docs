@@ -24,17 +24,18 @@ module.exports = {
           { text: "Jexia.com", link: "https://www.jexia.com/"}
         ],
         sidebar: [
-            "/get-started/",
+            ["/","Basic setup"],
+            "/tools/",
             "/auth/",
             "/dataset/",
             "/fileset/",
             "/ums/",
             "/pubsub/",  
             "/apphost/",
-            "/automation/",
             "/integration/",
+            "/automation/",
             "/mgm/",   
-            "/cli/"   
+            "/cli/"  
         ]
     },
     plugins: [ 'code-switcher', '@vuepress/medium-zoom', 
