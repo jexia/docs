@@ -1,53 +1,108 @@
----
-home: true
-heroImage: null
-heroText: null
-tagline: The backend for your applications
-actionText: Getting started →
-actionLink: /get-started/
-features:
-  - title: Build & Deploy Applications
-    details: Jexia has all you need to create and run applications. 
-  
-  - title: Fast Development
-    details: Our set of integrated tools will end repetitive tasks from your development process
-  
-  - title: High Performance
-    details: No need to keep on eye on performance and security. We will do it for you!
-  
-  - title: SDKs
-    details: Our JS SDK and PySDK will help you to integrate your applications with Jexia faster. 
-  
-  - title: App Hosting
-    details: With our Application Hosting you will be able to host you static site and Node applications with ease. 
-  
-  - title: CLI
-    details: You can integrate Jexia into your CI/CD process by using our CLI tool.
-footer: Copyright © 2020 Jexia company
----
+# Getting Started
+**Jexia** - platform that provides backend as a service solution, with a nice set of tools to cover most of the routine tasks during the development and operation process. 
+![About Jexia](./about.png)
+By using Jexia you can save time by skipping development and integration for basic services, as well as host your application on our cloud and do not spend time for preparing, scale, secure and monitoring your environments.   
 
-### As Easy as 1, 2, 3
+## Create a project
 
-```js
-import { jexiaClient, dataOperations } from "jexia-sdk-js/node"; // jexia-sdk-js/browser;
-const dataModule = dataOperations();
+**Jexia** is a platform with a set of services natively integrated between each other which takes out the routine task for application development and operation. The good thing is that you can use services together or independently. It gives you the flexibility to choose the functionality that you need and allows easy integration with your projects via our REST API and SDKs.  
 
-// You need to use your API Key / API Secret which is generated within your Jexia application. 
-// Do not forget make a Policy for your API!
-jexiaClient().init({
-  projectID: "PROJECT_ID",
-  key: "API_KEY",
-  secret: "API_SECRET",
-}, dataModule);
+You can [create](https://app.jexia.com/signup) your Jexia account by using an email or GitHub account.
 
-// Now you can run any CRUD operations for your Dataset: clients
-dataModule.dataset("clients")
-  .select()
-  .subscribe(records => { 
-    // You will always get an array of created records, including their 
-    // generated IDs (even when inserting a single record) 
-  }, 
-  error => { 
-    // If something goes wrong, the error information is accessible here 
-});
-  ```
+After signing in, you will be greeted by the Jexia Dashboard. Here you can observe all your projects and switch between them. Inside the project, you can do all management operations as well as organize collaboration and integrations. This can also be done via our [CLI tool](https://jexia-cli.readthedocs.io/en/stable/).
+
+![Jexia Dashboard](./dashboard.png)
+
+You can create a project by clicking on the **Create Project** button.
+
+<iframe width="700" height="395" src="https://www.youtube.com/embed/FY5QKc-gMj8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+You can have a maximum of **3** projects on the free plan, after you need to upgrade at least 1 project to a paid plan or delete a previous project on a free plan. The number of paid projects is unlimited, and they do not affect the number of projects you can have on a free plan.
+
+## Inside the project
+![Jexia Services](./services.png)
+1. **Collaboration** - Within this section, you can coordinate access to your project. For example, you can invite a team member or a developer to be a collaborator on the same project. This will allow them access to the project from their Jexia account. 
+1. **Settings** - Within this section, you can find the basic settings and information for the project (project name, description and URL). You may also delete the project within this section.
+1. **Integration** - Within this section, you can set up a connection between your Jexia project and external services. This will allow you to use them within your automatons.
+
+## Application Hosting
+1. **Deploy Application** - This area allows you to **host applications in the cloud**. You can fetch an application directly from a git repository and deploy it on our cloud. Currently, you can host your Node JS application, your Docker images or simply static files.
+
+## Services
+1. **Datasets** - these are used to store your application data. For example products, orders, transactions, configurations and anything else.
+1. **Filesets** - these are used to manage files for your application. For example avatars, blog images, product images, pdf documents and any other file you may need.
+1. **Relations** - these provide an easy way to establish data relations between Datasets, Filesets and Project Users. It allows you to get related data within one request. But, no need to worry, all connections and optimizations are managed by Jexia.    
+1. **RTC Channels** - these are used to organize **Pub/Sub** solutions such as chats, online games and any other real-time application. We also provide a built-in real-time notification functionality for Datasets, Filesets and Project User modules.
+1. **Project Users** - these are the users within your application. Within this module, you can perform some specific functions, such as **changing passwords**, **creating users** and **deleting users** as well as supporting standard the CRUD approach over your API. You can choose any approach.
+1. **Automation** - this module allows you to set up actions that will run based on when different events occur.
+
+## Access control
+1. **API-Keys** - module for generating API keys. You can make keys that allow access to public data, private data or partners etc. By default, all data is private. Different access levels can be set via a **Policy**.
+1. **Policy** - sets access rules for resources in your application. To create the policy you need to have at least one Project User or API key.
+
+## Create Dataset
+Let's create a Dataset which will allow us to store data accessible over our API.
+<iframe width="700" height="350" src="https://www.youtube.com/embed/3Dt79oYyAsU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+![Dataset fields](./ds_fields.png)
+
+Luckily, Jexia's Dataset module has schema and schemaless support, as well as field validation and default values for fields. This means you can spend less time testing and developing your database and more time developing your application. In the example below, we will create the Dataset "Orders".
+
+![Dataset](./ds.png)
+
+Our Schema or Schemaless approach for Datasets allows the flexibility to start your development process without any particular model and then update your model on the fly.
+
+::: warning
+Please be aware there are some rules related to the schema and schemaless data:
+
+1. When you create a schema field for a schemaless data entry, old data is not transferred to the newly created field.
+2. When you insert an object which has fields out of schema, Jexia will automatically create a schemaless field and put data there.
+3. When you delete a schema, field data will also be deleted. It will not be transferred to a schemaless field.  
+:::
+
+You do not need to be worried about database performance or index optimization etc., all this is handled by Jexia.
+
+If you have some related data such as *Order / Product* or *Book / Author* you can establish a relational connection between them within the **Relation** section. You do not need to specify any fields as a foreign key for these relations as Jexia will handle all work related to relations. After this has been setup, Jexia will automatically organize data in its proper Dataset. When fetching data over your API, you can choose to include all relational items to the Dataset, or just fetch the data held on that item.   
+
+## Creating the API & Polices
+As a next step, we would need to establish access rules. By default, all data is inaccessible and we need to specify rules to allow access to certain resources.
+
+There are two ways to organize this:
+1. **API Key** - this is useful when you need to allow data access for many visitors. For example, show all blog posts, books or comments.
+2. **Project User** - this is useful when you need to open access to a specific action, like **Update** or **Delete**. Setting this via project users ensures only specific people can perform certain actions.
+3. **Namespace** - this allows you to group users together and provide common access to specific actions and records, such as creating an admin group and allowing these to delete records.
+
+### Access via API Key
+To have API key access, you firstly need to create an API key. For this, you need to visit the **API Keys** section and create a new key. **Please ensure you write the API secret somewhere as you will not be able to view it again.**
+
+![API-Key creation](./api-key.png)
+
+After go to the **Policies** section to specify which resources and actions should be made available for this API key. Once you have clicked **Create policy**, the **Subject** should be the newly created API key, in **Resources** select the required Datasets, Filesets or Channels. It is also important to select all allowed actions. These are: Create, Read, Update and Delete.
+
+![Policy setup](./api-policy.png)
+
+### Access via Project User
+Go to the **Project Users** section and create a new user with an email and password. After this, go to the **Policies** area and click **Create policy**. As the **Subject** you should select **All Users**. When selecting the **Resources** needed, select the required Datasets, Filesets or Channels as well as actions. Once this has been done, all registered and activated users will have access to the resources selected.
+
+![AllUsers policy](./policy.png)
+
+## Delete project
+
+To delete your project you need to first remove the application from within the **Application Hosting** section. Then go to **Settings** and click **Delete**, a one time token will be sent to the accounts email. You will need to use this token to confirm project deletion. 
+![Delete project](./delete_prj.png)
+![Confirm project deletion](./delete_prj_otp.png)
+::: danger
+Please, be aware. All data will be deleted and we will not be able to restore it. Please, use these function carefully.
+:::
+
+
+
+## Collaboration 
+With collaboration, you can share work with members of your team. You can invite them to help with setting up, helping with a deployment and other administration work. This can speed up the development process and decrease the overall delivery time. Currently, you can only invite users with a Jexia account.   
+
+## Examples & Open-source
+There are many examples you can find on our [GitHub](https://github.com/jexia). You will also find parts of our platform which we decided to make open-source (including these docs!).
+
+In the long run, we plan to open-source most of the Jexia platform. From another side, we understand that open-source projects come with big responsibilities to ensure they are well maintained and have a large time demand for supporting communities. As for now, we have decided to focus on adding new functionality to the platform, to provide more opportunities for our friends.  
+
+Happy coding! 

@@ -59,7 +59,7 @@ You can set up default values for each field. This value will be validated again
 Please keep in mind that for a string type it is not possible to set a default value as an empty string `''`, you can get either set a value or input `null` which will be passed as a `null` type.
 :::
 
-## Insert a record
+## Create
 To create a record in Jexia's dataset you need to create an action within either a policy for a User or API key. Below you can see the User approach as it has a wider use case for record creation.
 
 ::: tip
@@ -195,7 +195,7 @@ After execution, you will receive an array similar to the following array of obj
 }]
 ```
 
-## Read a record
+## Read
 To fetch your data you need to have the **Read** action selected on a policy which also contains the particular resource you are trying to access. You can apply different filters to get specific data. In the following example you can see an API key usage as the most common approach.
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
@@ -339,7 +339,7 @@ After execution, you will receive an array similar to the following array of obj
 }]
 ```
 
-## Delete a record
+## Delete
 To delete a record you need to have selected the Delete action in the policy for the resource you intend to edit. 
 Some examples can be seen below using the Project User method. 
 
@@ -435,7 +435,7 @@ After execution, you will receive an array similar to the following array of obj
     "verified":true
 }]
 ```
-## Update a Record
+## Update
 
 To update a record you need to have selected the Update action in the policy for the resource you intend to edit.
 Some examples can be seen below using the Project User method.
