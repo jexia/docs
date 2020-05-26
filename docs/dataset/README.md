@@ -71,18 +71,16 @@ Please keep in mind that the API always returns an array of records, even if you
 
 ``` py
 from jexia_sdk.http import HTTPClient
-
-JEXIA_PROJECT_ID = 'project_id'
-USER_EMAIL = 'user@jexia.com'
-USER_PASSWORD = 'secret-password'
-
+JEXIA_PROJECT_ID = ''
+JEXIA_API_KEY = ''
+JEXIA_API_SECRET = ''
 if __name__ == '__main__':
   client = HTTPClient()
   client.auth_consumption(
       project=JEXIA_PROJECT_ID,
-      method='ums',
-      email=USER_EMAIL,
-      password=USER_PASSWORD
+      method='apk',
+      key=JEXIA_API_KEY,
+      secret=JEXIA_API_SECRET,
   )
   to_save = {
     'title':"Order1",
@@ -103,46 +101,35 @@ if __name__ == '__main__':
 <template v-slot:js>
 
 ``` js
-import { jexiaClient, dataOperations,UMSModule } from "jexia-sdk-js/node"; 
+import { jexiaClient, dataOperations, field } from "jexia-sdk-js/node"; 
 const ds = dataOperations();
-const ums = new UMSModule(); 
 
 jexiaClient().init({
   projectID: "PROJECT_ID",
-}, ds, ums);
-
-  ums.signIn({    
-    email: 'Elon@tesla.com',    
-    password: 'secret-password'
-  }).subscribe(
-    data=>{
-      let orders_data = [{
-            "title":"Order1",
-            "total":10,
-            "verified":false
-        }, {
-            "title":"Order2",
-            "total":100,
-            "verified":false
-        }]
-        const orders = ds.dataset("orders");
-        const insertQuery = orders.insert(orders_data);  
-        insertQuery.subscribe(records => { 
-            // You will always get an array of created records, including their 
-            // generated IDs (even when inserting a single record) 
-          }, 
-          error => { 
-            // If something goes wrong, the error information is accessible here 
-        });
-    },
-    error=>{
-      console.log(error)
-    }
-  );  
-
+  key: "API_KEY",
+  secret: "API_SECRET",
+}, ds);
   
-}
+let orders_data = [{
+      "title":"Order1",
+      "total":10,
+      "verified":false
+  }, {
+      "title":"Order2",
+      "total":100,
+      "verified":false
+  }]
 
+const orders = ds.dataset("orders");
+const insertQuery = orders.insert(orders_data);  
+insertQuery.subscribe(records => { 
+      // You will always get an array of created records, including their 
+      // generated IDs (even when inserting a single record) 
+    }, 
+    error => { 
+      // If something goes wrong, the error information is accessible here 
+});
+  
 ```
 </template>
 <template v-slot:bash>
@@ -150,18 +137,18 @@ jexiaClient().init({
 ``` bash
 # Environment variables to be set
 export PROJECT_ID=<project_id>
-export TEST_USER=<user_here>
-export TEST_USER_PSW=<password_here>
+export API_KEY=<key_here>
+export API_SECRET=<secret_here>
 
-# save UMS token to our environment as we need to access Project Users
-export UMS_TOKEN=`curl -X POST -d '{
-  "method":"ums",
-  "email":"'"$TEST_USER"'",
-  "password":"'"$TEST_USER_PSW"'"
-}' "https://$PROJECT_ID.app.jexia.com/auth" | jq -r .access_token`
+# save API key token to our environment in case we need to use it
+export API_TOKEN=`curl -X POST -d '{
+  "method":"apk",
+  "key":"'"$API_KEY"'",
+  "secret":"'"$API_SECRET"'"
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq .access_token`
 
 #Insert record
-curl -H "Authorization: Bearer $UMS_TOKEN" -X POST -d '[{
+curl -H "Authorization: Bearer $API_TOKEN" -X POST -d '[{
   "title":"Order1",
   "total":10,
   "verified":false
@@ -275,22 +262,34 @@ selectQuery.subscribe(records => {
 <template v-slot:bash>
 
 ``` bash
+# Environment variables to be set
+export PROJECT_ID=<project_id>
+export API_KEY=<key_here>
+export API_SECRET=<secret_here>
+
+# save API key token to our environment in case we need to use it
+export API_TOKEN=`curl -X POST -d '{
+  "method":"apk",
+  "key":"'"$API_KEY"'",
+  "secret":"'"$API_SECRET"'"
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq .access_token`
+
 # Select all data
-curl -H "Authorization: Bearer $UMS_TOKEN" 
+curl -H "Authorization: Bearer $API_TOKEN" 
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders" | jq .
 
 # Select by id
-curl -H "Authorization: Bearer $UMS_TOKEN" 
+curl -H "Authorization: Bearer $API_TOKEN" 
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?
   cond=\[\{\"field\":\"id\"\},\"=\",\"2a51593d-e99f-4025-b20b-159e226fc47d\"\]" | jq .
 
 # Select special fields
-curl -H "Authorization: Bearer $UMS_TOKEN" 
+curl -H "Authorization: Bearer $API_TOKEN" 
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?
   outputs=\[\"title\",\"verified\"\]" | jq .
 
 # Select special fields + where
-curl -H "Authorization: Bearer $UMS_TOKEN" 
+curl -H "Authorization: Bearer $API_TOKEN" 
   -X GET "https://$PROJECT_ID.app.jexia.com/ds/orders?
   outputs=\[\"title\",\"verified\"\]&cond=\[\{\"field\":\"total\"\},\">\",10\]" | jq .
 
@@ -351,15 +350,15 @@ When you perform a Delete action, you will get back an array of affected records
 ``` py
 from jexia_sdk.http import HTTPClient
 JEXIA_PROJECT_ID = ''
-USER_EMAIL = ''
-USER_PASSWORD = ''
+JEXIA_API_KEY = ''
+JEXIA_API_SECRET = ''
 if __name__ == '__main__':
   client = HTTPClient()
   client.auth_consumption(
       project=JEXIA_PROJECT_ID,
-      method='ums',
-      key=USER_EMAIL,
-      secret=USER_PASSWORD
+      method='apk',
+      key=JEXIA_API_KEY,
+      secret=JEXIA_API_SECRET,
   )
   res = client.request(
           method='DELETE', 
@@ -373,48 +372,49 @@ if __name__ == '__main__':
 <template v-slot:js>
 
 ``` js
-import { jexiaClient, UMSModule, dataOperations } from "jexia-sdk-js/node"; 
-// to use .where and .outputs
-import { field } from "jexia-sdk-js/node"; 
+import { jexiaClient, dataOperations, field } from "jexia-sdk-js/node"; 
 
 const ds = dataOperations();
-const ums = new UMSModule(); 
 
 jexiaClient().init({
-  projectID: "project_id",
-}, ds, ums);
+  projectID: "PROJECT_ID",
+  key: "API_KEY",
+  secret: "API_SECRET",
+}, ds);
 
-ums.signIn({    
-    email: 'Elon@tesla.com',    
-    password: 'secret-password'
-}).subscribe(
-  good=>{
-    const orders = ds.dataset("orders");
-    const deleteQuery = orders
-    .delete()
-    .where(field => field("id").isEqualTo("2a51593d-e99f-4025-b20b-159e226fc47d"));  
+const orders = ds.dataset("orders");
+const deleteQuery = orders
+.delete()
+.where(field => field("id").isEqualTo("2a51593d-e99f-4025-b20b-159e226fc47d"));  
 
-    deleteQuery.subscribe(
-      records => { 
-        // You will always get an array of created records, including their 
-        // generated IDs (even when inserting a single record) 
-      }, 
-      error => { 
-        // If something goes wrong, the error information is accessible here 
-    });
-  },
-  error=>{
-    console.log(error)
-  }
-);
-
+deleteQuery.subscribe(
+  records => { 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
+  }, 
+  error => { 
+    // If something goes wrong, the error information is accessible here 
+});
+ 
 ```
 </template>
 <template v-slot:bash>
 
 ``` bash
+# Environment variables to be set
+export PROJECT_ID=<project_id>
+export API_KEY=<key_here>
+export API_SECRET=<secret_here>
+
+# save API key token to our environment in case we need to use it
+export API_TOKEN=`curl -X POST -d '{
+  "method":"apk",
+  "key":"'"$API_KEY"'",
+  "secret":"'"$API_SECRET"'"
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq .access_token`
+
 # Select by id
-curl -H "Authorization: Bearer $UMS_TOKEN" 
+curl -H "Authorization: Bearer $API_TOKEN" 
   -X DELETE "https://$PROJECT_ID.app.jexia.com/ds/orders?
   cond=\[\{\"field\":\"id\"\},\"=\",\"2a51593d-e99f-4025-b20b-159e226fc47d\"\]" | jq .
 ```
@@ -452,15 +452,15 @@ You can add an `id` field into the update object, Jexia will find and update it 
 ``` py
 from jexia_sdk.http import HTTPClient
 JEXIA_PROJECT_ID = ''
-USER_EMAIL = ''
-USER_PASSWORD = ''
+JEXIA_API_KEY = ''
+JEXIA_API_SECRET = ''
 if __name__ == '__main__':
   client = HTTPClient()
   client.auth_consumption(
       project=JEXIA_PROJECT_ID,
-      method='ums',
-      key=USER_EMAIL,
-      secret=USER_PASSWORD
+      method='apk',
+      key=JEXIA_API_KEY,
+      secret=JEXIA_API_SECRET,
   )
   #if you will have ID in objects you do not need cond='....'
   to_save={
@@ -479,39 +479,28 @@ if __name__ == '__main__':
 <template v-slot:js>
 
 ``` js
-import { jexiaClient, UMSModule, dataOperations } from "jexia-sdk-js/node"; 
-// to use .where(field("total").isBetween(0,50)) and .outputs
-import { field } from "jexia-sdk-js/node"; 
-
-const ds = dataOperations();                      
-const ums = new UMSModule(); 
+import { jexiaClient, dataOperations, field } from "jexia-sdk-js/node"; 
+const ds = dataOperations();
 
 jexiaClient().init({
-  projectID: "project_id",
-}, ds, ums);
+  projectID: "PROJECT_ID",
+  key: "API_KEY",
+  secret: "API_SECRET",
+}, ds);
 
-ums.signIn({    
-    email: 'Elon@tesla.com',    
-    password: 'secret-password'
-}).subscribe(
-  user=>{
-    const orders = ds.dataset("orders");
-    const updateQuery = orders
-      .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }]) // To update 1 record with specific ID
-      //.where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg'))); // To update update batch of records 
+const orders = ds.dataset("orders");
+const updateQuery = orders
+  .update([{id:"3005a8f8-b849-4525-b535-a0c765e1ef8e", verified: true }]) // To update 1 record with specific ID
+  //.where(field => field("total").isBetween(0,50).and(field("name").isLike('%avg'))); // To update update batch of records 
 
-    updateQuery.subscribe(records => { 
-        // You will always get an array of created records, including their 
-        // generated IDs (even when inserting a single record) 
-      }, 
-      error => { 
-        // If something goes wrong, the error information is accessible here 
-    });
-  },
-  error=>{
-    console.log(error)
-  }
-)
+updateQuery.subscribe(records => { 
+    // You will always get an array of created records, including their 
+    // generated IDs (even when inserting a single record) 
+  }, 
+  error => { 
+    // If something goes wrong, the error information is accessible here 
+});
+ 
 
   
 
@@ -520,8 +509,20 @@ ums.signIn({
 <template v-slot:bash>
 
 ``` bash
+# Environment variables to be set
+export PROJECT_ID=<project_id>
+export API_KEY=<key_here>
+export API_SECRET=<secret_here>
+
+# save API key token to our environment in case we need to use it
+export API_TOKEN=`curl -X POST -d '{
+  "method":"apk",
+  "key":"'"$API_KEY"'",
+  "secret":"'"$API_SECRET"'"
+}' "https://$PROJECT_ID.app.jexia.com/auth" | jq .access_token`
+
 # Update by id
-curl -H "Authorization: Bearer $UMS_TOKEN" -d '{
+curl -H "Authorization: Bearer $API_TOKEN" -d '{
   "id":"3005a8f8-b849-4525-b535-a0c765e1ef8e",
   "text":"New post",
   "author":"Roy Ban",
