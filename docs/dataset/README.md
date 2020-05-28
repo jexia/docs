@@ -1086,11 +1086,10 @@ After execution, you will receive an array similar to the following array of obj
 ```
 
 ## REST API Errors
-During REST API request you can get the following errors:
+During REST API request you might get the following errors in responds:
 
 Code|Description
 ----|-----------
-200|Record(s) created successfully. The response contains the full record(s) including its default fields.
 400|Bad request. The request was somehow malformed and was not executed.
 401|Invalid authentication. Access token was not provided or incorrect.
 403|Forbidden. Access token does not have permission to insert the record(s) into this dataset.
