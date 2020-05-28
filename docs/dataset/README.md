@@ -207,7 +207,7 @@ if __name__ == '__main__':
           cond='[{"field":"dislike"},"=",true]',
           #cond=[{"field":"total"},"null",true, "or", {"field":"total"},"in",["1","2"]]
           #cond=[[{"field":"title"},"null",false, "or", {"field":"total"},"in",["1","2"]], "and", {"field":"created_at"}, ">", "24h"]
-          #cond=[{"field":"title"},"regexp","^A", "and", {"field":"total"},">",21]
+          #cond=[{"field":"title"},"regex","^A", "and", {"field":"total"},">",21]
           #cond=[{"field":"some.field"},"null", false]
           outputs='["id","total","title"]',
           range='{"limit": 10}'
@@ -248,7 +248,7 @@ const selectQuery = orders
   // .where(field("title").isLike("Charlotte's Web"))
   // .where(field("title").isNotNull())
   // .where(field("title").isNull())
-  // .where(field("title").satisfiesRegexp('a-z0-9'))   
+  // .where(field("title").satisfiesRegex('a-z0-9'))   
 selectQuery.subscribe(records => { 
     // You will always get an array of created records, including their 
     // generated IDs (even when inserting a single record) 
@@ -301,7 +301,7 @@ curl -H "Authorization: Bearer $API_TOKEN"
 # [GET] /ds/orders?cond=[[{"field":"title"},"null",false, "or", {"field":"total"},"in",["1","2"]], "and", {"field":"created_at"}, ">", "24h"]
 
 # Get any orders where title starts with the letter "A" and total > 21:
-# [GET] /ds/orders?cond=[{"field":"title"},"regexp","^A", "and", {"field":"total"},">",21]
+# [GET] /ds/orders?cond=[{"field":"title"},"regex","^A", "and", {"field":"total"},">",21]
 
 # Find a record by nested field where field some.field exists (is not null):
 # [GET] /ds/orders?cond=[{"field":"some.field"},"null", false]
@@ -317,7 +317,7 @@ Emptiness comparators|“null”|true or false|all fields
 Range comparator|“between”|[start, end]|textual, numbers, date/times
 Array comparators|“in”, “not in”|Array of allowed values (matching field type)|all fields
 Pattern comparator|“like”|string value|textual
-Regex comparator|“regexp”|string value|textual
+Regex comparator|“regex”|string value|textual
 
 You can use the following operators to make advanced requests: `and`, `&&`, `or` and `||`.
 
@@ -834,7 +834,7 @@ import { field } from "jexia-sdk-js/node";
 .where(field("title").isLike("%oby"))
 .where(field("title").isNotNull())
 .where(field("title").isNull())
-.where(field("title").satisfiesRegexp('[A-Z][0-9]*')) 
+.where(field("title").satisfiesRegex('[A-Z][0-9]*')) 
 
 const isAuthorTom = field("user_name").isEqualTo("Tom");  
 const isAuthorDick = field("user_name").isEqualTo("Dick");  
