@@ -23,12 +23,10 @@ const ums = new UMSModule();
 jexiaClient().init({    
   projectID: "PROJECT_ID"
 }, ums); 
-
+// For SDK > v5.0.0 
 ums.signUp({    
     email: "user@company.com",    
-    password: "my_password"
-  }, 
-  {
+    password: "my_password",
     age: 25, 
     address: { 
       city: "Apeldoorn",
@@ -38,6 +36,20 @@ ums.signUp({
     user => {..do something with registered user}, 
     error=>{..handle error}
   );  
+//before < JS SDK v5.0.0.
+ums.signUp({    
+    email: "user@company.com",    
+    password: "my_password"},
+    {
+      age: 25, 
+      address: { 
+        city: "Apeldoorn",
+        country: "NL"
+      }
+    }).subscribe(
+      user => {..do something with registered user}, 
+      error=>{..handle error}
+    );  
 ```
 
 </template>
