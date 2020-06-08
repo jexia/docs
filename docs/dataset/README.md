@@ -697,6 +697,11 @@ const orders = ds.dataset("orders");
 orders.select()
   .fields("title", "items.qty") // You can also pass an array of field names 
   .subscribe(records => {}, err=>{}); // You will get array of {id, title, author} please keep in mind "id" is always returned
+
+// You can also omit fields() method and pass requred fields directly to the select()
+// this code is identical to the prevous one:
+orders.select("title", "items.qty")
+  .subscribe(records => {}, err=>{});
 ```
 </template>
 <template v-slot:bash>
