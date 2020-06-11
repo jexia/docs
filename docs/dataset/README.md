@@ -108,6 +108,7 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
+  zone: "PROJECT_ZONE",
 }, ds);
   
 let orders_data = [{
@@ -230,6 +231,7 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
+  zone: "PROJECT_ZONE",
 }, ds);
 
 const orders = ds.dataset("orders");
@@ -380,6 +382,7 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
+  zone: "PROJECT_ZONE",
 }, ds);
 
 const orders = ds.dataset("orders");
@@ -486,6 +489,7 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
+  zone: "PROJECT_ZONE",
 }, ds);
 
 const orders = ds.dataset("orders");

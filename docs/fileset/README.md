@@ -85,6 +85,7 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
+  zone: "PROJECT_ZONE",
 }, jfs, realTime());
 
 const fileset = jfs.fileset("fileset_name");

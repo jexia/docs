@@ -59,6 +59,12 @@ jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
   secret: "API_SECRET",
+  /**
+   * Zone parameter was introduced in v5.2.0
+   * If your project uses a previous version it will keep working for a while.
+   * You can find you project zone inside "Settings" section of your project.
+   */
+  zone: "PROJECT_ZONE",
 }, ds); //jfs, ums, rtc
 
 // Now you can run any CRUD operations for your Datasets
@@ -174,6 +180,7 @@ and then do similar commands to get data. Below you can find example:
       projectID: "<your-project-id>",
       key: "<your-project-api-key>",
       secret: "<your-project-api-secret>",
+      zone: "<your-project-zone>",
     };
     jexia.jexiaClient().init(credentials, dataModule);
     const postsList = document.querySelector("ul");
