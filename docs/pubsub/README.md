@@ -36,7 +36,8 @@ const rtm = realTime();
 jexiaClient().init({  
   projectID: "your-project-id",  
   key: "your-api-key",    
-  secret: "your-api-secret"  
+  secret: "your-api-secret",
+  zone: "PROJECT_ZONE",
 }, rtm);  
 
 // Initiate a channel
