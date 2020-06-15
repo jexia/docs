@@ -1,26 +1,27 @@
 # <pro/> Application Hosting
 
-Jexia's Application Hosting can be used to organize your static files. Currently, you can host your Node JS application, your Docker images or simply static files. You can fetch an application directly from a git repository and deploy it on our cloud. Application Hosting can be used for example with React, VueJs, and Angular as frameworks. The only requirement is that the project listens on port `80`, please see the examples below.
+Jexia's Application Hosting can be used to serve your static files as well as hosting for you backend. Currently, you can host your Node JS, Go, Python, PHP applications, your Docker images or simply static files. You can fetch an application directly from a git repository and deploy it on our cloud. Application Hosting can be used for example with React, VueJs, and Angular as frameworks. The only requirement is that the project listens on port `80`, please see the examples below.
 
 ## Common requirements: 
 
 1. GitHub repository (open or private)
 2. Project in Jexia
-3. The application must use port `80`
+3. Configuration based on Runme.io
 4. The application must listen on `0.0.0.0`
+5. The application might use port `80` or expose port via `runme` config file
 
 ## Build and run requirements:
-### Dockerfile:
-If there is a Dockerfile inside your repository it will be used for the building and deployment process.
 
-### NodeJS
-1. Your application must support NodeJS version 12 and the corresponding NPM version
-2. Your application must contain a `package.json` file with the `build` and `start` scripts
+Jexia supports `Runme.io` specification. It means you can deploy multiple containers including needed databases and language you prefer to use. So, if you already have `.runme` folder inside your repo, you can deploy it without any changes. If you do not have it you can use runme.io generator to generate specification. 
+Please, visit [runme.io](https://runme.io)
 
+::: tip
+You can run your docker image as well. Check runme.io to make proper configuration for this.  
+:::
 
 ## What do you get? 
 
-1. Hosting for your React, VueJS, Angular, NodeJS, Python, Go, PHP and many more projects built in a variety of languages 
+1. Hosting for your React, VueJS, Angular, NodeJS, Deno, Python, Go, PHP and many more projects built in a variety of languages 
 2. A subdomain provided by Jexia, such as `*.jexia.app`
 3. The possibility of adding your custom domain
 4. SSL certificates for your subdomain
@@ -28,46 +29,49 @@ If there is a Dockerfile inside your repository it will be used for the building
 
 ## How does it work? 
 
-When you initiate your application via Jexia's Application Hosting, Jexia will clone your GitHub repository into a secure environment. In this environment, Jexia will run `npm install` and `npm run build`. As soon as it is finished, the repository will be deployed into the cloud environment and a URL will be generated for your application. When the deployment has been completed, Jexia will run the `npm run start` command from your `package.json` file. As a last step, the cloned repository will be deleted from the secure environment.
+When you initiate your application via Jexia's Application Hosting, Jexia will clone your GitHub repository into a secure environment. After this Jexia will read configuration file from `.runme/config.yaml` and will apply building instructions. As soon as it is finished, the repository will be deployed into the cloud environment and a URL will be generated for your application. When the deployment has been completed, Jexia will run the command from your Dockerfile. As a last step, the cloned repository will be deleted from the secure environment.
+
+## Limitations
+Below you can see limitation per container:
+* Number of requests - no limit
+* Number 
+* 1 CPU 
+* 1Gb RAM
+* 5Gb of storage (root file system inside container)
+* We use K8s for Application Hosting. Within this, there is no state management inside each 'pod', please ensure you use persistent storage for all data.
+
 
 ## How to deploy?
 
-### Step 1: Check if your GitHub repository has package.json file
+### Step 1: Check if your GitHub repository has .runme folder
 
-First of all, you need to be sure that your repository contains a `package.json` file. Inside this file it must contain the `build` and `start` commands. See the example below:
+First of all, you need to be sure that your repository contains a `.runme/config.yaml` file. 
+See the example below:
 
-```json
-{
-  "name" :  "My Jexia app",
-  "version" :  "0.1.0",
-  "scripts" : {
-    "build" : "vue-cli-service build",
-    "start" : "http-server ./dist -p 80"
-  },
-  "dependencies" : {
-    "http-server" : "^0.11.1",
-    "jexia-sdk-js" : "^4.1.0",
-    "vue" : "^2.6.10"
-  },
-  "devDependencies" : {}
-}
+```yaml
+version: 1.0
+publish: app
+services:
+  app:
+    build:
+      type: dockerfile
+      config: ./.runme/Dockerfile
+    ports:
+      - container: 4000
+        public: 80
 ```
-The `build` script should contain the command that builds your application ready for deployment. 
+It gives instruction for Jexia to use Dockerfile from `./.runme/Dockerfile` to build an app and expose port 4000 to port 80 
 
-For example:
+Dockerfile can be as you need, below you can find some common for NodeJs app:
 
-1. VueJS : `"build": "vue-cli-service build"`
-2. React :  `"build": "cd packages/react-scripts && node bin/react-scripts.js build"`
-3. Angular: `"build": "ng build *project* [options]"`
-4. NodeJS : `"build": ""` -  can be an empty string. 
+```Dockerfile
+FROM node:14.0.0
+WORKDIR /app
+COPY . .
+RUN npm install
+ENTRYPOINT npm run serve
+```
 
-If you need to run some Pre- / Post-install scripts you need to combine these under the `build` script.
-
-As you can see in our example, `"start": "HTTP-server ./dist -p 80"`, we use a HTTP server to organize and deploy static files. Here we listen on port `80` and use the `/dist` folder, which contains our ready-built project. More options can be found on the **HTTP server** package page. Feel free to implement any approach that suits you, but remember that port `80` needs to be used. 
-
-::: tip
-If you have a docker file present in your repository, we will use it to build & deploy the application. 
-:::
 
 ### Step 2: Organize your projects at Jexia
 
@@ -157,12 +161,6 @@ In our example, the repository name will be: `jexia-vue-todo`
 
 ## Examples
 As for now, you can use these examples for deployment:
-* VueJs TodoMVC: `https://github.com/jexia/jexia-vue-todo.git`
+* VueJS TodoMVC: `https://github.com/jexia/jexia-vue-todo.git`
 * NodeJS application: `https://github.com/jexia/test-node-app.git`
-
-## Limitations
-The current limitations are listed below:
-* Your application can have no more than 265MB of RAM.
-* We support NodeJS version 12.10
-* We support NPM as the default package manager
-* We use K8s for Application Hosting. Within this, there is no state management inside each 'pod', please ensure you use persistent storage for all data.
+* VueJS Jexia DataViwer: `https://github.com/jexia/DataViewer.git`
