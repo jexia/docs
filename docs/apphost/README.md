@@ -6,13 +6,13 @@ Jexia's Application Hosting can be used to serve your static files as well as ho
 
 1. GitHub repository (open or private)
 2. Project in Jexia
-3. Configuration based on Runme.io
+3. Configuration based on [runme.io](https://runme.io)
 4. The application must listen on `0.0.0.0`
-5. The application might use port `80` or expose port via `runme` config file
+5. The application might use port `80` or expose port via `.runme/config.yaml` file
 
 ## Build and run requirements:
 
-Jexia supports `Runme.io` specification. It means you can deploy multiple containers including needed databases and language you prefer to use. So, if you already have `.runme` folder inside your repo, you can deploy it without any changes. If you do not have it you can use runme.io generator to generate specification. 
+Jexia supports [runme.io](https://runme.io) specification. It means you can deploy multiple containers including needed databases and language you prefer to use. So, if you already have `.runme` folder inside your repo, you can deploy it without any changes. If you do not have it you can use runme.io generator to generate specification. 
 Please, visit [runme.io](https://runme.io)
 
 ::: tip
