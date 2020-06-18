@@ -54,6 +54,8 @@ const rtc = realTime();
 
 // You need to use your API Key / API Secret which is generated within your Jexia application.
 // Do not forget to create a Policy for your API and set the proper restrictions!
+
+// In addition to key and secret, you need to provide either projectID and zone OR just provide projectURL
 jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
@@ -65,6 +67,14 @@ jexiaClient().init({
    */
   zone: "PROJECT_ZONE",
 }, ds, /* pass any other modules you need like jfs, ums, rtc */);
+
+// or
+
+jexiaClient().init({
+  projectURL: "PROJECT_URL", // you can find it in your project settings
+  key: "API_KEY",
+  secret: "API_SECRET",
+}, ds);
 
 // Now you can run any CRUD operations for your Datasets
 const orders = ds.dataset("orders");
