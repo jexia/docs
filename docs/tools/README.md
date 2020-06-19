@@ -36,25 +36,26 @@ Now let's make simple CRUD to access our Dataset. For this, you can use the REST
 <CodeSwitcher :languages="{js:'JavaScript', py:'Python', bash:'cURL'}">
 <template v-slot:js>
 
-Below you can see an example with all the modules imported into the project. These are optional. If you do not need to access Filesets, Project Users (UMSModule) or real-time events, feel free to skip importing them. 
+Below you can see an example with all the modules imported from SDK. If you do not need to access Filesets, Project Users (UMSModule) or real-time events, feel free to skip importing them.
 
 ``` js
-import { 
-  // required main object
+import {
   jexiaClient,
-  dataOperations, // To work with DataSets
-  //fileOperations, // To work with FileSets 
-  //UMSModule, // To work with Project Users
-  //realTime // To get real-time notification for data changes and work channels  
+  dataOperations, // To work with Datasets
+  fileOperations, // To work with Filesets
+  UMSModule, // To work with Project Users
+  realTime // To get real-time notification for data changes and work channels
 } from "jexia-sdk-js/node";
 
 const ds = dataOperations();
-//const jfs = fileOperations();
-//const ums = new UMSModule();
-//const rtc = realTime();
+const jfs = fileOperations();
+const ums = new UMSModule();
+const rtc = realTime();
 
-// You need to use your API Key / API Secret which is generated within your Jexia application. 
-// Do not forget make a Policy for your API!
+// You need to use your API Key / API Secret which is generated within your Jexia application.
+// Do not forget to create a Policy for your API and set the proper restrictions!
+
+// In addition to key and secret, you need to provide either projectID and zone OR just provide projectURL
 jexiaClient().init({
   projectID: "PROJECT_ID",
   key: "API_KEY",
@@ -65,25 +66,33 @@ jexiaClient().init({
    * You can find you project zone inside "Settings" section of your project.
    */
   zone: "PROJECT_ZONE",
-}, ds); //jfs, ums, rtc
+}, ds, /* pass any other modules you need like jfs, ums, rtc */);
+
+// or
+
+jexiaClient().init({
+  projectURL: "PROJECT_URL", // you can find it in your project settings
+  key: "API_KEY",
+  secret: "API_SECRET",
+}, ds);
 
 // Now you can run any CRUD operations for your Datasets
 const orders = ds.dataset("orders");
 const archive = ds.dataset("arch");
 const selectQuery = orders
   .select()
-  .where(field => field("dislike").isEqualTo(true));  
+  .where(field => field("dislike").isEqualTo(true));
 
-//const insertQuery = orders.insert([order1, order2]);  
-//const updateQuery = orders.update([{ title: "Updated title" }]);  
-//const deleteQuery = orders.delete();  
+// const insertQuery = orders.insert([order1, order2]);
+// const updateQuery = orders.update([{ title: "Updated title" }]);
+// const deleteQuery = orders.delete();
 
 selectQuery.subscribe(records => {
-    // You will always get an array of created records, including their 
-    // generated IDs (even when inserting a single record) 
+    // You will always get an array of created records, including their
+    // generated IDs (even when inserting a single record)
   },
   error => {
-    // If something goes wrong, the error information is accessible here 
+    // If something goes wrong, you'll get an IRequestError object
 });
 ```
 </template>
@@ -143,7 +152,7 @@ if __name__ == '__main__':
           cond='[{"field":"dislike"},"=",true]',
           outputs='["id","total","title"]'
     )
-    print(res)  
+    print(res)
 ```
 
 </template>
@@ -174,7 +183,7 @@ and then do similar commands to get data. Below you can find example:
     if (!jexia) {
       throw new Error("Please inform support team of Jexia.");
     }
-    //Initialize dataOperationsModule
+    // Initialize dataOperationsModule
     const dataModule = jexia.dataOperations();
     const credentials = {
       projectID: "<your-project-id>",
