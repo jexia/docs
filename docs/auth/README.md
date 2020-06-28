@@ -229,3 +229,13 @@ Result: User A will have full access to Orders dataset as Policy 2 is subset of 
 ::: tip
 You can create as many policies as you need. All of them will be evaluated during the request. Changes in a policy have an immediate effect. 
 :::
+
+## Refreshing Tokens
+
+Refreshing a token requires the API Key and API Secret to be used to receive an access token and a refresh token. This can be done as seen [above](#api-keys). Once this first call has been made, the API Secret is no longer needed to refresh the current token. If the token is not refreshed after a 2 hour period, a new request to the `/auth` endpoint will be needed, and you will receive a new access token and refresh token.
+
+::: tip
+At this moment in time, the JavaScript SDK automatically refreshes the token, however, other SDKs do not. You will need to do this manually.
+:::
+
+To view all of the endpoints, errors they return and example uses, please see the [Management Contracts](/mgm) page where a swagger view is available.
