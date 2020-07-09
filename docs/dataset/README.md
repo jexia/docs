@@ -1095,3 +1095,6 @@ Code|Description
 403|Forbidden. Access token does not have permission to insert the record(s) into this dataset.
 404|Dataset not found
 500|There is an internal error
+
+## Limitations
+Dataset has limit on responds message length - 250Kb. In case you get `response is too big` error try to applay filtering or specify fields in responds.   
