@@ -1097,4 +1097,4 @@ Code|Description
 500|There is an internal error
 
 ## Limitations
-Dataset has limit on responds message length - 250Kb. In case you get `response is too big` error try to applay filtering or specify fields in responds.   
+Dataset has a response size limit of **250Kb**. If you receive the error `response is too big`, try to apply filters or fetch only specific fields for the response.
