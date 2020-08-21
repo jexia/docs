@@ -213,16 +213,36 @@ After that, in your application you'll need to initialize the authorization proc
   <template v-slot:js>
 
   ``` js
+  const oauthOptions = {
+    /*
+     * possible values: 'sign-up' or 'sign-in'
+     */
+    action: 'sign-up',
+    /*
+     * The name of the provider, the list will be available in the management of your project
+     */
+    provider: 'facebook',
+    /*
+     * The URL which the oauth provider should redirect to.
+     * This is optional and when not provided, the url you setup in your project will be used.
+     */
+    redirect: 'https://mydomain.com/oauth/init',
+  };
+
   /*
-   * When running in the browser the line below will automatically redirect to the provider's page.
-   * You can also pass `false` to the second argument so you'll only get the URL back from the method.
-   * When in NodeJS, this method will return the URL which user should navigate to in order to start authentication.
+   * When running in the browser, it will automatically redirect to the provider's page.
    */
-  ums.initOAuth({
-    action: 'sign-up', // possible values: 'sign-up' or 'sign-in'
-    provider: 'facebook', // the name of the provider, the list will be available in the management of your project
-    redirect: 'https://mydomain.com/oauth/init', // the URL which the oauth provider should redirect to
-  }, /* redirect = true (by default) */);
+  ums.initOAuth(oauthOptions).subscribe();
+
+  /*
+   * When running in NodeJS, it will resolve to the URL which user should navigate to in order to start authentication.
+   * You can also pass `false` to the second argument so you can redirect some other time.
+   */
+  ums.initOAuth(oauthOptions, false).subscribe(url => {
+    // you can also redirect by yourself
+    window.location.assign(url);
+  });
+
   ```
   </template>
 </CodeSwitcher>
