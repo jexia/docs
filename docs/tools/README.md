@@ -199,11 +199,11 @@ and then do similar commands to get data. Below you can find example:
         (posts) => {
           posts.forEach((post) => {
             const postTitle = document.createElement("li");
-            postTitle.innerText(post.title);
+            postTitle.innerText = post.title;
             postsList.appendChild(postTitle);
           });
         },
-        (errors)=>{console.log(error)}
+        (errors)=>{console.log(errors)}
       )
   }
 </script>
