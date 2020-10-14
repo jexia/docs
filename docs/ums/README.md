@@ -128,30 +128,35 @@ After execution, you will receive a JSON object similar to the following:
 ```
 
 ## Sign-in a User
-Provide email and password as user credentials to sign in to the project.  
-The user account should already exist in your project.
+There are two methods for signing in:
+
+- [Providing email and password as credentials](#sign-in-with-e-mail-and-password).
+- [Using Social Authentication (OAuth)](#sign-in-with-oauth).
+
+### Sign-in with e-mail and password
+In order to sign-in a user with regular credentials, user account should already exist in your project (that means you have to [sign-up](#sign-up-a-user) they first).
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
-import { jexiaClient, UMSModule } from "jexia-sdk-js";  
+import { jexiaClient, UMSModule } from "jexia-sdk-js";
 
-const ums = new UMSModule();   
-jexiaClient().init({    
-  projectID: "PROJECT_ID",    
-}, ums); 
+const ums = new UMSModule();
+jexiaClient().init({
+  projectID: "PROJECT_ID",
+}, ums);
 
-ums.signIn({    
-  email: 'Elon@tesla.com',    
-  password: 'secret-password',    
-  default: true,   
-  alias: 'Elon Musk'  
+ums.signIn({
+  email: 'Elon@tesla.com',
+  password: 'secret-password',
+  default: true,
+  alias: 'Elon Musk',
 }).subscribe(user => {
   // run request with current user token
-}, error=>{
+}, error => {
   console.log(error)
-});  
+});
 ```
 
 Additional optional options:
@@ -182,7 +187,6 @@ if __name__ == '__main__':
       email=USER_EMAIL,
       password=USER_PASSWORD
   )
-  
 ```
 
 </template>
@@ -199,6 +203,71 @@ export UMS_TOKEN=`curl -X POST -d '{
 </template>
 </CodeSwitcher>
 
+### Sign-in with OAuth
+Because the way [OAuth 2.0 Protocol](https://oauth.net/2/) works, using it means there is an additional step which you authorize the application at the provider's page.
+To enable OAuth for your users, you need to go to "Project Users" in your project management and setup the required settings in "OAuth Providers" tab.
+
+After that, in your application you'll need to initialize the authorization process:
+
+<CodeSwitcher :languages="{js:'JavaScript'}">
+  <template v-slot:js>
+
+  ``` js
+  const oauthOptions = {
+    /*
+     * possible values: 'sign-up' or 'sign-in'
+     */
+    action: 'sign-up',
+    /*
+     * The name of the provider, the list will be available in the management of your project
+     */
+    provider: 'facebook',
+    /*
+     * The URL which the oauth provider should redirect to.
+     * This is optional and when not provided, the url you setup in your project will be used.
+     */
+    redirect: 'https://mydomain.com/oauth/init',
+  };
+
+  /*
+   * When running in the browser, it will automatically redirect to the provider's page.
+   */
+  ums.initOAuth(oauthOptions).subscribe();
+
+  /*
+   * When running in NodeJS, it will resolve to the URL which user should navigate to in order to start authentication.
+   * You can also pass `false` to the second argument so you can redirect some other time.
+   */
+  ums.initOAuth(oauthOptions, false).subscribe(url => {
+    // you can also redirect by yourself
+    window.location.assign(url);
+  });
+
+  ```
+  </template>
+</CodeSwitcher>
+
+After the user is redirected to the provider's page, they should authorize and be redirected back to the `redirect` URL you passed. This request will contain two query parameters, `code` and `state`, you should get them and pass to sign in:
+
+<CodeSwitcher :languages="{js:'JavaScript'}">
+  <template v-slot:js>
+
+  ``` js
+  // Let's say the full redirected URL was: https://mydomain.com/oauth/init?code=some-random-code&state=sign-up
+  ums.signIn({
+    code: 'some-random-code',
+    state: 'sign-up',
+    default: true, // optional
+    alias: 'Elon Musk', // optional
+  }).subscribe(user => {
+    // run request with current user token
+  }, error => {
+    console.log(error)
+  });
+  ```
+  </template>
+</CodeSwitcher>
+
 ## Fetch a User
 To fetch a user you can look at the following methods:
 
@@ -207,9 +276,9 @@ To fetch a user you can look at the following methods:
 
 ``` js
 // via alias
-ums.getUser('Elon Musk').subscribe(user => {}, error=>{});    
-// via email 
-ums.getUser('elon@tesla.com').subscribe(user => {}, error=>{});   
+ums.getUser('Elon Musk').subscribe();
+// via email
+ums.getUser('elon@tesla.com').subscribe();
 ```
 </template>
 <template v-slot:py>
