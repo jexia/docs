@@ -56,8 +56,12 @@ if __name__ == '__main__':
 <template v-slot:js>
 
 ``` js
-// Jexia client
+// Jexia client for Node Application
 import { jexiaClient, dataOperations } from "jexia-sdk-js/node";
+
+// Jexia client for Browser Application
+import { jexiaClient, dataOperations } from "jexia-sdk-js/browser";
+
 
 const ds = dataOperations();
 
@@ -154,8 +158,11 @@ if __name__ == '__main__':
 <template v-slot:js>
 
 ``` js
-// Jexia client and Project Users module
+// Jexia client and Project Users module for Node App
 import { jexiaClient, UMSModule} from "jexia-sdk-js/node"; 
+
+// Jexia client and Project Users module for Browser App
+import { jexiaClient, UMSModule} from "jexia-sdk-js/browser"; 
 
 const ums = new UMSModule(); 
 
