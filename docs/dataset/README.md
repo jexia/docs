@@ -731,11 +731,11 @@ For this you need to specify which parent for which you want to attach the child
 
 ```js
 dom.dataset("order")
-    .where(field("id").isEqualTo('my_uuid'));
     .attach("items", [
       "b4961b6a-85a2-4ee8-b946-9001c978c801",
       "e199d460-c88f-4ab9-8373-1d6ad0bd0acb",
     ])
+    .where(field("id").isEqualTo("my_uuid"))
     .subscribe();
 ```
 </template>
