@@ -5,7 +5,11 @@
 <template v-slot:js>
 
 ```
+// node only
 npm install jexia-sdk-js node-fetch ws --save
+
+// web
+npm install jexia-sdk-js --save
 ```
 
 </template>
