@@ -288,6 +288,7 @@ ums.signIn({
   email: 'Elon@tesla.com',
   password: 'secret-password',
   default: true,
+  alias: 'Elon Musk',
 }).subscribe(user => {
   // run request with current user token
 }, error => {
@@ -295,6 +296,8 @@ ums.signIn({
 });
 
 ums.signOut('Elon@tesla.com');
+// OR
+ums.signOut('Elon Musk');
 ```
 
 </CodeSwitcher>
