@@ -303,7 +303,9 @@ ums.signOut('Elon Musk');
 </CodeSwitcher>
 
 ## Fetch a User
-To fetch a user you can look at the following methods:
+Fetching a user can be done by providing an alias or without, so the SDK will fetch a user based on the DEFAULT alias.
+ 
+*DEFAULT alias can be set in the `ums.signIn()` configuration*  
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -313,6 +315,8 @@ To fetch a user you can look at the following methods:
 ums.getUser('Elon Musk').subscribe();
 // via email
 ums.getUser('elon@tesla.com').subscribe();
+// fallback on the DEFAULT alias, if set.
+ums.getUser().subscribe();
 ```
 </template>
 <template v-slot:py>
