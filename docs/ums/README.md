@@ -416,6 +416,23 @@ curl
 </template>
 </CodeSwitcher>
 
+## is User logged in
+Sometimes you need to check inside your app if a user has been logged in.
+
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:js>
+
+``` js
+// via alias
+ums.isLoggedIn('Elon Musk').subscribe();
+// via email
+ums.isLoggedIn('elon@tesla.com').subscribe();
+// by omiting the "alias", the SDK will check upon the default alias
+ums.isLoggedIn().subscribe();
+```
+</template>
+</CodeSwitcher>
+
 ### Using the Automation Module
 You need to set up automation which will catch the `UMS: password reset request` event. Then, when you initiate a reset password, the user will get an email with a pre-made template message ([see Automation](/automation)). Inside you should create a link to a page with a new password entry form. From this page you can make a call `resetPassword` with a token from URL, thjs will allow Jexia to handle the request and apply changes to the new user to enable a new password.     
 
