@@ -268,6 +268,40 @@ After the user is redirected to the provider's page, they should authorize and b
   </template>
 </CodeSwitcher>
 
+## Sign-out a User
+
+The sign-out function is fairly simple. Just delete all tokens that belong to the user.
+That means, also the aliases that where set during the sign-in.
+
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:js>
+
+``` js
+import { jexiaClient, UMSModule } from "jexia-sdk-js";
+
+const ums = new UMSModule();
+jexiaClient().init({
+  projectID: "PROJECT_ID",
+}, ums);
+
+ums.signIn({
+  email: 'Elon@tesla.com',
+  password: 'secret-password',
+  default: true,
+  alias: 'Elon Musk',
+}).subscribe(user => {
+  // run request with current user token
+}, error => {
+  console.log(error)
+});
+
+ums.signOut('Elon@tesla.com');
+// OR
+ums.signOut('Elon Musk');
+```
+
+</CodeSwitcher>
+
 ## Fetch a User
 To fetch a user you can look at the following methods:
 
