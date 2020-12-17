@@ -298,6 +298,8 @@ ums.signIn({
 ums.signOut('Elon@tesla.com');
 // OR
 ums.signOut('Elon Musk');
+// OR (the default alias)
+ums.signOut();
 ```
 
 </CodeSwitcher>
