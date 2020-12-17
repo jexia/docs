@@ -295,10 +295,11 @@ ums.signIn({
   console.log(error)
 });
 
-ums.signOut('Elon@tesla.com');
-// OR
+// via alias
 ums.signOut('Elon Musk');
-// OR (the default alias)
+// via email
+ums.signOut('Elon@tesla.com');
+// fallback on the DEFAULT alias, if set.
 ums.signOut();
 ```
 
