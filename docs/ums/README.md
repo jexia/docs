@@ -305,10 +305,31 @@ ums.signOut();
 
 </CodeSwitcher>
 
+## Current user
+When logged in, we also get the current logged-in user.
+
+** 
+::: Tip
+We call `fetchUser` in the background when logging in.
+::: 
+
+<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<template v-slot:js>
+
+``` js
+const currentUser = ums.currentUser;
+```
+</template>
+</CodeSwitcher>
+
 ## Fetch a User
 Fetching a user can be done by providing an alias or without, so the SDK will fetch a user based on the DEFAULT alias.
  
 *DEFAULT alias can be set in the `ums.signIn()` configuration*  
+
+::: Tip
+When logging in, we fetch the current user for you and save it to `ums.currentUser`. 
+:::
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
