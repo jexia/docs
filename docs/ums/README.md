@@ -303,7 +303,12 @@ ums.signOut('Elon Musk');
 </CodeSwitcher>
 
 ## Current user
-When logged in, we get also the current logged-in user.  
+When logged in, we also get the current logged-in user.
+
+** 
+::: Tip
+We call `fetchUser` in the background when logging in.
+::: 
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
