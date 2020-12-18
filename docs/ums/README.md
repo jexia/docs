@@ -7,11 +7,9 @@ UMS allows you to organize the sign-in process for your application without any 
 
 ## Sign-up a User
 UMS uses an email and password as user credentials.
-You can pass extra fields as second argument to the `ums.signUp()` method. 
-All extra fields will be stored as schemaless (unless you have created appropriated field at the UMS page of 
-our management application https://app.jexia.com) therefore you are able to save as many fields as you need.
-  
-Below you can find an example of how to sign-up a new user. 
+
+You can pass extra fields to the `ums.signUp()` method. All extra fields will be stored as schemaless (unless you have created appropriated field at the UMS page of 
+our management application [https://app.jexia.com](https://app.jexia.com)) therefore you are able to save as many fields as you need.
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -23,6 +21,7 @@ const ums = new UMSModule();
 jexiaClient().init({    
   projectID: "PROJECT_ID"
 }, ums); 
+
 // For SDK > v5.0.0 
 ums.signUp({    
     email: "user@company.com",    
@@ -32,24 +31,25 @@ ums.signUp({
       city: "Apeldoorn",
       country: "NL"
     }
-  }).subscribe(
+}).subscribe(
     user => {..do something with registered user}, 
-    error=>{..handle error}
-  );  
+    error=> {..handle error}
+);  
+
 //before < JS SDK v5.0.0.
 ums.signUp({    
     email: "user@company.com",    
-    password: "my_password"},
-    {
-      age: 25, 
-      address: { 
+    password: "my_password"
+}, {
+    age: 25, 
+    address: { 
         city: "Apeldoorn",
         country: "NL"
-      }
-    }).subscribe(
-      user => {..do something with registered user}, 
-      error=>{..handle error}
-    );  
+    }
+}).subscribe(
+    user => {..do something with registered user}, 
+    error=> {..handle error}
+);  
 ```
 
 </template>
@@ -110,21 +110,21 @@ Below you can find possible errors that may be returned:
 </template>
 </CodeSwitcher>
 
-After execution, you will receive a JSON object similar to the following:
+### Return value
+After execution, you will receive an object similar to the following:
 ``` json
 {  
- "id": "005c8679-3fad-46fd-a93f-9484ea8ff738",
- "email": "user@company.com", 
- "active": true,
- "age": 25,
- "address": { 
-      "city": "Apeldoorn",
-      "country": "NL"
- }, 
- "created_at": "2017-12-31T23:59:59.123456Z", 
- "updated_at": "2017-12-31T23:59:59.123456Z"
+    "id": "005c8679-3fad-46fd-a93f-9484ea8ff738",
+    "email": "user@company.com", 
+    "active": true,
+    "age": 25,
+    "address": { 
+        "city": "Apeldoorn",
+        "country": "NL"
+    }, 
+    "created_at": "2017-12-31T23:59:59.123456Z", 
+    "updated_at": "2017-12-31T23:59:59.123456Z"
 }
-
 ```
 
 ## Sign-in a User
@@ -134,7 +134,7 @@ There are two methods for signing in:
 - [Using Social Authentication (OAuth)](#sign-in-with-oauth).
 
 ### Sign-in with e-mail and password
-In order to sign-in a user with regular credentials, user account should already exist in your project (that means you have to [sign-up](#sign-up-a-user) they first).
+In order to sign-in a user with regular credentials, user account should already exist in your project (that means you have to [sign-up](#sign-up-a-user) or create an user from the Jexia [WebApp](http://app.jexia.com/)).
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -144,29 +144,35 @@ import { jexiaClient, UMSModule } from "jexia-sdk-js";
 
 const ums = new UMSModule();
 jexiaClient().init({
-  projectID: "PROJECT_ID",
+    projectID: "PROJECT_ID",
 }, ums);
 
 ums.signIn({
-  email: 'Elon@tesla.com',
-  password: 'secret-password',
-  default: true,
-  alias: 'Elon Musk',
-}).subscribe(user => {
-  // run request with current user token
+    email: 'Elon@tesla.com',
+    password: 'secret-password',
+    default: true,
+    alias: 'Elon Musk',
+}).subscribe(currentUser => {
+    // return the user object of the currentUser
 }, error => {
-  console.log(error)
+    console.log(error)
 });
 ```
 
-Additional optional options:
-* **default** - if true, this user account will be used for all further data operations by default.
+#### Additional options:
+* **default** - if `true`, this user account will be used for all further data operations by default.
 * **alias** - account alias, you can use it to clarify which account is going to be used to perform data operation.
+
+#### Return value
+The current User will be return, [check the details about the user object](#return-value)
 
 ::: tip
 Within Jexia's SDKs there is a possibility to sign-in with many users and run requests with different users. 
 For this, you need to use an alias. If you did not specify under which user to run a query, 
-the SDK will use user with the value **default: true**.
+the SDK will use user with the value `default: true`
+:::
+::: tip
+To switch between accounts that are logged-in, refer to [switchUser](#switch-user)
 :::
 
 </template>
@@ -247,7 +253,7 @@ After that, in your application you'll need to initialize the authorization proc
   </template>
 </CodeSwitcher>
 
-After the user is redirected to the provider's page, they should authorize and be redirected back to the `redirect` URL you passed. This request will contain two query parameters, `code` and `state`, you should get them and pass to sign in:
+After the user redirected to the provider's page, they should authorize and be redirected back to the `redirect` URL you passed. This request will contain two query parameters, `code` and `state`, you should get them and pass to sign in:
 
 <CodeSwitcher :languages="{js:'JavaScript'}">
   <template v-slot:js>
@@ -259,8 +265,8 @@ After the user is redirected to the provider's page, they should authorize and b
     state: 'sign-up',
     default: true, // optional
     alias: 'Elon Musk', // optional
-  }).subscribe(user => {
-    // run request with current user token
+  }).subscribe(currentUser => {
+    // return the user object of the currentUser
   }, error => {
     console.log(error)
   });
@@ -270,8 +276,8 @@ After the user is redirected to the provider's page, they should authorize and b
 
 ## Sign-out a User
 
-The sign-out function is fairly simple. Just delete all tokens that belong to the user.
-That means, also the aliases that where set during the sign-in.
+The sign-out function is fairly simple as it just deletes all tokens that belongs to a user. That means, also the aliases 
+that where set during the [sign-in](#sign-in-a-user) are removed.
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -281,37 +287,28 @@ import { jexiaClient, UMSModule } from "jexia-sdk-js";
 
 const ums = new UMSModule();
 jexiaClient().init({
-  projectID: "PROJECT_ID",
+    projectID: "PROJECT_ID",
 }, ums);
 
-ums.signIn({
-  email: 'Elon@tesla.com',
-  password: 'secret-password',
-  default: true,
-  alias: 'Elon Musk',
-}).subscribe(user => {
-  // run request with current user token
-}, error => {
-  console.log(error)
-});
+// ... user sign in
 
 // via alias
 ums.signOut('Elon Musk');
+
 // via email
 ums.signOut('Elon@tesla.com');
-// fallback on the DEFAULT alias, if set.
+
+// fallback on the DEFAULT alias, if set during login.
 ums.signOut();
 ```
-
+</template>
 </CodeSwitcher>
 
 ## Current user
-When logged in, we also get the current logged-in user.
+When logged in we also set the current logged-in user for you so you can refer to it on request.
 
-** 
-::: Tip
-We call `fetchUser` in the background when logging in.
-::: 
+#### Return value
+See the detailed object [here](#return-value)
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
@@ -323,12 +320,14 @@ const currentUser = ums.currentUser;
 </CodeSwitcher>
 
 ## Fetch a User
-Fetching a user can be done by providing an alias or without, so the SDK will fetch a user based on the DEFAULT alias.
- 
-*DEFAULT alias can be set in the `ums.signIn()` configuration*  
+Fetching a user can be done by providing an alias or without, so the SDK will fetch a user based on the `DEFAULT` alias.
 
-::: Tip
-When logging in, we fetch the current user for you and save it to `ums.currentUser`. 
+#### Return value
+See the detailed object [here](#return-value)
+
+
+::: tip
+When logging in, we fetch and set the current to `ums.currentUser` See [here](#current-user). 
 :::
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
@@ -336,11 +335,19 @@ When logging in, we fetch the current user for you and save it to `ums.currentUs
 
 ``` js
 // via alias
-ums.getUser('Elon Musk').subscribe();
+ums.getUser('Elon Musk').subscribe(user => {
+    // user holds the currentUser object
+});
+
 // via email
-ums.getUser('elon@tesla.com').subscribe();
-// fallback on the DEFAULT alias, if set.
-ums.getUser().subscribe();
+ums.getUser('elon@tesla.com').subscribe(user => {
+    // user holds the currentUser object
+});
+
+// fallback on the DEFAULT alias, if set during login.
+ums.getUser().subscribe(user => {
+    // user holds the currentUser object
+});
 ```
 </template>
 <template v-slot:py>
@@ -366,17 +373,20 @@ curl
 </CodeSwitcher>
 
 ## Delete a User
+
 To be able to delete a user, you need to provide a password. This is needed for security reasons.
 You can do user management via CRUD operations. This method is mainly for the current user to delete themselves.
+
 ::: warning
 This will be deprecated in future versions.
 :::
+
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 ums.deleteUser('Elon@tesla.com', password)
-.subscribe(user => {}, error=>{});    
+    .subscribe(user => {}, error=>{});    
 ```
 </template>
 <template v-slot:py>
@@ -410,8 +420,8 @@ There are two ways to change the password for a user by using their old password
 
 ``` js
 ums
-.changePassword('Elon@tesla.com', oldPassword, newPassword)
-.subscribe(user => {}, error=>{});   
+    .changePassword('Elon@tesla.com', oldPassword, newPassword)
+    .subscribe(user => {}, error=>{});   
 ```
 </template>
 <template v-slot:py>
@@ -444,19 +454,27 @@ curl
 </template>
 </CodeSwitcher>
 
-## is User logged in
-Sometimes you need to check inside your app if a user has been logged in.
+## Is User logged in
+In some situations you need to check inside your app if a user has been logged in.
 
 <CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
 <template v-slot:js>
 
 ``` js
 // via alias
-ums.isLoggedIn('Elon Musk').subscribe();
+ums.isLoggedIn('Elon Musk').subscribe(isLoggedIn => {
+    // return if the user is logged-in or not
+});
+
 // via email
-ums.isLoggedIn('elon@tesla.com').subscribe();
+ums.isLoggedIn('elon@tesla.com').subscribe(isLoggedIn => {
+    // return if the user is logged-in or not
+});
+
 // by omiting the "alias", the SDK will check upon the default alias
-ums.isLoggedIn().subscribe();
+ums.isLoggedIn().subscribe(isLoggedIn => {
+    // return if the user is logged-in or not
+});
 ```
 </template>
 </CodeSwitcher>
@@ -470,13 +488,13 @@ You need to set up automation which will catch the `UMS: password reset request`
 ```js
 // To request email with new token: 
 ums
-.requestResetPassword('Elon@tesla.com')
-.subscribe(user => {}, error=>{});   
+  .requestResetPassword('Elon@tesla.com')
+. subscribe(user => {}, error=>{});   
 
 // To apply newpassword
 ums
-.resetPassword(Token, newPassword)
-.subscribe(user => {}, error=>{});   
+  .resetPassword(Token, newPassword)
+  .subscribe(user => {}, error=>{});   
 ```
 
 </template>
@@ -537,16 +555,18 @@ For this you need to create a policy with the following values:
 ``` js
 // Select all active users  
 ums.select()  
- .where(field => field("active").isEqualTo(true))  
- .subscribe(user => {}, error=>{});   
+    .where(field => field("active").isEqualTo(true))  
+    .subscribe(user => {}, error => {});   
+
 // Suspend Elon! 
 ums.update({ active: false })  
- .where(field => field("email").isEqualTo("Elon@tesla.com"))  
- .subscribe(user => {}, error=>{});    
+    .where(field => field("email").isEqualTo("Elon@tesla.com"))  
+    .subscribe(user => {}, error => {});    
+
 // Delete all suspended users  
 ums.delete()  
- .where(field => field("active").isEqualTo(false))  
- .subscribe(user => {}, error=>{});   
+    .where(field => field("active").isEqualTo(false))  
+    .subscribe(user => {}, error => {});   
 ```
 </template>
 <template v-slot:py>
