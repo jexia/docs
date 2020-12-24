@@ -591,3 +591,58 @@ curl -H "Authorization: Bearer $UMS_TOKEN"
 
 </template>
 </CodeSwitcher>
+
+## RTC
+Using RTC and the UMS will work perfectly together. The SDK will handle all Token management from and to Websocket connection. 
+
+<CodeSwitcher :languages="{js:'JavaScript'}">
+<template v-slot:js>
+
+``` js
+import {
+  jexiaClient,
+  dataOperations,
+  UMSModule,
+  realTime,
+} from "jexia-sdk-js/node";
+
+const ds = dataOperations();
+const jfs = fileOperations();
+const ums = new UMSModule();
+const rtc = realTime();
+
+jexiaClient().init({
+        projectID: '6d3fc0ca-4f7c-4a25-9c54-e6761b25ae08',
+    },
+    ums,
+    ds,
+    rtc,
+);
+
+ds.dataset('orders')
+    .watch('all')
+    .subscribe(
+        res => console.log(res),
+        error => console.log(error),
+    );
+
+ums.signIn({
+    email: 'john@doe.com',
+    password: 'secretPassword',
+    default: true,
+});
+
+// from here the RTC will using the "john@doe.com" tokens
+
+ums.signIn({
+    email: 'willem@doe.com',
+    password: 'secretPassword',
+    default: true,
+});
+
+// from here the RTC switch and set the tokens from "willem@doe.com"
+// the same applied for the switchUser() and signOut()
+
+```
+</template>
+</CodeSwitcher>
