@@ -279,7 +279,7 @@ After the user redirected to the provider's page, they should authorize and be r
 The sign-out function is fairly simple as it just deletes all tokens that belongs to a user. That means, also the aliases 
 that where set during the [sign-in](#sign-in-a-user) are removed.
 
-<CodeSwitcher :languages="{js:'JavaScript',py:'Python',bash:'cURL'}">
+<CodeSwitcher :languages="{js:'JavaScript'}">
 <template v-slot:js>
 
 ``` js
@@ -300,6 +300,32 @@ ums.signOut('Elon@tesla.com');
 
 // fallback on the DEFAULT alias, if set during login.
 ums.signOut();
+```
+</template>
+</CodeSwitcher>
+
+## Switch user
+With SDK you can log in multiple users without logging out the user(s). 
+To switch between users you can use the following code.
+
+<CodeSwitcher :languages="{js:'JavaScript'}">
+<template v-slot:js>
+
+``` js
+import { jexiaClient, UMSModule } from "jexia-sdk-js";
+
+const ums = new UMSModule();
+jexiaClient().init({
+    projectID: "PROJECT_ID",
+}, ums);
+
+// ... user sign in
+
+// via alias
+ums.switchUser('Elon Musk');
+
+// via email
+ums.switchUser('Elon@tesla.com');
 ```
 </template>
 </CodeSwitcher>
