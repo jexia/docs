@@ -215,3 +215,37 @@ and then do similar commands to get data. Below you can find example:
 </html>
 ```
 
+## Events
+As we did try to handle "almost" everything for you, there are still cases where you like to act on actions/events when something happen.
+There for you can use the event system of the SDK, to do some side effects on a login for example.
+
+Currently, we have the following events available for you.
+
+- `token:login` when you login with your `secret` and `key`
+- `token:refresh` when your token got expired and the SDK is refreshing your token
+- `token:refreshFailed` when refreshing a token failed
+- `ums:login` when a UMS user is sign-in
+- `ums:switchUser` when a UMS user is switching
+- `ums:logout` when a UMS user is sign-out
+
+
+
+<CodeSwitcher :languages="{js:'JavaScript'}">
+<template v-slot:js>
+
+``` js
+import {
+  jexiaClient,
+} from "jexia-sdk-js/browser";
+
+const client = jexiaClient().init({
+  ... your project configs
+}, /* pass any modules you need like ds jfs, ums, rtc */);
+
+client.on(<your-event-name>, <custom-function>);
+
+// for example when token refresh has been failed (SDK does not know what to do)
+client.on('token:refreshFailed', () => location.href = '/login');
+```
+</template>
+</CodeSwitcher>
