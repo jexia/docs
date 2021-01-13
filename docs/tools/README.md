@@ -216,8 +216,8 @@ and then do similar commands to get data. Below you can find example:
 ```
 
 ## Events
-As we did try to handle "almost" everything for you, there are still cases where you like to act on actions/events when something happen.
-There for you can use the event system of the SDK, to do some side effects on a login for example.
+As we try to handle "almost" everything for you, there are still cases where you need to act on actions/events when something happens.
+Therefore you can use the event system of the SDK, for example to execute custom code on a login.
 
 Currently, we have the following events available for you.
 
