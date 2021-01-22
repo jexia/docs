@@ -196,6 +196,40 @@ Some commonly used variables are:
 
 ### Subscribe to resource event
 
+#### Low-level (generic) CRUD events available for all resource types:
+
+ EVENT    | DESCRIPTION
+----------|---------------------------------------------------------------
+ selected | the entry has been read / accessed
+ created  | notifies that the item has been created
+ updated  | event is thrown once the record is updated
+ deleted  | record is deleted
+ attached | notifies that the entry got a new relation (to another entry)
+ detached | occurs when the relation between data entries is dropped
+
+#### Fileset specific events:
+
+ EVENT        | DESCRIPTION
+--------------|----------------------------------------
+ uploaded     | notifies about successful file upload
+ uploadfailed | event is used to catch upload failures
+
+#### User management system events:
+
+ EVENT           | DESCRIPTION
+-----------------|----------------------------------------------------------------
+ signedup        | *event is thrown once the user is signed up
+ signedin        | notifies that user signed in (or at least requested a new JWT)
+ passwordchanged | user's password has been changed
+
+*This event is sent only when the users get signed up themselves, if you want to be notified when user is created by management/consumption API subscribe to low-level CRUD events. 
+
+#### Realtime module events:
+
+ EVENT     | DESCRIPTION
+-----------|--------------------------------------------------------
+ published | occures when the event is published to the RTC channel
+
 Send the following command to subscribe to the specified event(s).
 ```json
 {

@@ -48,4 +48,6 @@ channel
   }
 ```
 
+::: tip
 It's also possible to listen to `Dataset` events with the RTC. Please refer to the [Dataset](/dataset/#real-time-notifications) documentation.
+:::
