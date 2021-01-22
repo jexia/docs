@@ -27,7 +27,7 @@ You can use both or one of them to organize your project.
 
 ## API usage
 - [JavaScript SDK](./SDK.md)
-- [Clean WebSocket protocol](./Protocol.md)
+- [WebSocket protocol description](./Protocol.md) (for when SDK is not used)
 
 ## Limitation
 There is only one limitation, the maximum message size cannot be more than 64 kb.
