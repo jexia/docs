@@ -2,6 +2,12 @@
 
 The WebSocket API provides means to receive events on change resources (that the JWT has access to).
 
+## Before you start
+1. Create a User/API key.
+2. Log In providing valid credentials and method (check [here](../auth/README.md) for documentation).
+3. Create some resources with WebApp or management API.
+4. Make sure that User/API key you are going to use has all required permissions (policies) on the resources, create policies if not.
+
 ## Connecting to the WebSocket API
 
 Build the URL according to the template below:
@@ -15,16 +21,11 @@ project-id   | UUID   | unique identifier/hash of the project | `4f8c6ee3-f2d1-4
 zone         | string | project zone                          | `nl00`
 jwt          | string | valid token obtained after logging into the project using the API key credentials or any other method | `eyJhbGciOiJS... ...aev96IlwB1OFzDmyw`
 
-Connecting to the WebSocket API is done using a WebSocket client and connect it to the WebSocket address. Use one of the available WebSocket clients to create a connection:
+Connecting to the WebSocket API is done using a WebSocket client and connect it to the WebSocket address. You can test the WebSocket connection using one of these test clients:
 - [Simple WebSocket Client](https://chrome.google.com/webstore/detail/simple-websocket-client/pfdhoblngboilpfeibdedpjgfnlcodoo) (Chrome extension)
 - [Smart Websocket Client](https://chrome.google.com/webstore/detail/smart-websocket-client/omalebghpgejjiaoknljcfmglgbpocdp) (Chrome extension)
 - [WebSocket King](https://websocketking.com) (Online WebSocket client)
 
-## Before you start
-1. Create a User/API key.
-2. Log In providing valid credentials and method (check [here](../auth/README.md) for documentation).
-3. Create some resources with WebApp or management API.
-4. Make sure that User/API key you are going to use has all required permissions (policies) on the resources, create policies if not.
 
 ## Sending and Receiving messages
 After establishing the connection to the WebSocket API, the client can send messages to perform actions, like subscribing to particular events and receive messages, like notifications about changes. Both send and received messages must be using JSON encoding.
@@ -109,7 +110,9 @@ The client/JWT needs to have the proper permissions for the command to be accept
 
 #### Notification messages
 
-  ```json
+These are messages published to the socket by the realtime module providing live updates for server-side events. Usually notifications contain client specific service information. You cannot manage the subscriptions to notifications.
+
+```json
   {
     "type": "notification",
     "data": {

@@ -47,3 +47,5 @@ channel
     console.log(error); // Subscription Error: (2): none of the given actions ["read"] for this resource are allowed
   }
 ```
+
+It's also possible to listen to `Dataset` events with the RTC. Please refer to the [Dataset](/dataset/#real-time-notifications) documentation.
