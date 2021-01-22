@@ -56,7 +56,7 @@ data     | Any    | message data (payload) | `{"command":"unsubscribe","argument
 ```
 
 Each command has the `command` field in the `data` object to specify the command and optionally an `arguments` object to specify the arguments of the command.
-Field `correlation_id` is OPTIONAL and ignored by RTC, it is generated/provided by the client and returned back as apart of command response AS IS (in case it was provided by WebSocket client).
+Field `correlation_id` is OPTIONAL and ignored by RTC, it is generated/provided by the client and returned back as a part of the command response AS IS (in case it was provided by WebSocket client).
 
 The client/JWT needs to have the proper permissions for the command to be accepted and executed.
 
