@@ -31,6 +31,5 @@ You can use both or one of them to organize your project.
 
 ## Limitation
 There is only one limitation, the maximum message size cannot be more than 64 kb.
-This is at least two times bigger than the offer from other companies.
 
 Enjoy coding! 
