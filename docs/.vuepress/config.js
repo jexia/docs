@@ -30,7 +30,7 @@ module.exports = {
             "/dataset/",
             "/fileset/",
             "/ums/",
-            "/pubsub/",  
+            "/realtime/",  
             "/apphost/",
             "/integration/",
             "/automation/",

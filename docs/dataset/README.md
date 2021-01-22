@@ -764,11 +764,8 @@ If you want to have real-time updates regarding changes on datasets, you can use
 
 After an action has taken place, you will get a notification containing the record ID which was modified. You can then re-fetch this data from Jexia. We only send the ID for security reasons, as there might be a situation where many users will be subscribed to notifications but they should not have access to data itself. With the current approach, you can decide whom to show the data.
 
-You can use the `.watch()` method to subscribe to the notifications. Allowed actions can be provided either as arguments or as an array:
-1. created
-2. updated
-3. deleted
-4. all (used by default)
+You can use the `.watch()` method to subscribe to the notifications. Allowed actions can be provided either as arguments or as an array. Check the [full list](../realtime/Protocol.md#crud-events) of supported events or use `all` to subscribe get all suppored events.
+
 
 You can unsubscribe from notifications any time by calling the `.unsubscribe()` method.
 Keep in mind that you would need to import the `realTime` module from our SDKs.
