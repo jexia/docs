@@ -24,7 +24,7 @@ Connecting to the WebSocket API is done using a WebSocket client and connect it 
 1. Create a User/API key.
 2. Log In providing valid credentials and method (check [here](../auth/README.md) for documentation).
 3. Create some resources with WebApp or management API.
-4. Make sure that User/API key you are going to use has all reuired permissions (policies) on the resources, create policies if not.
+4. Make sure that User/API key you are going to use has all required permissions (policies) on the resources, create policies if not.
 
 ## Sending and Receiving messages
 After establishing the connection to the WebSocket API, the client can send messages to perform actions, like subscribing to particular events and receive messages, like notifications about changes. Both send and received messages must be using JSON encoding.
