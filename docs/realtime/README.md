@@ -1,4 +1,4 @@
-# <pro/> PubSub
+# <pro/> Realtime
 Nowadays many applications use real-time communication. To make this happen, you need to create a server that can handle and interpret WebSocket communications. 
 
 With Jexia this is already setup. You can use our Pub/Sub service and enjoy real-time communication between clients. Furthermore, in 1-click you can activate log storage for your channels and retrieve logs when you need it.

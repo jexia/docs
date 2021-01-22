@@ -196,7 +196,9 @@ Some commonly used variables are:
 
 ### Subscribe to resource event
 
-#### Low-level (generic) CRUD events available for all resource types:
+#### CRUD events
+
+This section contains Low-level (generic) CRUD events available for all resource types
 
  EVENT    | DESCRIPTION
 ----------|---------------------------------------------------------------
@@ -207,14 +209,14 @@ Some commonly used variables are:
  attached | notifies that the entry got a new relation (to another entry)
  detached | occurs when the relation between data entries is dropped
 
-#### Fileset specific events:
+#### Fileset specific events
 
  EVENT        | DESCRIPTION
 --------------|----------------------------------------
  uploaded     | notifies about successful file upload
  uploadfailed | event is used to catch upload failures
 
-#### User management system events:
+#### User management system events
 
  EVENT           | DESCRIPTION
 -----------------|----------------------------------------------------------------
@@ -224,7 +226,7 @@ Some commonly used variables are:
 
 *This event is sent only when the users get signed up themselves, if you want to be notified when user is created by management/consumption API subscribe to low-level CRUD events. 
 
-#### Realtime module events:
+#### Realtime module events
 
  EVENT     | DESCRIPTION
 -----------|--------------------------------------------------------
