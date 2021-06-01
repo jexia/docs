@@ -7,7 +7,7 @@ By using Jexia you can save time by skipping development and integration for bas
 
 **Jexia** is a platform with a set of services natively integrated between each other which takes out the routine task for application development and operation. The good thing is that you can use services together or independently. It gives you the flexibility to choose the functionality that you need and allows easy integration with your projects via our REST API and SDKs.  
 
-You can [create](https://app.jexia.com/signup) your Jexia account by using an email or GitHub account.
+You can create your Jexia account by using an email or GitHub account.
 
 After signing in, you will be greeted by the Jexia Dashboard. Here you can observe all your projects and switch between them. Inside the project, you can do all management operations as well as organize collaboration and integrations. This can also be done via our [CLI tool](https://jexia-cli.readthedocs.io/en/stable/).
 
